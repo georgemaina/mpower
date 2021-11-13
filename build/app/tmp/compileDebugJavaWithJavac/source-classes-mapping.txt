@@ -1,0 +1,4 @@
+mpower/chak/or/ke/mpower/BuildConfig.java
+ mpower.chak.or.ke.mpower.BuildConfig
+io/flutter/plugins/GeneratedPluginRegistrant.java
+ io.flutter.plugins.GeneratedPluginRegistrant

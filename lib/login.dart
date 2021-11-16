@@ -1,12 +1,15 @@
 // @dart=2.9
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:mpower/screens/main_screen.dart';
-import 'package:validate/validate.dart';
-import 'package:dropdown_formfield/dropdown_formfield.dart';
+// import 'package:flutter_form_builder/flutter_form_builder.dart';
+// import 'package:mpower/screens/main_screen.dart';
+// import 'package:validate/validate.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:http/http.dart' as http;
 import 'screens/globals.dart' as globals;
 import 'package:mpower/main.dart';
+// import 'package:mpower/database.dart';
+// import 'package:mpower/models/HealthWorkers.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -22,19 +25,19 @@ class MyApp extends StatefulWidget {
   _State createState() => _State();
 }
 
-class _LoginData {
-  String username = '';
-  String password = '';
-}
+// class _LoginData {
+//   String username = '';
+//   String password = '';
+// }
 
 class _State extends State<MyApp> {
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController location = TextEditingController();
 
-  String _chosenValue="";
-  String _myActivity;
-  String _myActivityResult;
+  // String _chosenValue="";
+  // String _myActivity;
+  // String _myActivityResult;
   bool _isObscure=true;
 
   Future login()async{
@@ -47,7 +50,7 @@ class _State extends State<MyApp> {
     });
 
     var data=jsonDecode(response.body);
-    String user=username.text;
+    // String user=username.text;
     if(data=="Error"){
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -69,31 +72,31 @@ class _State extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _myActivity = '';
-    _myActivityResult = '';
+    // _myActivity = '';
+    // _myActivityResult = '';
   }
 
-  _LoginData _data = new _LoginData();
+  // _LoginData _data = new _LoginData();
 
-  String _validateEmail(String value) {
-    // If empty value, the isEmail function throw a error.
-    // So I changed this function with try and catch.
-    try {
-      Validate.isAlphaNumeric(value);
-    } catch (e) {
-      return 'The Mobile number  must be a valid Phone number.';
-    }
+  // String _validateEmail(String value) {
+  //   // If empty value, the isEmail function throw a error.
+  //   // So I changed this function with try and catch.
+  //   try {
+  //     Validate.isAlphaNumeric(value);
+  //   } catch (e) {
+  //     return 'The Mobile number  must be a valid Phone number.';
+  //   }
+  //
+  //   return null;
+  // }
 
-    return null;
-  }
-
-  String _validatePassword(String value) {
-    if (value.length < 4) {
-      return 'The Password must be at least 4 characters.';
-    }
-
-    return null;
-  }
+  // String _validatePassword(String value) {
+  //   if (value.length < 4) {
+  //     return 'The Password must be at least 4 characters.';
+  //   }
+  //
+  //   return null;
+  // }
 
   // Map<String, dynamic> formData;
   void submit(){
@@ -172,33 +175,19 @@ class _State extends State<MyApp> {
                     ),
                     SizedBox(height:20.0),
                     Container(
-                      child: DropDownFormField(
-                        titleText: 'LOCATION TYPE',
-                        hintText: 'Please choose one',
-                        value: _myActivity,
-
-                        onSaved: (value) {
-                          setState(() {
-                            _myActivity = value;
-                          });
-                        },
-                        onChanged: (value) {
-                          setState(() {
-                            _myActivity = value;
-                          });
-                        },
-                        dataSource: [
-                          {
-                            "display": "CU",
-                            "value": "CU",
-                          },
-                          {
-                            "display": "HEALTH FACILITY",
-                            "value": "HELTHFACILITY",
-                          }
-                        ],
-                        textField: 'display',
-                        valueField: 'value',
+                      padding: EdgeInsets.all(10),
+                      child: DropdownSearch<String>(
+                        validator: (v) => v == null ? "required field" : null,
+                        dropdownSearchDecoration: InputDecoration(
+                          hintText: "LOCATION TYPE",
+                          labelText: "LOCATION TYPE *",
+                          contentPadding: EdgeInsets.all(10),
+                          border: OutlineInputBorder(),
+                        ),
+                        mode: Mode.MENU,
+                        showSelectedItems: true,
+                        items: ["HEALTH FACILITY", "CU"],
+                        onChanged: print
                       ),
                     ),
                     Container(

@@ -3,6 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mpower/screens/Awareness.dart';
 import 'package:mpower/screens/register.dart';
 import 'screening.dart';
+import 'views/health_workers.dart';
+// import 'package:mpower/models/HealthWorkers.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({
@@ -26,10 +28,17 @@ class SideMenu extends StatelessWidget {
             title: "Screening",
             svgSrc: "assets/icons/menu_tran.svg",
             press: () {
+              var route = ModalRoute.of(context);
+              if(route!=null){
+                print(route.settings.name);
+              }
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context)=>ScreeningApp())
-              );
+                  PageRouteBuilder(
+                      barrierDismissible: true,
+                      opaque: false,
+                      pageBuilder:(_, anim1, anim2)=>ScreeningApp()));
+
           },
           ),
           DrawerListTile(
@@ -60,7 +69,12 @@ class SideMenu extends StatelessWidget {
           DrawerListTile(
             title: "Profile",
             svgSrc: "assets/icons/menu_profile.svg",
-            press: () {},
+            press: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context)=>Workers())
+              );
+            },
           ),
           DrawerListTile(
             title: "Settings",

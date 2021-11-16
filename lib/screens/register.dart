@@ -5,13 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:mpower/screens/defaulters.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:http/http.dart' as http;
-import 'package:validate/validate.dart';
+// import 'package:validate/validate.dart';
 import 'globals.dart' as globals;
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 import 'package:mpower/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mpower/models/counties.dart';
 import 'package:dio/dio.dart';
+import 'package:mpower/database.dart';
+// import 'package:mpower/models/HealthWorkers.dart';
 
 class Register extends StatefulWidget {
    const Register({Key? key}) : super(key: key);
@@ -24,14 +26,17 @@ class _RegisterState extends State<Register> {
   String _myActivity="";
   String _myActivityResult="";
   TextEditingController names = TextEditingController();
-  TextEditingController age = TextEditingController();
-  TextEditingController sex = TextEditingController();
-  // DropDownFormField serviceDefaulted = DropDownFormField();
-  TextEditingController village = TextEditingController();
-  TextEditingController guardian = TextEditingController();
-  TextEditingController contacts = TextEditingController();
-  TextEditingController chvName = TextEditingController();
-
+  TextEditingController phone = TextEditingController();
+  TextEditingController facility = TextEditingController();
+  TextEditingController county = TextEditingController();
+  TextEditingController subcounty = TextEditingController();
+  TextEditingController mflcode = TextEditingController();
+  TextEditingController venue = TextEditingController();
+  TextEditingController gathering = TextEditingController();
+  TextEditingController menreached = TextEditingController();
+  TextEditingController womenreached = TextEditingController();
+  TextEditingController disabledreached = TextEditingController();
+  TextEditingController inputdate = TextEditingController();
 
   final formKey =new GlobalKey<FormState>();
 
@@ -43,45 +48,52 @@ class _RegisterState extends State<Register> {
   }
 
   Future registerDefaulter()async {
-    String url = globals.url.toString() + "registerDefaulter";
+    String url = globals.url.toString() + "registerchw";
     var response = await http.post(Uri.parse(url), body: {
       "names": names.text,
-      "age": age.text,
-      "sex": sex.text,
-      "serviceDefaulted": _myActivityResult,
-      "village": village.text,
-      "guardian": guardian.text,
-      "contacts": contacts.text,
-      "chvName": chvName.text,
+      "phone": phone.text,
+      "facility": facility.text,
+      "county": county.text,
+      "subcounty": subcounty.text,
+      "mflcode": mflcode.text,
+      "venue": venue.text,
+      "gathering": gathering.text,
+      "menreached": menreached.text,
+      "womenreached": womenreached.text,
+      "disabledreached": disabledreached.text,
+      "inputdate": inputdate.text,
     });
 
     var data=jsonDecode(response.body);
     if(data=="Error"){
       // Scaffold.of(context).showSnackBar(SnackBar(
-        print('Could not save Defaulter');
+        print('Could not Add Health Worker');
       // ));
     }else{
-      print('Successfully saved defaulter');
+      print('Successfully Added Healthworker');
       Navigator.push(context, MaterialPageRoute(builder: (context)=>Defaulters()));
     }
   }
 
-  submit(){
+  submit() async{
     // First validate form.
-    var form = formKey.currentState;
-  // if (form.validate()) {
+    // var form = formKey.currentState;
+   // if (form.validate()) {
      // form.save();
      setState(() {
        _myActivityResult = _myActivity;
      });
 
-      this.registerDefaulter();
+    DBProvider.createWorker(names.text, phone.text, facility.text, county.text,
+        subcounty.text, mflcode.text, venue.text,gathering.text, menreached.text,
+        womenreached.text, disabledreached.text,inputdate.text);
+      //this.registerDefaulter();
 
       // print('Printing the login data.');
       // print('Mobile: ${_data.username}');
       // print('Password: ${_data.password}');
 
-    //}
+    // }
   }
 
  // @override
@@ -160,7 +172,7 @@ class _RegisterState extends State<Register> {
                   SizedBox(height: 10.0,),
                   TextFormField(
                     obscureText: false,
-                    controller: age,
+                    controller: phone,
                     decoration: InputDecoration(
                       hintText: 'Phone',
                       // suffixIcon: Icon(Icons.visibility_off),
@@ -178,7 +190,7 @@ class _RegisterState extends State<Register> {
                   SizedBox(height: 10.0,),
                   TextFormField(
                     obscureText: false,
-                    controller: sex,
+                    controller: facility,
                     decoration: InputDecoration(
                       hintText: 'Name of Health Facility',
                       // suffixIcon: Icon(Icons.visibility_off),
@@ -210,27 +222,25 @@ class _RegisterState extends State<Register> {
                       showSearchBox: true,
                     ),
                   SizedBox(height: 10.0,),
-                  TextFormField(
-                    obscureText: false,
-                    controller: guardian,
-                    decoration: InputDecoration(
-                      hintText: 'Sub County',
-                      // suffixIcon: Icon(Icons.visibility_off),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
+                  DropdownSearch<CountyModel>(
+                    items: [
+                      CountyModel(county: "Offline name1", id: "999"),
+                      CountyModel(county: "Offline name2", id: "0101")
+                    ],
+                    maxHeight: 300,
+                    onFind: (String? filter) => getData(filter),
+                    dropdownSearchDecoration: InputDecoration(
+                      labelText: "Choose your Sub County",
+                      contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
+                      border: OutlineInputBorder(),
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter Sub-Counter';
-                      }
-                      return null;
-                    },
+                    onChanged: print,
+                    showSearchBox: true,
                   ),
                   SizedBox(height: 10.0,),
                   TextFormField(
                     obscureText: false,
-                    controller: contacts,
+                    controller: mflcode,
                     decoration: InputDecoration(
                       hintText: 'Facility MFL Code',
                       // suffixIcon: Icon(Icons.visibility_off),
@@ -248,7 +258,7 @@ class _RegisterState extends State<Register> {
                   SizedBox(height: 10.0,),
                   TextFormField(
                     obscureText: false,
-                    controller: chvName,
+                    controller: venue,
                     decoration: InputDecoration(
                       hintText: 'Venue of Awareness Creation',
                       // suffixIcon: Icon(Icons.visibility_off),
@@ -274,15 +284,73 @@ class _RegisterState extends State<Register> {
                       border: OutlineInputBorder(),
                     ),
                     onChanged: print,
-                    // selectedItem: "Tunisia",
-                    // validator: (String item) {
-                    //   if (item == null)
-                    //     return "Required field";
-                    //   else if (item == "Brazil")
-                    //     return "Invalid item";
-                    //   else
-                    //     return null;
-                    // },
+                  ),
+                  TextFormField(
+                    obscureText: false,
+                    controller: menreached,
+                    decoration: InputDecoration(
+                      hintText: 'Men Reached',
+                      // suffixIcon: Icon(Icons.visibility_off),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter Number of Men Reached';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    obscureText: false,
+                    controller: womenreached,
+                    decoration: InputDecoration(
+                      hintText: 'Number Women Reached',
+                      // suffixIcon: Icon(Icons.visibility_off),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter Number of women Reached';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    obscureText: false,
+                    controller: disabledreached,
+                    decoration: InputDecoration(
+                      hintText: 'Disabled Reached',
+                      // suffixIcon: Icon(Icons.visibility_off),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter Number of Disabled Reached';
+                      }
+                      return null;
+                    },
+                  ),TextFormField(
+                    obscureText: false,
+                    controller: inputdate,
+                    decoration: InputDecoration(
+                      hintText: 'Input date',
+                      // suffixIcon: Icon(Icons.visibility_off),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter Number of Disabled Reached';
+                      }
+                      return null;
+                    },
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
@@ -302,7 +370,7 @@ class _RegisterState extends State<Register> {
                                 )),
                           onPressed: (){
                             print(names.text);
-                            print(chvName.text);
+                            print(facility.text);
                             this.submit();
                           },
                         ),

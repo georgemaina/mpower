@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mpower/database.dart';
+import 'package:mpower/main.dart';
 // import 'package:mpower/models/HealthWorkers.dart';
 // import 'package:mpower/screens/views/referral.dart';
 
@@ -55,7 +56,12 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text("Workers List"),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context, false),
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context)=>myMain())
+            );
+          },
         ),
       ),
       body: _isLoading
@@ -68,8 +74,8 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Colors.orange,
               margin: const EdgeInsets.all(15),
               child: ListTile(
-                title: Text(_workers[index]['Names']),
-                subtitle: Text(_workers[index]['Phone']),
+                title: Text(_workers[index]['names']),
+                subtitle: Text(_workers[index]['phone']),
                 trailing: SizedBox(
                   width: 100,
                   child: Row(

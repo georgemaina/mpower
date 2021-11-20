@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:mpower/screens/globals.dart' as globals;
 
 class BloodSugar extends StatefulWidget {
   const BloodSugar({Key? key}) : super(key: key);
@@ -25,6 +26,12 @@ class _BloodSugarState extends State<BloodSugar> {
                     labelText:'TESTING BLOOD SUGAR',
                     //hintText: 'TESTING BLOOD SUGAR'
                 ),
+                  onChanged:(val) {
+                    setState(() {
+                      globals.test_bs=val.toString();
+                      print('Test Blood Sugar='+val.toString());
+                    });
+                  }
               ),
               FormBuilderTextField(
                 name: 'lastmeal',
@@ -32,6 +39,12 @@ class _BloodSugarState extends State<BloodSugar> {
                     labelText:'HOW MANY HOURS HAS IT BEEN SINCE THE CLIENT LAST ATE,DRUNK ANYTHING BUT WATER.',
                    // hintText: 'NATIONAL ID'
                 ),
+                  onChanged:(val) {
+                    setState(() {
+                      globals.last_meal=val.toString();
+                      print('Time last meal or drink='+val.toString());
+                    });
+                  }
               ),
               FormBuilderTextField(
                 name: 'bsresults',
@@ -39,6 +52,12 @@ class _BloodSugarState extends State<BloodSugar> {
                   labelText:'BLOOD SUGAR TEST RESULT.',
                 ),
                 keyboardType: TextInputType.number,
+                  onChanged:(val) {
+                    setState(() {
+                      globals.bs_results=val.toString();
+                      print('Blood Sugar Result='+val.toString());
+                    });
+                  }
               )
             ],
           ),

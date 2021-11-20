@@ -63,6 +63,7 @@ class _State extends State<MyApp> {
           MaterialPageRoute(builder: (context)=>myMain())
       );
       globals.isLoggedIn = true;
+      globals.loggedUser =username.text;
     }
   }
 
@@ -76,27 +77,6 @@ class _State extends State<MyApp> {
     // _myActivityResult = '';
   }
 
-  // _LoginData _data = new _LoginData();
-
-  // String _validateEmail(String value) {
-  //   // If empty value, the isEmail function throw a error.
-  //   // So I changed this function with try and catch.
-  //   try {
-  //     Validate.isAlphaNumeric(value);
-  //   } catch (e) {
-  //     return 'The Mobile number  must be a valid Phone number.';
-  //   }
-  //
-  //   return null;
-  // }
-
-  // String _validatePassword(String value) {
-  //   if (value.length < 4) {
-  //     return 'The Password must be at least 4 characters.';
-  //   }
-  //
-  //   return null;
-  // }
 
   // Map<String, dynamic> formData;
   void submit(){

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mpower/screens/Awareness.dart';
 import 'package:mpower/screens/register.dart';
-import 'screening.dart';
+import 'package:mpower/screens/screening2.dart';
+import 'screening3.dart';
 import 'views/health_workers.dart';
 // import 'package:mpower/models/HealthWorkers.dart';
 
@@ -34,10 +35,8 @@ class SideMenu extends StatelessWidget {
               }
               Navigator.push(
                   context,
-                  PageRouteBuilder(
-                      barrierDismissible: true,
-                      opaque: false,
-                      pageBuilder:(_, anim1, anim2)=>ScreeningApp()));
+                  MaterialPageRoute(builder: (context)=>Screening())
+              );
 
           },
           ),

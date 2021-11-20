@@ -1,4 +1,4 @@
-#Tue Nov 16 16:27:25 EAT 2021
+#Sat Nov 20 13:24:33 EAT 2021
 base.0=C\:\\Users\\george\\Documents\\FlutterApps\\mpower\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

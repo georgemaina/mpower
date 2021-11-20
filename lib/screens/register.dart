@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mpower/models/counties.dart';
 import 'package:mpower/screens/defaulters.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:http/http.dart' as http;
@@ -10,10 +12,9 @@ import 'globals.dart' as globals;
 // import 'package:provider/provider.dart';
 import 'package:mpower/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mpower/models/counties.dart';
 import 'package:dio/dio.dart';
 import 'package:mpower/database.dart';
-// import 'package:mpower/models/HealthWorkers.dart';
+import 'package:mpower/screens/views/health_workers.dart';
 
 class Register extends StatefulWidget {
    const Register({Key? key}) : super(key: key);
@@ -25,6 +26,9 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   String _myActivity="";
   String _myActivityResult="";
+
+  late List<DropdownMenuItem<String>> list;
+
   TextEditingController names = TextEditingController();
   TextEditingController phone = TextEditingController();
   TextEditingController facility = TextEditingController();
@@ -40,14 +44,36 @@ class _RegisterState extends State<Register> {
 
   final formKey =new GlobalKey<FormState>();
 
-  @override
+   @override
   void initState() {
     super.initState();
+    list=[];
+    DBProvider.getCounties().then((listMap) {
+      listMap.map((map){
+        print(map.toString());
+        return getDropDownWidget(map);
+      }).forEach((dropDownItem) {
+        list.add(dropDownItem);
+      });
+      setState(() {});
+    });
+
+
     _myActivity = '';
     _myActivityResult = '';
   }
 
-  Future registerDefaulter()async {
+  DropdownMenuItem<String> getDropDownWidget(Map<String, dynamic> map){
+    return DropdownMenuItem<String>(
+      value:map['county'],
+      child:Text(map['county']),
+
+    );
+    }
+
+
+
+    Future registerDefaulter()async {
     String url = globals.url.toString() + "registerchw";
     var response = await http.post(Uri.parse(url), body: {
       "names": names.text,
@@ -88,6 +114,10 @@ class _RegisterState extends State<Register> {
         subcounty.text, mflcode.text, venue.text,gathering.text, menreached.text,
         womenreached.text, disabledreached.text,inputdate.text);
       //this.registerDefaulter();
+     Navigator.push(
+         context,
+         MaterialPageRoute(builder: (context)=>Workers())
+     );
 
       // print('Printing the login data.');
       // print('Mobile: ${_data.username}');
@@ -96,25 +126,11 @@ class _RegisterState extends State<Register> {
     // }
   }
 
- // @override
+  @override
   Widget build(BuildContext context) {
     double width=MediaQuery.of(context).size.width;
     double height=MediaQuery.of(context).size.height;
 
-    Future<List<CountyModel>> getData(filter) async {
-      String url = globals.url.toString() + "getCounties";
-      var response = await Dio().get(
-        url,
-        queryParameters: {"filter": filter},
-      );
-
-      final data = response.data;
-      if (data != null) {
-        return CountyModel.fromJsonList(data);
-      }
-
-      return [];
-    }
     return MaterialApp(
         theme: ThemeData.dark().copyWith(
           scaffoldBackgroundColor: secondaryColor,
@@ -205,39 +221,51 @@ class _RegisterState extends State<Register> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 20.0,),
-                    DropdownSearch<CountyModel>(
-                      items: [
-                        CountyModel(county: "Offline name1", id: "999"),
-                        CountyModel(county: "Offline name2", id: "0101")
-                      ],
-                      maxHeight: 300,
-                      onFind: (String? filter) => getData(filter),
-                      dropdownSearchDecoration: InputDecoration(
-                        labelText: "Choose your County",
-                        contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
-                        border: OutlineInputBorder(),
-                      ),
-                      onChanged: print,
-                      showSearchBox: true,
-                    ),
                   SizedBox(height: 10.0,),
-                  DropdownSearch<CountyModel>(
-                    items: [
-                      CountyModel(county: "Offline name1", id: "999"),
-                      CountyModel(county: "Offline name2", id: "0101")
-                    ],
-                    maxHeight: 300,
-                    onFind: (String? filter) => getData(filter),
-                    dropdownSearchDecoration: InputDecoration(
-                      labelText: "Choose your Sub County",
-                      contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
-                      border: OutlineInputBorder(),
+                  TextFormField(
+                    obscureText: false,
+                    controller: county,
+                    decoration: InputDecoration(
+                      hintText: 'County',
+                      // suffixIcon: Icon(Icons.visibility_off),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                     ),
-                    onChanged: print,
-                    showSearchBox: true,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Enter County';
+                      }
+                      return null;
+                    },
                   ),
                   SizedBox(height: 10.0,),
+                  TextFormField(
+                    obscureText: false,
+                    controller: subcounty,
+                    decoration: InputDecoration(
+                      hintText: 'Sub County',
+                      // suffixIcon: Icon(Icons.visibility_off),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter Facility Name';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 20.0,),
+                  //   DropdownButton(
+                  //
+                  //       hint: Text('Select County'),
+                  //       onChanged:(value){},
+                  //       items: list,
+                  //     borderRadius: BorderRadius.circular(10.0),
+                  //   ),
+                  // SizedBox(height: 20.0,),
                   TextFormField(
                     obscureText: false,
                     controller: mflcode,

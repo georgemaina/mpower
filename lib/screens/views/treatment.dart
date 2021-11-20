@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:mpower/screens/globals.dart' as globals;
+
 
 class Treatment extends StatefulWidget {
   const Treatment({Key? key}) : super(key: key);
@@ -28,6 +30,12 @@ class _TreatmentState extends State<Treatment> {
                 decoration: InputDecoration(
                   labelText:'IS THE PATIENT KNOWN HYPERTENSIVE?',
                 ),
+                  onChanged:(val) {
+                    setState(() {
+                      globals.hypertensive=val.toString();
+                      print('Hypertensive:'+val.toString());
+                    });
+                  }
               ),
               FormBuilderRadioGroup(
                 name: 'bptreament',
@@ -38,6 +46,12 @@ class _TreatmentState extends State<Treatment> {
                 decoration: InputDecoration(
                   labelText:'IS THE CLIENT ON TREATMENT FOR HYPERTENSION?',
                 ),
+                  onChanged:(val) {
+                    setState(() {
+                      globals.bp_treatment=val.toString();
+                      print('Hypertension Treament:'+val.toString());
+                    });
+                  }
               ),
               FormBuilderRadioGroup(
                 name: 'diabetic',
@@ -48,6 +62,12 @@ class _TreatmentState extends State<Treatment> {
                 decoration: InputDecoration(
                   labelText:'IS THE CLIENT KNOWN DIABETIC?',
                 ),
+                  onChanged:(val) {
+                    setState(() {
+                      globals.diabetic=val.toString();
+                      print('Diabetic:'+val.toString());
+                    });
+                  }
               ),
               FormBuilderRadioGroup(
                 name: 'diabetesTreatment',
@@ -58,6 +78,12 @@ class _TreatmentState extends State<Treatment> {
                 decoration: InputDecoration(
                   labelText:'IS THE CLIENT ON TREATMENT FOR DIABETES?',
                 ),
+                  onChanged:(val) {
+                    setState(() {
+                      globals.diabetes_treatment=val.toString();
+                      print('Diabetes Treament:'+val.toString());
+                    });
+                  }
               )
             ],
           ),

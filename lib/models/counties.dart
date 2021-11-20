@@ -1,31 +1,50 @@
-class CountyModel {
-  final String id;
-  final String county;
+class Counties{
+  int id;
+  String countycode;
+  String county;
 
-  CountyModel(
-      {required this.id, required this.county});
+  Counties(
+      this.id,
+      this.countycode,
+      this.county
+      );
 
-  factory CountyModel.fromJson(Map<String, dynamic> json) {
-    return CountyModel(
-      id: json["ID"],
-      county: json["County"],
-    );
+  MaptoCountiesListMap() {
+    return {
+      "id":id,
+      "countycode":countycode,
+      "county":county,
+    };
   }
 
-  static List<CountyModel> fromJsonList(List list) {
-    return list.map((item) => CountyModel.fromJson(item)).toList();
+  static fromMap(Map c) {
+    return Counties(c['id'], c['countycode'], c['county']);
+  }
+}
+
+class SubCounties{
+  int id;
+  String countycode;
+  String county;
+  String sub_county;
+
+  SubCounties(
+      this.id,
+      this.countycode,
+      this.county,
+      this.sub_county
+      );
+
+  MaptoSubCountiesListMap() {
+    return {
+      "id":id,
+      "countycode":countycode,
+      "county":county,
+      "sub_county":sub_county
+    };
   }
 
-  ///this method will prevent the override of toString
-  String userAsString() {
-    return '#${this.id} ${this.county}';
+  static fromMap(Map c) {
+    return SubCounties(c['id'], c['countycode'], c['county'],c['sub_county']);
   }
-
-  ///custom comparing function to check if two users are equal
-  bool isEqual(CountyModel? model) {
-    return this.id == model?.id;
-  }
-
-  @override
-  String toString() => county;
 }

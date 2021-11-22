@@ -10,7 +10,7 @@ String url="http://192.168.100.103:8888/mpower/data/getDataFunctions.php?task=";
 String firstname="";
 String lastname="";
 String dob="";
-String sex="f";
+String sex="";
 String phone="";
 String nationalid="";
 String opdno="";

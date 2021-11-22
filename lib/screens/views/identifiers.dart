@@ -44,16 +44,28 @@ class _IdentifiersState extends State<Identifiers> {
                 controller: phone,
                 decoration: InputDecoration(
                     labelText:'MOBILE PHONE NUMBER',
-                    hintText: 'MOBILE PHONE NUMBER'
+                    // hintText: 'MOBILE PHONE NUMBER'
                 ),
+                  onChanged:(val) {
+                    setState(() {
+                      globals.phone=val.toString();
+                      print('Blood Sugar Result='+val.toString());
+                    });
+                  }
               ),
               FormBuilderTextField(
                 name: 'nationalid',
                 controller: nationalid,
                 decoration: InputDecoration(
                     labelText:'NATIONAL ID.',
-                    hintText: 'NATIONAL ID'
+                    // hintText: 'NATIONAL ID'
                 ),
+                  onChanged:(val) {
+                    setState(() {
+                      globals.nationalid=val.toString();
+                      print('Blood Sugar Result='+val.toString());
+                    });
+                  }
               ),
               FormBuilderTextField(
                 name: 'opdno',
@@ -62,6 +74,12 @@ class _IdentifiersState extends State<Identifiers> {
                   labelText:'OPD NUMBER.',
                 ),
                 keyboardType: TextInputType.number,
+                  onChanged:(val) {
+                    setState(() {
+                      globals.opdno=val.toString();
+                      print('Blood Sugar Result='+val.toString());
+                    });
+                  }
               )
             ],
           ),

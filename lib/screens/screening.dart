@@ -1,6 +1,5 @@
 import 'package:accordion/accordion.dart';
 import 'package:flutter/material.dart';
-// import 'package:mpower/login.dart';
 import 'package:mpower/main.dart';
 // import '../constants.dart';
 // import 'package:google_fonts/google_fonts.dart';
@@ -16,6 +15,23 @@ import 'views/referral.dart';
 // import 'package:mpower/controllers/MenuController.dart';
 // import 'package:mpower/screens/main_screen.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+
+class Screening extends StatelessWidget {
+  const Screening({Key? key}) : super(key: key);
+
+  @override
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Hypertension & Diabetes Screening',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: ScreeningApp(),
+    );
+  }
+}
+
 
 class ScreeningApp extends StatefulWidget {
   const ScreeningApp({Key? key}) : super(key: key);
@@ -54,7 +70,7 @@ class _ScreeningAppState extends State<ScreeningApp> {
 
   }
 
-  FocusNode focusNode = new FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -64,7 +80,7 @@ class _ScreeningAppState extends State<ScreeningApp> {
       ),
       home: Scaffold(
         backgroundColor: Colors.blueGrey[100],
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
           title: Text('Hypertension & Diabetes Screening'),
           leading: IconButton(
@@ -74,12 +90,13 @@ class _ScreeningAppState extends State<ScreeningApp> {
           ),
         ),
         body:Container(
-            child:FormBuilder(
-            key: _formKey,
             child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
               padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child:FormBuilder(
+                key: _formKey,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                // mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Accordion(
                     maxOpenSections: 1,
@@ -87,6 +104,7 @@ class _ScreeningAppState extends State<ScreeningApp> {
                     scrollIntoViewOfItems: ScrollIntoViewOfItems.slow,
                     children: [
                       AccordionSection(
+
                         isOpen: false,
                         leftIcon: Icon(Icons.insights_rounded, color: Colors.white),
                         header: Text('ENROLLMENT', style: _headerStyle),

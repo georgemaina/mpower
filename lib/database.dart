@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 import 'models/counties.dart';
@@ -63,7 +63,8 @@ class DBProvider {
       "weight             TEXT,"
       "height             TEXT,"
       "voucher_no             TEXT,"
-      "refer_to             TEXT"")");
+      "refer_to             TEXT"
+      "inputdate             TEXT"")");
 
   await database.execute("CREATE TABLE diabetes ("
       "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -148,16 +149,31 @@ class DBProvider {
     final db = await DBProvider.db();
     var results=(await db.query('sqlite_master', columns: ['type', 'name'])).forEach((row) {
       print(row.values);
-    });
 
-    return db.query('health_workers', orderBy: "id");
+    });
+    // print(results);
+    // return results;
+     return db.query('health_workers', orderBy: "id");
+  }
+
+  // Read all items (workers)
+  static Future<List<Map<String, dynamic>>> countEnrollments() async {
+    final db = await DBProvider.db();
+    return await db.query('enrollments', orderBy: "id");
+
   }
 
   // Read all items (workers)
   static Future<List<Map<String, dynamic>>> countRecords() async {
     final db = await DBProvider.db();
-    return await db.query('diabetes', orderBy: "id");
+    return await db.query('health_workers', orderBy: "id");
 
+  }
+
+  // Read all items (workers)
+  static Future<List<Map<String, dynamic>>> getEnrollment() async {
+    final db = await DBProvider.db();
+    return db.query('enrollments', orderBy: "id");
   }
 
 // Read all items (workers)
@@ -165,6 +181,7 @@ class DBProvider {
     final db = await DBProvider.db();
     return db.query('health_workers', orderBy: "id");
   }
+
   static Future<List<Map<String, dynamic>>> getDiabetesData() async {
     final db = await DBProvider.db();
     return db.query('diabetes', orderBy: "id");
@@ -240,7 +257,7 @@ class DBProvider {
   String phone,String nationalid,String opdno, String alcohol,String tobacco,String diet,
   String exercise,String hypertensive,String bp_treatment,String diabetic,String diabetes_treatment,
   String systolic,String diastolic, String systolic2,String diastolic2,String test_bs, String last_meal,
-  String bs_results,String weight, String height, String voucher_no, String refer_to) async {
+  String bs_results,String weight, String height, String voucher_no, String refer_to,inputdate) async {
     final db = await DBProvider.db();
 
     final data = {"firstname":firstname,"lastname":lastname,"dob":dob, "sex":sex,
@@ -248,7 +265,7 @@ class DBProvider {
     "opdno":opdno,"alcohol":alcohol,"tobacco":tobacco,"diet":diet,"exercise":exercise,"hypertensive":hypertensive,
     "bp_treatment":bp_treatment,"diabetic":diabetic,"diabetes_treatment":diabetes_treatment, "systolic":systolic,
     "diastolic":diastolic,"systolic2":systolic2,"diastolic2":diastolic2,"test_bs":test_bs,"last_meal":last_meal,
-    "bs_results":bs_results,"weight":weight,"height":height,"voucher_no":voucher_no, "refer_to":refer_to};
+    "bs_results":bs_results,"weight":weight,"height":height,"voucher_no":voucher_no, "refer_to":refer_to, "refer_to":refer_to};
 
     final id = await db.insert('enrollments', data,
         conflictAlgorithm: sql.ConflictAlgorithm.replace);

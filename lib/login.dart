@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_form_builder/flutter_form_builder.dart';
 // import 'package:mpower/screens/main_screen.dart';
 // import 'package:validate/validate.dart';
-import 'package:dropdown_search/dropdown_search.dart';
+// import 'package:dropdown_search/dropdown_search.dart';
 import 'package:http/http.dart' as http;
 import 'screens/globals.dart' as globals;
 import 'package:mpower/main.dart';
@@ -33,7 +33,7 @@ class MyApp extends StatefulWidget {
 class _State extends State<MyApp> {
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
-  TextEditingController location = TextEditingController();
+  // TextEditingController location = TextEditingController();
 
   // String _chosenValue="";
   // String _myActivity;
@@ -154,46 +154,51 @@ class _State extends State<MyApp> {
                       ),
                     ),
                     SizedBox(height:20.0),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      child: DropdownSearch<String>(
-                        validator: (v) => v == null ? "required field" : null,
-                        dropdownSearchDecoration: InputDecoration(
-                          hintText: "LOCATION TYPE",
-                          labelText: "LOCATION TYPE *",
-                          contentPadding: EdgeInsets.all(10),
-                          border: OutlineInputBorder(),
-                        ),
-                        mode: Mode.MENU,
-                        showSelectedItems: true,
-                        items: ["HEALTH FACILITY", "CU"],
-                        onChanged: print
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      child: TextField(
-                        controller: location,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'LOCATION',
-                        ),
-                      ),
-                    ),
-                    // FlatButton(
-                    //   onPressed: (){
-                    //     //forgot password screen
-                    //   },
-                    //   // textColor: Colors.blue,
-                    //   child: Text('Forgot Password'),
+                    // Container(
+                    //   padding: EdgeInsets.all(10),
+                    //   child: DropdownSearch<String>(
+                    //     validator: (v) => v == null ? "required field" : null,
+                    //     dropdownSearchDecoration: InputDecoration(
+                    //       hintText: "LOCATION TYPE",
+                    //       labelText: "LOCATION TYPE *",
+                    //       contentPadding: EdgeInsets.all(10),
+                    //       border: OutlineInputBorder(),
+                    //     ),
+                    //     mode: Mode.MENU,
+                    //     showSelectedItems: true,
+                    //     items: ["HEALTH FACILITY", "CU"],
+                    //     onChanged: print
+                    //   ),
                     // ),
+                    // Container(
+                    //   padding: EdgeInsets.all(10),
+                    //   child: TextField(
+                    //     controller: location,
+                    //     decoration: InputDecoration(
+                    //       border: OutlineInputBorder(),
+                    //       labelText: 'LOCATION',
+                    //     ),
+                    //   ),
+                    // ),
+                    // // FlatButton(
+                    // //   onPressed: (){
+                    // //     //forgot password screen
+                    // //   },
+                    // //   // textColor: Colors.blue,
+                    // //   child: Text('Forgot Password'),
+                    // // ),
                     Container(
                         height: 50,
                         padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        child: RaisedButton(
-                          textColor: Colors.white,
-                          color: Colors.blue,
-                          child: Text('LOGIN'),
+                        child: ElevatedButton.icon(
+                          // textColor: Colors.white,
+                          // color: Colors.blue,
+                          style:ElevatedButton.styleFrom(
+                            primary: Colors.blue,
+                            textStyle: TextStyle(color:Colors.white,fontSize: 18),
+                              ),
+                          label: Text('LOGIN'),
+                          icon: Icon(Icons.login),
                           onPressed: () {
                             print(username.text);
                             print(password.text);

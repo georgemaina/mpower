@@ -1,10 +1,10 @@
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:mpower/database.dart';
 import 'package:http/http.dart' as http;
 import 'package:mpower/screens/globals.dart' as globals;
-import 'package:mpower/screens/views/health_workers.dart';
+// import 'package:mpower/screens/views/health_workers.dart';
 import 'dart:convert';
 
 class Upload extends StatefulWidget {
@@ -17,6 +17,40 @@ class Upload extends StatefulWidget {
 class _UploadState extends State<Upload> {
   List<Map<String, dynamic>> _records = [];
   int totalRecords=0;
+
+  void uploadHealthWorkers() async{
+    final bpdata=await DBProvider.getWorkers();
+    String url = globals.url.toString() + "uploadHealthWorkers";
+    var response = await http.post(
+        Uri.parse(url),
+        headers: {"Content-Type": "application/json"},
+        body:jsonEncode(bpdata)
+    );
+
+    var data=jsonDecode(response.body);
+    if(data=="Error"){
+      print('Could not Add Health Workers');
+    }else{
+      print('Successfully Added Health Workers');
+    }
+  }
+
+  void uploadEnrollment() async{
+    final bpdata=await DBProvider.getEnrollment();
+    String url = globals.url.toString() + "uploadEnrollment";
+    var response = await http.post(
+        Uri.parse(url),
+        headers: {"Content-Type": "application/json"},
+        body:jsonEncode(bpdata)
+    );
+
+    var data=jsonDecode(response.body);
+    if(data=="Error"){
+      print('Could not Add Enrollment');
+    }else{
+      print('Successfully Added Enrollment Data');
+    }
+  }
 
   void uploadCancer() async{
     final bpdata=await DBProvider.getCancerData();
@@ -164,8 +198,9 @@ class _UploadState extends State<Upload> {
                       uploadEpilepsy();
                       uploadRetinopathy();
                       uploadCancer();
-
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Workers()));
+                      uploadHealthWorkers();
+                      uploadEnrollment();
+                      // Navigator.push(context, MaterialPageRoute(builder: (context)=>Workers()));
                     });
                 }
 

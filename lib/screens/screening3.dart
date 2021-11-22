@@ -12,7 +12,7 @@ import 'package:mpower/screens/views/risk_assessment.dart';
 import 'package:mpower/screens/views/treatment.dart';
 import 'package:mpower/main.dart';
 
-class Screening extends StatelessWidget {
+class Screening2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -37,6 +37,7 @@ class MyHomePageState extends State<MyHomePage> {
   submit(){
 
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,12 +75,12 @@ class MyHomePageState extends State<MyHomePage> {
 class EnrollmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    buildItem(String label) {
-      return Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Text(label),
-      );
-    }
+    // buildItem(String label) {
+    //   return Padding(
+    //     padding: const EdgeInsets.all(10.0),
+    //     child: Text(label),
+    //   );
+    // }
 
     return ExpandableNotifier(
         child: Padding(
@@ -139,12 +140,12 @@ class EnrollmentCard extends StatelessWidget {
 class IdentifierCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    buildItem(String label) {
-      return Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Text(label),
-      );
-    }
+    // buildItem(String label) {
+    //   return Padding(
+    //     padding: const EdgeInsets.all(10.0),
+    //     child: Text(label),
+    //   );
+    // }
     return ExpandableNotifier(
         child: Padding(
           padding: const EdgeInsets.all(10),
@@ -210,13 +211,13 @@ class Card3 extends StatelessWidget {
       );
     }
 
-    buildList() {
-      return Column(
-        children: <Widget>[
-          for (var i in [1, 2, 3, 4]) buildItem("Item ${i}"),
-        ],
-      );
-    }
+    // buildList() {
+    //   return Column(
+    //     children: <Widget>[
+    //       for (var i in [1, 2, 3, 4]) buildItem("Item ${i}"),
+    //     ],
+    //   );
+    // }
 
     return ExpandableNotifier(
         child: Padding(
@@ -283,13 +284,13 @@ class Card4 extends StatelessWidget {
       );
     }
 
-    buildList() {
-      return Column(
-        children: <Widget>[
-          for (var i in [1, 2, 3, 4]) buildItem("Item ${i}"),
-        ],
-      );
-    }
+    // buildList() {
+    //   return Column(
+    //     children: <Widget>[
+    //       for (var i in [1, 2, 3, 4]) buildItem("Item ${i}"),
+    //     ],
+    //   );
+    // }
 
     return ExpandableNotifier(
         child: Padding(
@@ -349,12 +350,12 @@ class Card4 extends StatelessWidget {
 class Card5 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    buildItem(String label) {
-      return Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Text(label),
-      );
-    }
+    // buildItem(String label) {
+    //   return Padding(
+    //     padding: const EdgeInsets.all(10.0),
+    //     child: Text(label),
+    //   );
+    // }
 
      return ExpandableNotifier(
         child: Padding(
@@ -421,13 +422,13 @@ class Card6 extends StatelessWidget {
       );
     }
 
-    buildList() {
-      return Column(
-        children: <Widget>[
-          for (var i in [1, 2, 3, 4]) buildItem("Item ${i}"),
-        ],
-      );
-    }
+    // buildList() {
+    //   return Column(
+    //     children: <Widget>[
+    //       for (var i in [1, 2, 3, 4]) buildItem("Item ${i}"),
+    //     ],
+    //   );
+    // }
 
     return ExpandableNotifier(
         child: Padding(
@@ -494,13 +495,13 @@ class Card7 extends StatelessWidget {
       );
     }
 
-    buildList() {
-      return Column(
-        children: <Widget>[
-          for (var i in [1, 2, 3, 4]) buildItem("Item ${i}"),
-        ],
-      );
-    }
+    // buildList() {
+    //   return Column(
+    //     children: <Widget>[
+    //       for (var i in [1, 2, 3, 4]) buildItem("Item ${i}"),
+    //     ],
+    //   );
+    // }
 
     return ExpandableNotifier(
         child: Padding(
@@ -560,12 +561,12 @@ class Card7 extends StatelessWidget {
 class Card8 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    buildItem(String label) {
-      return Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Text(label),
-      );
-    }
+    // buildItem(String label) {
+    //   return Padding(
+    //     padding: const EdgeInsets.all(10.0),
+    //     child: Text(label),
+    //   );
+    // }
 
     return ExpandableNotifier(
         child: Padding(

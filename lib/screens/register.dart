@@ -3,7 +3,8 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mpower/models/counties.dart';
+// import 'package:mpower/models/counties.dart';
+import 'package:mpower/screens/Awareness.dart';
 import 'package:mpower/screens/defaulters.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:http/http.dart' as http;
@@ -12,9 +13,9 @@ import 'globals.dart' as globals;
 // import 'package:provider/provider.dart';
 import 'package:mpower/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:dio/dio.dart';
+// import 'package:dio/dio.dart';
 import 'package:mpower/database.dart';
-import 'package:mpower/screens/views/health_workers.dart';
+// import 'package:mpower/screens/views/health_workers.dart';
 
 class Register extends StatefulWidget {
    const Register({Key? key}) : super(key: key);
@@ -116,7 +117,7 @@ class _RegisterState extends State<Register> {
       //this.registerDefaulter();
      Navigator.push(
          context,
-         MaterialPageRoute(builder: (context)=>Workers())
+         MaterialPageRoute(builder: (context)=>AwarenessApp())
      );
 
       // print('Printing the login data.');

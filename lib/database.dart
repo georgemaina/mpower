@@ -212,11 +212,13 @@ class DBProvider {
     return db.query('cancer', orderBy: "id");
   }
 
-  // Read all items (Counties)
-  static Future<List<Map<String, dynamic>>> getCounties() async {
-    final db = await DBProvider.db();
-    return db.query('counties', orderBy: "id");
-  }
+  // // Read all items (Counties)
+  // static Future<List<Map<String, dynamic>>> getCounties() async {
+  //   // final db = await DBProvider.db();
+  //   // return db.query('counties', orderBy: "id");
+  //
+  //
+  // }
 
   // Read all items (Counties)
   static Future<List<Map<String, dynamic>>> getSubCounties() async {
@@ -242,12 +244,12 @@ class DBProvider {
   static Future<int> createWorker(String names,String phone,String facility, String county,
                                   String subcounty,String mflcode,
                       String venue,String gathering,String menreached,String womenreached,
-                      String disabledreached,inputdate) async {
+                      String disabledreached) async {
     final db = await DBProvider.db();
 
     final data = {"names":names,"phone":phone,"facility":facility, "county":county,"subcounty":subcounty,"mflcode":mflcode,
       "venue":venue,"gathering":gathering,"menreached":menreached,"womenreached":womenreached,
-      "disabledreached":disabledreached,"inputdate":inputdate};
+      "disabledreached":disabledreached};
     final id = await db.insert('health_workers', data,
         conflictAlgorithm: sql.ConflictAlgorithm.replace);
     return id;
@@ -266,6 +268,8 @@ class DBProvider {
     "bp_treatment":bp_treatment,"diabetic":diabetic,"diabetes_treatment":diabetes_treatment, "systolic":systolic,
     "diastolic":diastolic,"systolic2":systolic2,"diastolic2":diastolic2,"test_bs":test_bs,"last_meal":last_meal,
     "bs_results":bs_results,"weight":weight,"height":height,"voucher_no":voucher_no, "refer_to":refer_to, "refer_to":refer_to};
+
+    //print(data);
 
     final id = await db.insert('enrollments', data,
         conflictAlgorithm: sql.ConflictAlgorithm.replace);

@@ -1,5 +1,6 @@
+//@dart=2.9
 import 'dart:math' as math;
-
+import 'package:flutter/cupertino.dart';
 import 'package:mpower/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:mpower/screens/views/blood_pressure.dart';
@@ -11,6 +12,10 @@ import 'package:mpower/screens/views/referral.dart';
 import 'package:mpower/screens/views/risk_assessment.dart';
 import 'package:mpower/screens/views/treatment.dart';
 import 'package:mpower/main.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+
+import 'package:intl/intl.dart';
+
 
 class Screening2 extends StatelessWidget {
   @override
@@ -33,14 +38,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
+  final _formKey = GlobalKey<FormBuilderState>();
+  static final DateTime now = DateTime.now();
+  static final DateFormat formatter = DateFormat('yyyy-MM-dd H:m:s');
+  final String formatted = formatter.format(now);
 
-  submit(){
-
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Colors.blueGrey[100],
         appBar: AppBar(
         title: Text('Hypertension & Diabetes Screening'),
         leading: IconButton(
@@ -53,19 +60,23 @@ class MyHomePageState extends State<MyHomePage> {
           iconColor: Colors.blue,
           useInkWell: true,
         ),
-        child: ListView(
-          physics: const BouncingScrollPhysics(),
-          children: <Widget>[
-            EnrollmentCard(), //Enrollment
-            IdentifierCard(),  //Identifier
-            Card3(),
-            Card4(),
-            Card5(),
-            Card6(),
-            Card7(),
-            Card8(),
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            physics: const BouncingScrollPhysics(),
+            children: <Widget>[
+              EnrollmentCard(), //Enrollment
+              IdentifierCard(),  //Identifier
+              Card3(),
+              Card4(),
+              Card5(),
+              Card6(),
+              Card7(),
+              Card8(),
 
-          ],
+
+            ],
+          ),
         ),
       ),
     );
@@ -75,19 +86,19 @@ class MyHomePageState extends State<MyHomePage> {
 class EnrollmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // buildItem(String label) {
-    //   return Padding(
-    //     padding: const EdgeInsets.all(10.0),
-    //     child: Text(label),
-    //   );
-    // }
+    buildItem(String label) {
+      return Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Text(label),
+      );
+    }
 
     return ExpandableNotifier(
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.only(left: 10,top:2,right: 10,bottom: 2),
           child: ScrollOnExpand(
             child: Card(
-              clipBehavior: Clip.antiAlias,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
               child: Column(
                 children: <Widget>[
                   ExpandablePanel(
@@ -98,7 +109,16 @@ class EnrollmentCard extends StatelessWidget {
                       hasIcon: false,
                     ),
                     header: Container(
-                      color: Colors.indigoAccent,
+                      decoration: new BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: new BorderRadius.only(
+                            topLeft: const Radius.circular(10.0),
+                            topRight: const Radius.circular(10.0),
+                            bottomRight: const Radius.circular(10.0),
+                            bottomLeft: const Radius.circular(10.0),
+                          )
+                      ),
+                      // color: Colors.indigoAccent,
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Row(
@@ -115,12 +135,20 @@ class EnrollmentCard extends StatelessWidget {
                               ),
                             ),
                             Expanded(
-                              child: Text(
-                                "ENROLLMENT",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1!
-                                    .copyWith(color: Colors.white),
+                              child: RichText(
+                                text: TextSpan(
+                                  children: [
+                                    WidgetSpan(child: Icon(Icons.insights_rounded,color: Colors.white)),
+                                    TextSpan(
+                                      text:"ENROLLMENT",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          .copyWith(color: Colors.white),
+                                    )
+                                  ],
+
+                                ),
                               ),
                             ),
                           ],
@@ -140,15 +168,15 @@ class EnrollmentCard extends StatelessWidget {
 class IdentifierCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // buildItem(String label) {
-    //   return Padding(
-    //     padding: const EdgeInsets.all(10.0),
-    //     child: Text(label),
-    //   );
-    // }
+    buildItem(String label) {
+      return Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Text(label),
+      );
+    }
     return ExpandableNotifier(
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.only(left: 10,top:2,right: 10,bottom: 2),
           child: ScrollOnExpand(
             child: Card(
               clipBehavior: Clip.antiAlias,
@@ -162,7 +190,16 @@ class IdentifierCard extends StatelessWidget {
                       hasIcon: false,
                     ),
                     header: Container(
-                      color: Colors.indigoAccent,
+
+                      decoration: new BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: new BorderRadius.only(
+                            topLeft: const Radius.circular(10.0),
+                            topRight: const Radius.circular(10.0),
+                            bottomRight: const Radius.circular(10.0),
+                            bottomLeft: const Radius.circular(10.0),
+                          )
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Row(
@@ -179,13 +216,21 @@ class IdentifierCard extends StatelessWidget {
                               ),
                             ),
                             Expanded(
-                              child: Text(
-                                "IDENTIFIERS",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1!
-                                    .copyWith(color: Colors.white),
-                              ),
+                                child: RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      WidgetSpan(child: Icon(Icons.compare_rounded, color: Colors.white)),
+                                      TextSpan(
+                                        text:"IDENTIFIERS",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1
+                                            .copyWith(color: Colors.white),
+                                      )
+                                    ],
+
+                                  ),
+                                )
                             ),
                           ],
                         ),
@@ -206,22 +251,22 @@ class Card3 extends StatelessWidget {
   Widget build(BuildContext context) {
     buildItem(String label) {
       return Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.only(left: 10,top:2,right: 10,bottom: 2),
         child: Text(label),
       );
     }
 
-    // buildList() {
-    //   return Column(
-    //     children: <Widget>[
-    //       for (var i in [1, 2, 3, 4]) buildItem("Item ${i}"),
-    //     ],
-    //   );
-    // }
+    buildList() {
+      return Column(
+        children: <Widget>[
+          for (var i in [1, 2, 3, 4]) buildItem("Item ${i}"),
+        ],
+      );
+    }
 
     return ExpandableNotifier(
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.only(left: 10,top:2,right: 10,bottom: 2),
           child: ScrollOnExpand(
             child: Card(
               clipBehavior: Clip.antiAlias,
@@ -235,7 +280,16 @@ class Card3 extends StatelessWidget {
                       hasIcon: false,
                     ),
                     header: Container(
-                      color: Colors.indigoAccent,
+
+                      decoration: new BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: new BorderRadius.only(
+                            topLeft: const Radius.circular(10.0),
+                            topRight: const Radius.circular(10.0),
+                            bottomRight: const Radius.circular(10.0),
+                            bottomLeft: const Radius.circular(10.0),
+                          )
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Row(
@@ -252,12 +306,20 @@ class Card3 extends StatelessWidget {
                               ),
                             ),
                             Expanded(
-                              child: Text(
-                                "REISK ASSESSMENT",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1!
-                                    .copyWith(color: Colors.white),
+                              child: RichText(
+                                text: TextSpan(
+                                  children: [
+                                    WidgetSpan(child: Icon(Icons.computer, color: Colors.white)),
+                                    TextSpan(
+                                      text:"RISK ASSESSMENT",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          .copyWith(color: Colors.white),
+                                    )
+                                  ],
+
+                                ),
                               ),
                             ),
                           ],
@@ -279,22 +341,22 @@ class Card4 extends StatelessWidget {
   Widget build(BuildContext context) {
     buildItem(String label) {
       return Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.only(left: 10,top:2,right: 10,bottom: 2),
         child: Text(label),
       );
     }
 
-    // buildList() {
-    //   return Column(
-    //     children: <Widget>[
-    //       for (var i in [1, 2, 3, 4]) buildItem("Item ${i}"),
-    //     ],
-    //   );
-    // }
+    buildList() {
+      return Column(
+        children: <Widget>[
+          for (var i in [1, 2, 3, 4]) buildItem("Item ${i}"),
+        ],
+      );
+    }
 
     return ExpandableNotifier(
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.only(left: 10,top:2,right: 10,bottom: 2),
           child: ScrollOnExpand(
             child: Card(
               clipBehavior: Clip.antiAlias,
@@ -308,7 +370,16 @@ class Card4 extends StatelessWidget {
                       hasIcon: false,
                     ),
                     header: Container(
-                      color: Colors.indigoAccent,
+
+                      decoration: new BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: new BorderRadius.only(
+                            topLeft: const Radius.circular(10.0),
+                            topRight: const Radius.circular(10.0),
+                            bottomRight: const Radius.circular(10.0),
+                            bottomLeft: const Radius.circular(10.0),
+                          )
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Row(
@@ -325,14 +396,22 @@ class Card4 extends StatelessWidget {
                               ),
                             ),
                             Expanded(
-                              child: Text(
-                                "CURRENT TREATMENT",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1!
-                                    .copyWith(color: Colors.white),
-                              ),
+                              child: RichText(
+                                text: TextSpan(
+                                  children: [
+                                    WidgetSpan(child: Icon(Icons.contact_page, color: Colors.white)),
+                                    TextSpan(
+                                      text:"CURRENT TREATMENT",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          .copyWith(color: Colors.white),
+                                    )
+                                  ],
+
+                                ),
                             ),
+                            )
                           ],
                         ),
                       ),
@@ -350,16 +429,16 @@ class Card4 extends StatelessWidget {
 class Card5 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // buildItem(String label) {
-    //   return Padding(
-    //     padding: const EdgeInsets.all(10.0),
-    //     child: Text(label),
-    //   );
-    // }
+    buildItem(String label) {
+      return Padding(
+        padding: const EdgeInsets.only(left: 10,top:2,right: 10,bottom: 2),
+        child: Text(label),
+      );
+    }
 
      return ExpandableNotifier(
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.only(left: 10,top:2,right: 10,bottom: 2),
           child: ScrollOnExpand(
             child: Card(
               clipBehavior: Clip.antiAlias,
@@ -373,7 +452,16 @@ class Card5 extends StatelessWidget {
                       hasIcon: false,
                     ),
                     header: Container(
-                      color: Colors.indigoAccent,
+
+                      decoration: new BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: new BorderRadius.only(
+                            topLeft: const Radius.circular(10.0),
+                            topRight: const Radius.circular(10.0),
+                            bottomRight: const Radius.circular(10.0),
+                            bottomLeft: const Radius.circular(10.0),
+                          )
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Row(
@@ -390,12 +478,20 @@ class Card5 extends StatelessWidget {
                               ),
                             ),
                             Expanded(
-                              child: Text(
-                                "BLOOD PRESSURE",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1!
-                                    .copyWith(color: Colors.white),
+                              child: RichText(
+                                text: TextSpan(
+                                  children: [
+                                    WidgetSpan(child: Icon(Icons.computer, color: Colors.white)),
+                                    TextSpan(
+                                      text:"BLOOD PRESSURE",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          .copyWith(color: Colors.white),
+                                    )
+                                  ],
+
+                                ),
                               ),
                             ),
                           ],
@@ -417,22 +513,22 @@ class Card6 extends StatelessWidget {
   Widget build(BuildContext context) {
     buildItem(String label) {
       return Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.only(left: 10,top:2,right: 10,bottom: 2),
         child: Text(label),
       );
     }
 
-    // buildList() {
-    //   return Column(
-    //     children: <Widget>[
-    //       for (var i in [1, 2, 3, 4]) buildItem("Item ${i}"),
-    //     ],
-    //   );
-    // }
+    buildList() {
+      return Column(
+        children: <Widget>[
+          for (var i in [1, 2, 3, 4]) buildItem("Item ${i}"),
+        ],
+      );
+    }
 
     return ExpandableNotifier(
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.only(left: 10,top:2,right: 10,bottom: 2),
           child: ScrollOnExpand(
             child: Card(
               clipBehavior: Clip.antiAlias,
@@ -446,7 +542,16 @@ class Card6 extends StatelessWidget {
                       hasIcon: false,
                     ),
                     header: Container(
-                      color: Colors.indigoAccent,
+
+                      decoration: new BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: new BorderRadius.only(
+                            topLeft: const Radius.circular(10.0),
+                            topRight: const Radius.circular(10.0),
+                            bottomRight: const Radius.circular(10.0),
+                            bottomLeft: const Radius.circular(10.0),
+                          )
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Row(
@@ -463,12 +568,20 @@ class Card6 extends StatelessWidget {
                               ),
                             ),
                             Expanded(
-                              child: Text(
-                                "BLOOD SUGAR",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1!
-                                    .copyWith(color: Colors.white),
+                              child: RichText(
+                                text: TextSpan(
+                                  children: [
+                                    WidgetSpan(child: Icon(Icons.movie, color: Colors.white)),
+                                    TextSpan(
+                                      text:"BLOOD SUGAR",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          .copyWith(color: Colors.white),
+                                    )
+                                  ],
+
+                                ),
                               ),
                             ),
                           ],
@@ -490,22 +603,22 @@ class Card7 extends StatelessWidget {
   Widget build(BuildContext context) {
     buildItem(String label) {
       return Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.only(left: 10,top:2,right: 10,bottom: 2),
         child: Text(label),
       );
     }
 
-    // buildList() {
-    //   return Column(
-    //     children: <Widget>[
-    //       for (var i in [1, 2, 3, 4]) buildItem("Item ${i}"),
-    //     ],
-    //   );
-    // }
+    buildList() {
+      return Column(
+        children: <Widget>[
+          for (var i in [1, 2, 3, 4]) buildItem("Item ${i}"),
+        ],
+      );
+    }
 
     return ExpandableNotifier(
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.only(left: 10,top:2,right: 10,bottom: 2),
           child: ScrollOnExpand(
             child: Card(
               clipBehavior: Clip.antiAlias,
@@ -519,7 +632,16 @@ class Card7 extends StatelessWidget {
                       hasIcon: false,
                     ),
                     header: Container(
-                      color: Colors.indigoAccent,
+
+                      decoration: new BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: new BorderRadius.only(
+                            topLeft: const Radius.circular(10.0),
+                            topRight: const Radius.circular(10.0),
+                            bottomRight: const Radius.circular(10.0),
+                            bottomLeft: const Radius.circular(10.0),
+                          )
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Row(
@@ -536,12 +658,20 @@ class Card7 extends StatelessWidget {
                               ),
                             ),
                             Expanded(
-                              child: Text(
-                                "BMI",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1!
-                                    .copyWith(color: Colors.white),
+                              child: RichText(
+                                text: TextSpan(
+                                  children: [
+                                    WidgetSpan(child: Icon(CupertinoIcons.refresh, color: Colors.white)),
+                                    TextSpan(
+                                      text:"BMI",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          .copyWith(color: Colors.white),
+                                    )
+                                  ],
+
+                                ),
                               ),
                             ),
                           ],
@@ -561,16 +691,16 @@ class Card7 extends StatelessWidget {
 class Card8 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // buildItem(String label) {
-    //   return Padding(
-    //     padding: const EdgeInsets.all(10.0),
-    //     child: Text(label),
-    //   );
-    // }
+    buildItem(String label) {
+      return Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Text(label),
+      );
+    }
 
     return ExpandableNotifier(
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.only(left: 10,top:2,right: 10,bottom: 2),
           child: ScrollOnExpand(
             child: Card(
               clipBehavior: Clip.antiAlias,
@@ -584,7 +714,16 @@ class Card8 extends StatelessWidget {
                       hasIcon: false,
                     ),
                     header: Container(
-                      color: Colors.indigoAccent,
+
+                      decoration: new BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: new BorderRadius.only(
+                            topLeft: const Radius.circular(10.0),
+                            topRight: const Radius.circular(10.0),
+                            bottomRight: const Radius.circular(10.0),
+                            bottomLeft: const Radius.circular(10.0),
+                          )
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Row(
@@ -601,12 +740,20 @@ class Card8 extends StatelessWidget {
                               ),
                             ),
                             Expanded(
-                              child: Text(
-                                "REFERRAL",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText2!
-                                    .copyWith(color: Colors.white),
+                              child: RichText(
+                                text: TextSpan(
+                                  children: [
+                                    WidgetSpan(child: Icon(Icons.house, color: Colors.white)),
+                                    TextSpan(
+                                      text:"REFERRAL",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          .copyWith(color: Colors.white),
+                                    )
+                                  ],
+
+                                ),
                               ),
                             ),
                           ],

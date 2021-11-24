@@ -5,6 +5,7 @@ import 'package:mpower/screens/register.dart';
 import 'package:mpower/screens/screening.dart';
 import 'package:mpower/screens/screening3.dart';
 import 'views/health_workers.dart';
+import 'package:mpower/screens/components/facilities.dart';
 // import 'package:mpower/models/HealthWorkers.dart';
 
 class SideMenu extends StatelessWidget {
@@ -18,7 +19,7 @@ class SideMenu extends StatelessWidget {
       child: ListView(
         children: [
           DrawerHeader(
-            child: Image.asset("assets/images/logo.png"),
+            child: Image.asset("assets/icons/icon.png"),
           ),
           DrawerListTile(
             title: "Dashboard",
@@ -83,7 +84,12 @@ class SideMenu extends StatelessWidget {
           DrawerListTile(
             title: "Settings",
             svgSrc: "assets/icons/menu_setting.svg",
-            press: () {},
+            press: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context)=>SearchBar())
+              );
+            },
           ),
         ],
       ),

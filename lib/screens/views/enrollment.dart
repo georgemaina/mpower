@@ -21,38 +21,7 @@ class _EnrollmentState extends State<Enrollment> {
   // TextEditingController surname=TextEditingController();
   final _formKey = GlobalKey<FormBuilderState>();
 
-  void _getEnrollmentData() async {
-    // First validate form.
-
-
-    setState(() {
-      globals.firstname = this.firstname.text;
-      globals.lastname = this.lastname.text;
-      globals.dob = this.dob.text;
-    });
-
-    print(globals.firstname);
-    print(globals.lastname);
-    print(globals.dob);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _getEnrollmentData();
-  }
-
-  // Future _onChanged() async {
-  //   _formKey.currentState!.save();
-  //   if (_formKey.currentState!.validate()) {
-  //     print(_formKey.currentState!.value);
-  //   } else {
-  //     print("validation failed");
-  //   }
-  // }
-  FocusNode _focusNode = FocusNode();
-
-  @override
+    @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
@@ -65,7 +34,6 @@ class _EnrollmentState extends State<Enrollment> {
               // crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 FormBuilderTextField(
-                  focusNode: _focusNode,
                   name: 'firstname',
                   controller: firstname,
                   decoration: InputDecoration(
@@ -75,9 +43,15 @@ class _EnrollmentState extends State<Enrollment> {
                     onChanged:(val) {
                       setState(() {
                         globals.firstname=val.toString();
-                        // print('Blood Sugar Result='+val.toString());
+                        print('First name='+val.toString());
                       });
+                    },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter First Name';
                     }
+                    return null;
+                  },
                 ),
                 FormBuilderTextField(
                   name: 'lastname',
@@ -89,9 +63,15 @@ class _EnrollmentState extends State<Enrollment> {
                     onChanged:(val) {
                       setState(() {
                         globals.lastname=val.toString();
-                        // print('Blood Sugar Result='+val.toString());
+                        print('Last name='+val.toString());
                       });
+                    },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text';
                     }
+                    return null;
+                  },
                 ),
                 FormBuilderTextField(
                   name: 'dob',
@@ -103,9 +83,15 @@ class _EnrollmentState extends State<Enrollment> {
                     onChanged:(val) {
                       setState(() {
                         globals.dob=val.toString();
-                        // print('Blood Sugar Result='+val.toString());
+                        print('DOB='+val.toString());
                       });
+                    },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter Year of Birth';
                     }
+                    return null;
+                  },
                 ),
                 FormBuilderRadioGroup(
                     name: 'Sex',

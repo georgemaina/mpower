@@ -28,6 +28,8 @@ class _UploadState extends State<Upload> {
     );
 
     var data=jsonDecode(response.body);
+    // print(data);
+
     if(data=="Error"){
       print('Could not Add Health Workers');
     }else{
@@ -43,6 +45,7 @@ class _UploadState extends State<Upload> {
         headers: {"Content-Type": "application/json"},
         body:jsonEncode(bpdata)
     );
+   // print(bpdata);
 
     var data=jsonDecode(response.body);
     if(data=="Error"){
@@ -148,6 +151,7 @@ class _UploadState extends State<Upload> {
     );
 
     var data=jsonDecode(response.body);
+    //print(data);
     if(data=="Error"){
       // Scaffold.of(context).showSnackBar(SnackBar(
       print('Could not Add uploadDiabetes');
@@ -164,7 +168,7 @@ class _UploadState extends State<Upload> {
     setState(() {
       _records=data;
       totalRecords=_records.length;
-      print(jsonEncode(_records));
+      // print(jsonEncode(_records));
     });
   }
 

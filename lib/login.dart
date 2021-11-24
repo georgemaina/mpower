@@ -48,8 +48,12 @@ class _State extends State<MyApp> {
       "password":password.text,
       "userGroup":"Admin",
     });
+    print(url);
+    print(response.body);
 
     var data=jsonDecode(response.body);
+    print(data);
+
     // String user=username.text;
     if(data=="Error"){
       ScaffoldMessenger.of(context).showSnackBar(
@@ -114,6 +118,11 @@ class _State extends State<MyApp> {
                               fontWeight: FontWeight.w500,
                               fontSize: 30),
                         )),
+                    Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(10),
+                        child: Image.asset("assets/icons/icon.png",width: 100,height: 100,),
+                    ),
                     Container(
                         alignment: Alignment.center,
                         padding: EdgeInsets.all(10),
@@ -200,8 +209,8 @@ class _State extends State<MyApp> {
                           label: Text('LOGIN'),
                           icon: Icon(Icons.login),
                           onPressed: () {
-                            print(username.text);
-                            print(password.text);
+                            // print(username.text);
+                            // print(password.text);
                             this.submit();
                           },
                         )),

@@ -4,10 +4,10 @@ class Counties{
   String county;
 
   Counties(
-      this.id,
-      this.countycode,
-      this.county
-      );
+    this.id,
+    this.countycode,
+    this.county
+  );
 
   MaptoCountiesListMap() {
     return {

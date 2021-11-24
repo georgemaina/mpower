@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:mpower/screens/globals.dart' as globals;
+import 'package:mpower/main.dart';
 import 'package:mpower/database.dart';
-// import 'health_workers.dart';
+import 'package:mpower/screens/globals.dart' as globals;// import 'health_workers.dart';
 import 'package:intl/intl.dart';
 
 class Referral extends StatefulWidget {
@@ -21,6 +21,18 @@ class _ReferralState extends State<Referral> {
   final String formatted = formatter.format(now);
 
   // TextEditingController surname=TextEditingController();
+  submit() async{
+    DBProvider.enrollClient(globals.firstname,globals.lastname,globals.dob,globals.sex,globals.phone,
+        globals.nationalid,globals.opdno,globals.alcohol,globals.tobacco,globals.diet,
+        globals.exercise,globals.hypertensive,globals.bp_treatment,globals.diabetic,globals.diabetes_treatment,
+        globals.systolic,globals.diastolic,globals.systolic2,globals.diastolic2,globals.test_bs,
+        globals.last_meal,globals.bs_results,globals.weight,globals.height,globals.voucher_no, globals.refer_to,formatted);
+    //this.registerDefaulter();
+    Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context)=>myMain())
+    );
+  }
 
   void _getReferalData() async {
     // First validate form.
@@ -39,27 +51,6 @@ class _ReferralState extends State<Referral> {
   void initState() {
     super.initState();
     _getReferalData();
-  }
-
-
-  submit() async{
-
-    DBProvider.enrollClient(globals.firstname,globals.lastname,globals.dob,globals.sex,globals.phone,
-    globals.nationalid,globals.opdno,globals.alcohol,globals.tobacco,globals.diet,
-    globals.exercise,globals.hypertensive,globals.bp_treatment,globals.diabetic,globals.diabetes_treatment,
-    globals.systolic,globals.diastolic,globals.systolic2,globals.diastolic2,globals.test_bs,
-    globals.last_meal,globals.bs_results,globals.weight,globals.height,globals.voucher_no, globals.refer_to,formatted);
-    //this.registerDefaulter();
-    // Navigator.push(
-    //     context,
-    //     MaterialPageRoute(builder: (context)=>Workers())
-    // );
-
-    // print('Printing the login data.');
-    // print('Mobile: ${_data.username}');
-    // print('Password: ${_data.password}');
-
-    // }
   }
 
   @override
@@ -95,19 +86,45 @@ class _ReferralState extends State<Referral> {
                       globals.refer_to=val.toString();
                       print('Refer To='+val.toString());
                     });
+                  },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
                   }
+                  return null;
+                },
               ),
-              Container(
-                  height: 50,
-                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      this.submit();
-                    },
-                    child: const Text('ENROLL CLIENT'),
-                    style: ElevatedButton.styleFrom(
-                        fixedSize: const Size(240, 80), primary: Colors.deepOrange),
-                  ),),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Text('Forget password?',style: TextStyle(fontSize: 12.0),),
+                    ElevatedButton.icon(
+                      label: Text('ENROLL CLIENT'),
+                      icon:Icon(Icons.save),
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.deepOrange,
+                          padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                          textStyle: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
+                          )),
+                      onPressed: (){
+                        _formKey.currentState?.save();
+                        if (_formKey.currentState!.validate()) {
+                          this.submit();
+                        } else {
+                          print("validation failed");
+                        }
+
+                      },
+                    ),
+                  ],
+                ),
+              ),
+
             ],
           ),
         )

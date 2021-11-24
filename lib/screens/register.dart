@@ -3,7 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:mpower/models/counties.dart';
+import 'package:mpower/models/facilities.dart';
 import 'package:mpower/screens/Awareness.dart';
 import 'package:mpower/screens/defaulters.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -13,9 +13,9 @@ import 'globals.dart' as globals;
 // import 'package:provider/provider.dart';
 import 'package:mpower/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:dio/dio.dart';
+import 'package:dio/dio.dart';
 import 'package:mpower/database.dart';
-// import 'package:mpower/screens/views/health_workers.dart';
+import 'package:flutter/widgets.dart';
 
 class Register extends StatefulWidget {
    const Register({Key? key}) : super(key: key);
@@ -25,10 +25,8 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  String _myActivity="";
-  String _myActivityResult="";
-
-  late List<DropdownMenuItem<String>> list;
+  String _myActivity = "";
+  String _myActivityResult = "";
 
   TextEditingController names = TextEditingController();
   TextEditingController phone = TextEditingController();
@@ -41,40 +39,116 @@ class _RegisterState extends State<Register> {
   TextEditingController menreached = TextEditingController();
   TextEditingController womenreached = TextEditingController();
   TextEditingController disabledreached = TextEditingController();
-  TextEditingController inputdate = TextEditingController();
+  final formKey = new GlobalKey<FormState>();
 
-  final formKey =new GlobalKey<FormState>();
+  var countyname = "";
+  var subcountyname;
+  var message;
+  bool error = false;
+  var countydata;
 
-   @override
+  List<String> counties = [
+    "Mombasa",
+    "Kwale",
+    "Kilifi",
+    "Tana River",
+    "Lamu",
+    "Taita-Taveta",
+    "Garissa",
+    "wajir",
+    "Mandera",
+    "Marsabit",
+    "Isiolo",
+    "Meru",
+    "Tharaka-Nithi",
+    "Embu",
+    "Kitui",
+    "Machakos",
+    "Makueni",
+    "Nyandarua",
+    "Nyeri",
+    "Kirinyaga",
+    "Murang'a",
+    "Kiambu",
+    "Turkana",
+    "West Pokot",
+    "Samburu",
+    "Trans Nzoia",
+    "Uasin Gishu",
+    "Elgeyo-Marakwet",
+    "Nandi",
+    "Baringo",
+    "Laikipia",
+    "Nakuru",
+    "Narok",
+    "Kajiado",
+    "Kericho",
+    "Bomet",
+    "Kakamega",
+    "Vihiga",
+    "Bungoma",
+    "Busia",
+    "Siaya",
+    "Kisumu",
+    "Homa Bay",
+    "Migori",
+    "Kisii",
+    "Nyamira",
+    "Nairobi City"
+  ];
+
+  String dataurl = globals.url.toString() + "getSubCounties";
+
+
+
+  @override
   void initState() {
+    // TODO: implement initState
+    error = false;
+    message = "";
+    countyname = "Kiambu"; //default country
     super.initState();
-    list=[];
-    DBProvider.getCounties().then((listMap) {
-      listMap.map((map){
-        print(map.toString());
-        return getDropDownWidget(map);
-      }).forEach((dropDownItem) {
-        list.add(dropDownItem);
-      });
-      setState(() {});
-    });
-
-
-    _myActivity = '';
-    _myActivityResult = '';
   }
 
-  DropdownMenuItem<String> getDropDownWidget(Map<String, dynamic> map){
-    return DropdownMenuItem<String>(
-      value:map['county'],
-      child:Text(map['county']),
+  Future<void> getSubCounty() async {
+    var res = await http.post(
+        Uri.parse(dataurl + "&county=" + Uri.encodeComponent(countyname)));
+    //attache countryname on parameter country in url
+    if (res.statusCode == 200) {
+      setState(() {
+        countydata = json.decode(res.body);
+        if (countydata["error"]) {
+          //check fi there is any error from server.
+          error = true;
+          message = countydata["errmsg"];
+        }
+      });
+    } else {
+      //there is error
+      setState(() {
+        error = true;
+        message = "Error during fetching data";
+      });
+    }
+  }
 
+  Future<List<FacilityModel>> getFacilities(filter) async {
+    var response = await Dio().get(
+      globals.url.toString() + "getFacilities",
+      queryParameters: {"filter": filter},
     );
+
+    final data = json.decode(response.data);
+    if (data != null) {
+      // print(data.length);
+      return FacilityModel.fromJsonList(data);
     }
 
+    return [];
 
+  }
 
-    Future registerDefaulter()async {
+  Future registerDefaulter() async {
     String url = globals.url.toString() + "registerchw";
     var response = await http.post(Uri.parse(url), body: {
       "names": names.text,
@@ -88,70 +162,81 @@ class _RegisterState extends State<Register> {
       "menreached": menreached.text,
       "womenreached": womenreached.text,
       "disabledreached": disabledreached.text,
-      "inputdate": inputdate.text,
     });
 
-    var data=jsonDecode(response.body);
-    if(data=="Error"){
+    var data = jsonDecode(response.body);
+    if (data == "Error") {
       // Scaffold.of(context).showSnackBar(SnackBar(
-        print('Could not Add Health Worker');
+      print('Could not Add Health Worker');
       // ));
-    }else{
+    } else {
       print('Successfully Added Healthworker');
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>Defaulters()));
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Defaulters()));
     }
   }
 
-  submit() async{
+  submit() async {
     // First validate form.
     // var form = formKey.currentState;
-   // if (form.validate()) {
-     // form.save();
-     setState(() {
-       _myActivityResult = _myActivity;
-     });
+    // if (form.validate()) {
+    // form.save();
+    setState(() {
+      _myActivityResult = _myActivity;
+    });
 
-    DBProvider.createWorker(names.text, phone.text, facility.text, county.text,
-        subcounty.text, mflcode.text, venue.text,gathering.text, menreached.text,
-        womenreached.text, disabledreached.text,inputdate.text);
-      //this.registerDefaulter();
-     Navigator.push(
-         context,
-         MaterialPageRoute(builder: (context)=>AwarenessApp())
-     );
-
-      // print('Printing the login data.');
-      // print('Mobile: ${_data.username}');
-      // print('Password: ${_data.password}');
-
-    // }
+    DBProvider.createWorker(
+        names.text,
+        phone.text,
+        facility.text,
+        county.text,
+        subcounty.text,
+        mflcode.text,
+        venue.text,
+        gathering.text,
+        menreached.text,
+        womenreached.text,
+        disabledreached.text);
+    //this.registerDefaulter();
+    Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AwarenessApp())
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    double width=MediaQuery.of(context).size.width;
-    double height=MediaQuery.of(context).size.height;
+    double width = MediaQuery
+        .of(context)
+        .size
+        .width;
+    double height = MediaQuery
+        .of(context)
+        .size
+        .height;
 
     return MaterialApp(
-        theme: ThemeData.dark().copyWith(
-          scaffoldBackgroundColor: secondaryColor,
-          textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
-              .apply(bodyColor: Colors.white),
-          canvasColor: secondaryColor,
-        ),
-     home:Scaffold(
-      appBar: AppBar(
-        title: Text('CHF Register'),
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: secondaryColor,
+        textTheme: GoogleFonts.poppinsTextTheme(Theme
+            .of(context)
+            .textTheme)
+            .apply(bodyColor: Colors.white),
+        canvasColor: secondaryColor,
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('CHF Register'),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () => Navigator.pop(context, false),
           ),
-      ),
-      body: Container(
-        height: height,
-        width: width,
-          child:Form(
-            key:formKey,
+        ),
+        body: Container(
+          height: height,
+          width: width,
+          child: Form(
+            key: formKey,
 
             child: SingleChildScrollView(
               padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
@@ -165,7 +250,8 @@ class _RegisterState extends State<Register> {
                       children: [
                         Text('CHF Registration',
                           textAlign: TextAlign.start,
-                          style: TextStyle(fontSize: 25.0,fontWeight: FontWeight.bold),),
+                          style: TextStyle(fontSize: 25.0,
+                              fontWeight: FontWeight.bold),),
                       ],
                     ),
                   ),
@@ -198,75 +284,74 @@ class _RegisterState extends State<Register> {
                       ),
                     ),
                     validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter CHF phone Number';
-                        }
-                        return null;
-                  },
-                  ),
-                  SizedBox(height: 10.0,),
-                  TextFormField(
-                    obscureText: false,
-                    controller: facility,
-                    decoration: InputDecoration(
-                      hintText: 'Name of Health Facility',
-                      // suffixIcon: Icon(Icons.visibility_off),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                    validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter Facility Name';
+                        return 'Please enter CHF phone Number';
                       }
                       return null;
                     },
                   ),
                   SizedBox(height: 10.0,),
-                  TextFormField(
-                    obscureText: false,
-                    controller: county,
-                    decoration: InputDecoration(
-                      hintText: 'County',
-                      // suffixIcon: Icon(Icons.visibility_off),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      border: Border.all(
+                          color: Colors.grey,
+                          style: BorderStyle.solid,
+                          width: 0.80),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: DropdownButton(
+                        isExpanded: true,
+                        value: countyname,
+                        hint: Text('Choose a county'),
+
+                        items: counties.map((value) {
+                          return DropdownMenuItem(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          countyname = value.toString(); //change the country name
+                          getSubCounty();
+                        },
                       ),
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Enter County';
-                      }
-                      return null;
-                    },
                   ),
-                  SizedBox(height: 10.0,),
-                  TextFormField(
-                    obscureText: false,
-                    controller: subcounty,
-                    decoration: InputDecoration(
-                      hintText: 'Sub County',
-                      // suffixIcon: Icon(Icons.visibility_off),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter Facility Name';
-                      }
-                      return null;
-                    },
+                  SizedBox(height: 10,),
+                  Container( //wrapper for City list
+                    // margin: EdgeInsets.only(top:10),
+                    child: error ? Text(message) :
+                    countydata == null ?
+                    Text("Choose Sub County") :
+                    wardList(),
+                    //if there is error then show error message,
+                    //else check if data is null,
+                    //if not then show city list,
+
                   ),
                   SizedBox(height: 20.0,),
-                  //   DropdownButton(
-                  //
-                  //       hint: Text('Select County'),
-                  //       onChanged:(value){},
-                  //       items: list,
-                  //     borderRadius: BorderRadius.circular(10.0),
-                  //   ),
-                  // SizedBox(height: 20.0,),
+                  DropdownSearch<FacilityModel>(
+                    // items: [
+                    //   FacilityModel(facilityname: "Offline name1", mflcode: 999),
+                    //   FacilityModel(facilityname: "Offline name2", mflcode: 101)
+                    // ],
+                    maxHeight: 300,
+                    onFind:(String? filter)=>getFacilities(filter),
+                    dropdownSearchDecoration: InputDecoration(
+                      labelText: "Name of Health Facility",
+                      contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
+                      border: OutlineInputBorder(),
+                    ),
+                    onChanged: (value){
+                      mflcode.text=value!.mflcode.toString();
+                    },
+                    showSearchBox: true,
+                  ),
+
+                  SizedBox(height: 20.0,),
                   TextFormField(
                     obscureText: false,
                     controller: mflcode,
@@ -304,7 +389,14 @@ class _RegisterState extends State<Register> {
                   ),
                   SizedBox(height: 10),
                   DropdownSearch(
-                    items: ["Church","Chief Baraza","Women’s Group","Men’s Group","Market","Other"],
+                    items: [
+                      "Church",
+                      "Chief Baraza",
+                      "Women’s Group",
+                      "Men’s Group",
+                      "Market",
+                      "Other"
+                    ],
                     mode: Mode.MENU,
                     dropdownSearchDecoration: InputDecoration(
                       hintText: "Type of Gathering/Group",
@@ -314,6 +406,7 @@ class _RegisterState extends State<Register> {
                     ),
                     onChanged: print,
                   ),
+                  SizedBox(height: 10),
                   TextFormField(
                     obscureText: false,
                     controller: menreached,
@@ -331,6 +424,7 @@ class _RegisterState extends State<Register> {
                       return null;
                     },
                   ),
+                  SizedBox(height: 10),
                   TextFormField(
                     obscureText: false,
                     controller: womenreached,
@@ -348,6 +442,7 @@ class _RegisterState extends State<Register> {
                       return null;
                     },
                   ),
+                  SizedBox(height: 10),
                   TextFormField(
                     obscureText: false,
                     controller: disabledreached,
@@ -364,60 +459,105 @@ class _RegisterState extends State<Register> {
                       }
                       return null;
                     },
-                  ),TextFormField(
-                    obscureText: false,
-                    controller: inputdate,
-                    decoration: InputDecoration(
-                      hintText: 'Input date',
-                      // suffixIcon: Icon(Icons.visibility_off),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter Number of Disabled Reached';
-                      }
-                      return null;
-                    },
                   ),
+
+                  SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                       // Text('Forget password?',style: TextStyle(fontSize: 12.0),),
-                        ElevatedButton(
-                          child: Text('REGISTER'),
+                        // Text('Forget password?',style: TextStyle(fontSize: 12.0),),
+                        ElevatedButton.icon(
+                          label: Text('REGISTER'),
+                          icon: Icon(Icons.save),
                           style: ElevatedButton.styleFrom(
                               primary: Colors.indigo,
-                              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 50, vertical: 20),
                               textStyle: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white
-                                )),
-                          onPressed: (){
-                            print(names.text);
-                            print(facility.text);
-                            this.submit();
+                              )),
+                          onPressed: () {
+                            formKey.currentState?.save();
+                            if (formKey.currentState!.validate()) {
+                              this.submit();
+                            } else {
+                              print("validation failed");
+                            }
                           },
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(height:20.0),
-              Container(
-                padding: EdgeInsets.all(16),
-                child: Text(_myActivityResult),
-              )
+                  SizedBox(height: 20.0),
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    child: Text(_myActivityResult),
+                  )
                 ],
               ),
             ),
           ),
+        ),
       ),
-     ),
     );
   }
+
+
+  Widget wardList() {
+    //widget function for city list
+    List<WardOne> wordList = List<WardOne>.from(
+        countydata["data"].map((i) {
+          return WardOne.fromJSON(i);
+        })
+    ); //searilize citylist json data to object model.
+
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        border: Border.all(
+            color: Colors.grey, style: BorderStyle.solid, width: 0.80),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: DropdownButton(
+          hint: Text("Select Sub County"),
+          isExpanded: true,
+          value: subcountyname,
+
+          items: wordList.map((wordOne) {
+            return DropdownMenuItem(
+              child: Text(wordOne.subcounty),
+              value: wordOne.subcounty,
+            );
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              subcountyname = value;
+            });
+            // <-- Will trigger re-build on StatefulWidget
+            print("Selected city is $value");
+          },
+
+        ),
+      ),
+    );
   }
 
+}
+//model class to searilize country list JSON data.
+class WardOne{
+  String id, county, subcounty;
+  WardOne({required this.id, required this.county, required this.subcounty});
+
+  factory WardOne.fromJSON(Map<String, dynamic> json){
+    return WardOne(
+        id:json["id"],
+        county: json["county"],
+        subcounty: json["subcounty"]
+    );
+  }
+}

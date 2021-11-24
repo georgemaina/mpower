@@ -49,9 +49,15 @@ class _IdentifiersState extends State<Identifiers> {
                   onChanged:(val) {
                     setState(() {
                       globals.phone=val.toString();
-                      print('Blood Sugar Result='+val.toString());
+                      // print('Blood Sugar Result='+val.toString());
                     });
+                  },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter Phone Number';
                   }
+                  return null;
+                },
               ),
               FormBuilderTextField(
                 name: 'nationalid',
@@ -63,9 +69,15 @@ class _IdentifiersState extends State<Identifiers> {
                   onChanged:(val) {
                     setState(() {
                       globals.nationalid=val.toString();
-                      print('Blood Sugar Result='+val.toString());
+                      // print('Blood Sugar Result='+val.toString());
                     });
+                  },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter National ID';
                   }
+                  return null;
+                },
               ),
               FormBuilderTextField(
                 name: 'opdno',

@@ -19,7 +19,7 @@ class Header extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.menu),
             onPressed:context.read<MenuController>().controlMenu,
-            color: Color(4278727245) ,
+            color: Colors.white ,
           ),
         if (!Responsive.isMobile(context))
           Text(

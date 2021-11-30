@@ -1,4 +1,3 @@
-//@dart=2.9
 import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:mpower/expandable.dart';
@@ -11,7 +10,7 @@ import 'package:mpower/screens/views/identifiers.dart';
 import 'package:mpower/screens/views/referral.dart';
 import 'package:mpower/screens/views/risk_assessment.dart';
 import 'package:mpower/screens/views/treatment.dart';
-import 'package:mpower/main.dart';
+import 'package:mpower/welcome.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import 'package:intl/intl.dart';
@@ -140,11 +139,9 @@ class EnrollmentCard extends StatelessWidget {
                                   children: [
                                     WidgetSpan(child: Icon(Icons.insights_rounded,color: Colors.white)),
                                     TextSpan(
-                                      text:"ENROLLMENT",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1
-                                          .copyWith(color: Colors.white),
+                                      text:" ENROLLMENT",
+                                      style: TextStyle(fontSize: 15.0, color: Colors.white,fontWeight: FontWeight.bold)
+                                          // .copyWith(color: Colors.white),
                                     )
                                   ],
 
@@ -221,11 +218,9 @@ class IdentifierCard extends StatelessWidget {
                                     children: [
                                       WidgetSpan(child: Icon(Icons.compare_rounded, color: Colors.white)),
                                       TextSpan(
-                                        text:"IDENTIFIERS",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1
-                                            .copyWith(color: Colors.white),
+                                        text:" IDENTIFIERS",
+                                        style: TextStyle(fontSize: 15.0, color: Colors.white,fontWeight: FontWeight.bold)
+                                            // .copyWith(color: Colors.white),
                                       )
                                     ],
 
@@ -311,11 +306,9 @@ class Card3 extends StatelessWidget {
                                   children: [
                                     WidgetSpan(child: Icon(Icons.computer, color: Colors.white)),
                                     TextSpan(
-                                      text:"RISK ASSESSMENT",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1
-                                          .copyWith(color: Colors.white),
+                                      text:" RISK ASSESSMENT",
+                                      style: TextStyle(fontSize: 15.0, color: Colors.white,fontWeight: FontWeight.bold)
+                                          // .copyWith(color: Colors.white),
                                     )
                                   ],
 
@@ -401,11 +394,9 @@ class Card4 extends StatelessWidget {
                                   children: [
                                     WidgetSpan(child: Icon(Icons.contact_page, color: Colors.white)),
                                     TextSpan(
-                                      text:"CURRENT TREATMENT",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1
-                                          .copyWith(color: Colors.white),
+                                      text:" CURRENT TREATMENT",
+                                      style:TextStyle(fontSize: 15.0, color: Colors.white,fontWeight: FontWeight.bold)
+                                          // .copyWith(color: Colors.white),
                                     )
                                   ],
 
@@ -483,11 +474,9 @@ class Card5 extends StatelessWidget {
                                   children: [
                                     WidgetSpan(child: Icon(Icons.computer, color: Colors.white)),
                                     TextSpan(
-                                      text:"BLOOD PRESSURE",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1
-                                          .copyWith(color: Colors.white),
+                                      text:" BLOOD PRESSURE",
+                                      style: TextStyle(fontSize: 15.0, color: Colors.white,fontWeight: FontWeight.bold)
+                                          // .copyWith(color: Colors.white),
                                     )
                                   ],
 
@@ -573,11 +562,9 @@ class Card6 extends StatelessWidget {
                                   children: [
                                     WidgetSpan(child: Icon(Icons.movie, color: Colors.white)),
                                     TextSpan(
-                                      text:"BLOOD SUGAR",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1
-                                          .copyWith(color: Colors.white),
+                                      text:" BLOOD SUGAR",
+                                      style: TextStyle(fontSize: 15.0, color: Colors.white,fontWeight: FontWeight.bold)
+                                          // .copyWith(color: Colors.white),
                                     )
                                   ],
 
@@ -663,11 +650,9 @@ class Card7 extends StatelessWidget {
                                   children: [
                                     WidgetSpan(child: Icon(CupertinoIcons.refresh, color: Colors.white)),
                                     TextSpan(
-                                      text:"BMI",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1
-                                          .copyWith(color: Colors.white),
+                                      text:" BMI",
+                                      style: TextStyle(fontSize: 15.0, color: Colors.white,fontWeight: FontWeight.bold)
+                                          // .copyWith(color: Colors.white),
                                     )
                                   ],
 
@@ -745,11 +730,9 @@ class Card8 extends StatelessWidget {
                                   children: [
                                     WidgetSpan(child: Icon(Icons.house, color: Colors.white)),
                                     TextSpan(
-                                      text:"REFERRAL",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1
-                                          .copyWith(color: Colors.white),
+                                      text:" REFERRAL",
+                                      style: TextStyle(fontSize: 15.0, color: Colors.white,fontWeight: FontWeight.bold)
+                                          // .copyWith(color: Colors.white),
                                     )
                                   ],
 

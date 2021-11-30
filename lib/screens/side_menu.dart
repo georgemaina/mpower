@@ -3,10 +3,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mpower/screens/Awareness.dart';
 import 'package:mpower/screens/register.dart';
 import 'package:mpower/screens/screening.dart';
-import 'package:mpower/screens/screening3.dart';
+// import 'package:mpower/screens/screening3.dart';
 import 'views/health_workers.dart';
-import 'package:mpower/screens/components/facilities.dart';
-// import 'package:mpower/models/HealthWorkers.dart';
+import 'package:mpower/screens/awareness_home.dart';
+import 'package:mpower/screens/awareness_home.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({
@@ -36,7 +36,7 @@ class SideMenu extends StatelessWidget {
               }
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context)=>Screening2())
+                  MaterialPageRoute(builder: (context)=>ScreeningHome())
               );
 
           },
@@ -57,7 +57,7 @@ class SideMenu extends StatelessWidget {
             press: () {
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context)=>AwarenessApp())
+                  MaterialPageRoute(builder: (context)=>AwarenessDashboard())
               );
             },
           ),
@@ -67,7 +67,7 @@ class SideMenu extends StatelessWidget {
             press: () {
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context)=>ScreeningApp())
+                  MaterialPageRoute(builder: (context)=>ScreeningHome())
               );
             },
           ),
@@ -84,12 +84,7 @@ class SideMenu extends StatelessWidget {
           DrawerListTile(
             title: "Settings",
             svgSrc: "assets/icons/menu_setting.svg",
-            press: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context)=>SearchBar())
-              );
-            },
+            press: () {},
           ),
         ],
       ),

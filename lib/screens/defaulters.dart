@@ -1,10 +1,9 @@
-//@dart=2.9
 import 'package:flutter/material.dart';
 import 'package:mpower/constants.dart';
 import 'package:mpower/controllers/MenuController.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:mpower/main.dart';
+import 'package:mpower/welcome.dart';
 import 'package:mpower/screens/main_screen.dart';
 import 'package:mpower/screens/register.dart';
 import 'globals.dart' as globals;
@@ -59,16 +58,16 @@ class Client {
   String contacted;
 
   Client({
-    this.ID,
-    this.names,
-    this.age,
-    this.sex,
-    this.serviceDefaulted,
-    this.village,
-    this.guardian,
+    required this.ID,
+    required this.names,
+    required this.age,
+    required this.sex,
+    required this.serviceDefaulted,
+    required this.village,
+    required this.guardian,
     // this.contacts,
-    this.chvName,
-    this.contacted,
+    required this.chvName,
+    required this.contacted,
   });
 
   factory Client.fromJson(Map<String, dynamic> json) {
@@ -135,7 +134,7 @@ class _MainListViewState extends State {
         // print(snapshot.data.names.length);
         // print(snapshot.hasData);
         return ListView(
-          children: snapshot.data
+          children: snapshot.data!
               .map((data) => Column(
                     children: <Widget>[
                       GestureDetector(
@@ -303,7 +302,7 @@ class SecondScreen extends State<SecondScreenState> {
   submit(){
     // First validate form.
     var form = formKey.currentState;
-    if (form.validate()) {
+    if (form!.validate()) {
       // form.save();
       // setState(() {
       //   _myActivityResult = _myActivity;
@@ -377,7 +376,7 @@ class SecondScreen extends State<SecondScreenState> {
                   return Center(child: CircularProgressIndicator());
 
                 return ListView(
-                  children: snapshot.data
+                  children: snapshot.data!
                       .map((data) => Column(
                             children: <Widget>[
                               GestureDetector(
@@ -412,15 +411,13 @@ class SecondScreen extends State<SecondScreenState> {
                                                   new Radio(
                                                     value: 0,
                                                     groupValue: _radioValue1,
-                                                    onChanged:
-                                                    _handleRadioValueChange1,
+                                                    onChanged:null,
                                                   ),
                                                   new Text('Yes',style: new TextStyle(fontSize: 16.0),),
                                                   new Radio(
                                                     value: 1,
                                                     groupValue: _radioValue1,
-                                                    onChanged:
-                                                    _handleRadioValueChange1,
+                                                    onChanged:null,
                                                   ),
                                                   new Text('No',style: new TextStyle(fontSize: 16.0),
                                                   ),
@@ -442,9 +439,9 @@ class SecondScreen extends State<SecondScreenState> {
                                                     Row(
                                                       mainAxisAlignment:MainAxisAlignment.start,
                                                       children: <Widget>[
-                                                        new Radio(value: 2,groupValue: _radioValue2,onChanged:_handleRadioValueChange2),
+                                                        new Radio(value: 2,groupValue: _radioValue2,onChanged:null),
                                                         new Text('Yes',style: new TextStyle(fontSize: 16.0)),
-                                                        new Radio(value: 3,groupValue: _radioValue2,onChanged:_handleRadioValueChange2),
+                                                        new Radio(value: 3,groupValue: _radioValue2,onChanged:null),
                                                         new Text('No',style: new TextStyle(fontSize: 16.0)),
                                                       ],
                                                     ),

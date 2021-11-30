@@ -3,14 +3,20 @@ library MyApp.globals;
 bool isLoggedIn = false;
 String loggedUser="";
 
-// String url="http://40.71.71.47/mpower/data/getDataFunctions.php?task=";
+// String url="http://51.140.3.12:8082/mpower/data/getDataFunctions.php?task=";
+// String url="http://192.168.100.7/mpower/data/getDataFunctions.php?task=";
 String url="http://192.168.100.103:8888/mpower/data/getDataFunctions.php?task=";
+// String url="http://40.71.71.47/mpower/data/getDataFunctions.php?task=";
+//CHAK Server
+// String url="http://197.232.14.151:8089/mpower/data/getDataFunctions.php?task=";
+
 
 //Screening Variables
 String firstname="";
 String lastname="";
 String dob="";
 String sex="";
+String pregnant="";
 String phone="";
 String nationalid="";
 String opdno="";
@@ -48,6 +54,7 @@ String bc1="";
 String bc2="";
 String bc3="";
 String bc4="";
+String totalcancer="";
 
 //******Diabetes variables***
 String dbt1="";
@@ -60,6 +67,7 @@ String dbt7="";
 String dbt8="";
 String dbt9="";
 String dbt10="";
+String totaldiabetes="";
 
 //******Hypertension variables***
 String bp1="";
@@ -72,12 +80,14 @@ String bp7="";
 String bp8="";
 String bp9="";
 String bp10="";
+String totalhypertension="";
 
 //******Epilepsy variables***
 String epy1="";
 String epy2="";
 String epy3="";
 String epy4="";
+String totalepilepsy="";
 
 //******Diabetes Retinipathy variables***
 String dr1="";
@@ -85,6 +95,7 @@ String dr2="";
 String dr3="";
 String dr4="";
 String dr5="";
+String totalretinopathy="";
 
 //******Anaemia variables***
 String sca1="";
@@ -92,4 +103,5 @@ String sca2="";
 String sca3="";
 String sca4="";
 String sca5="";
+String totalanaemia="";
 

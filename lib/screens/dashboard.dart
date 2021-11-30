@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:mpower/screens/register.dart';
 import '../../constants.dart';
 import 'components/header.dart';
-import 'welcome.dart';
+import 'dashlet1.dart';
 import 'summary.dart';
 import 'components/upload.dart';
 

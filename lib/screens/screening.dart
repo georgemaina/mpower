@@ -1,187 +1,115 @@
-import 'package:accordion/accordion.dart';
 import 'package:flutter/material.dart';
-import 'package:mpower/main.dart';
-// import '../constants.dart';
-// import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_launcher_icons/android.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mpower/screens/globals.dart';
+import 'package:mpower/screens/views/identifiers.dart';
+import 'package:mpower/welcome.dart';
 import 'views/enrollment.dart';
+import 'views/blood_pressure.dart';
+import 'views/bloodsugar.dart';
 import 'views/identifiers.dart';
 import 'views/risk_assessment.dart';
 import 'views/treatment.dart';
-import 'views/blood_pressure.dart';
-import 'views/bloodsugar.dart';
 import 'views/bmi.dart';
 import 'views/referral.dart';
-// import 'package:provider/provider.dart';
-// import 'package:mpower/controllers/MenuController.dart';
-// import 'package:mpower/screens/main_screen.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'main_screen.dart';
+import '../constants.dart';
 
-class Screening extends StatelessWidget {
-  const Screening({Key? key}) : super(key: key);
-
+class ScreeningHome extends StatefulWidget {
   @override
+  _ScreeningHomeState createState() => _ScreeningHomeState();
+}
+
+class _ScreeningHomeState extends State<ScreeningHome> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Hypertension & Diabetes Screening',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: ScreeningApp(),
-    );
-  }
-}
-
-
-class ScreeningApp extends StatefulWidget {
-  const ScreeningApp({Key? key}) : super(key: key);
-
-  @override
-  _ScreeningAppState createState() => _ScreeningAppState();
-}
-
-class _ScreeningAppState extends State<ScreeningApp> {
-  final _headerStyle = TextStyle(color: Color(0xffffffff), fontSize: 15, fontWeight: FontWeight.bold);
-  // final _contentStyleHeader = TextStyle(color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.w700);
-  // final _contentStyle = TextStyle(color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.normal);
-  // final _loremIpsum =
-  // '''Lorem ipsum is typically a corrupted version of 'De finibus bonorum et malorum', a 1st century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin.''';
-  final _formKey =new GlobalKey<FormState>();
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {});
-  }
-
-  submit() async{
-    setState(() {
-      // _myActivityResult = _myActivity;
-    });
-    //
-    // DBProvider.createWorker(names.text, phone.text, facility.text, county.text,
-    //     subcounty.text, mflcode.text, venue.text,gathering.text, menreached.text,
-    //     womenreached.text, disabledreached.text,inputdate.text);
-    // //this.registerDefaulter();
-    // Navigator.push(
-    //     context,
-    //     MaterialPageRoute(builder: (context)=>Workers())
-    // );
-
-  }
-
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Screening',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: bgColor,
+        textTheme: GoogleFonts.poppinsTextTheme(Theme
+            .of(context)
+            .textTheme)
+            .apply(bodyColor: Colors.white),
+        canvasColor: bgColor,
       ),
       home: Scaffold(
-        backgroundColor: Colors.blueGrey[100],
-        resizeToAvoidBottomInset: true,
         appBar: AppBar(
-          title: Text('Hypertension & Diabetes Screening'),
+          title: Text("Screening"),
+          elevation: 2,
+          backgroundColor: Color.fromRGBO(49, 87, 110, 1.0),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            onPressed: ()=>Navigator.push(context,MaterialPageRoute(builder: (context)=>myMain())),
-
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context)=>myMain())
+              );
+            },
           ),
         ),
-        body:Container(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child:FormBuilder(
-                key: _formKey,
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Accordion(
-                    maxOpenSections: 1,
-                    headerPadding: EdgeInsets.symmetric(vertical: 7, horizontal: 15),
-                    scrollIntoViewOfItems: ScrollIntoViewOfItems.slow,
-                    children: [
-                      AccordionSection(
+        body: Container(
+          padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 2.0),
+          child: GridView.count(
+            crossAxisCount: 2,
+            padding: EdgeInsets.all(3.0),
+            children: <Widget>[
+              makeDashboardItem("Enrollment", Icons.medical_services,Enrollment()),
+              makeDashboardItem("Identifiers",Icons.shield,Identifiers()),
+              makeDashboardItem("Risk Assessment", Icons.favorite,RiskAssessment()),
+              makeDashboardItem("Current Treatment", Icons.health_and_safety,Treatment()),
+              makeDashboardItem("Blood Pressure", Icons.health_and_safety,BloodPressure()),
+              makeDashboardItem("Blood Sugar",Icons.medical_services,BloodSugar()),
+              makeDashboardItem("BMI",Icons.medical_services,Bmi()),
+              makeDashboardItem("Referral",Icons.medical_services,Referral())
+            ],
+          ),
+        ),
+      ),
 
-                        isOpen: false,
-                        leftIcon: Icon(Icons.insights_rounded, color: Colors.white),
-                        header: Text('ENROLLMENT', style: _headerStyle),
-                        content: Enrollment(),
-                        contentHorizontalPadding: 20,
-                        contentBorderWidth: 1,
 
-                      ),
-                      AccordionSection(
-                        isOpen: false,
-                        leftIcon: Icon(Icons.compare_rounded, color: Colors.white),
-                        header: Text('IDENTIFIERS', style: _headerStyle),
-                        contentBorderColor: Color(0xffffffff),
-                        content: Identifiers(),
-                      ),
-                      AccordionSection(
-                        isOpen: false,
-                        leftIcon: Icon(Icons.food_bank, color: Colors.white),
-                        header: Text('RISK ASSESSMENT', style: _headerStyle),
-                        content: RiskAssessment(),
-                      ),
-                      AccordionSection(
-                        isOpen: false,
-                        leftIcon: Icon(Icons.contact_page, color: Colors.white),
-                        header: Text('CURRENT TREATMENT', style: _headerStyle),
-                        content: Treatment(),
-                      ),
-                      AccordionSection(
-                        isOpen: false,
-                        leftIcon: Icon(Icons.computer, color: Colors.white),
-                        header: Text('BLOOD PRESSURE)', style: _headerStyle),
-                        content: BloodPressure(),
-                      ),
-                      AccordionSection(
-                        isOpen: false,
-                        leftIcon: Icon(Icons.movie, color: Colors.white),
-                        header: Text('BLOOD SUGAR', style: _headerStyle),
-                        content: BloodSugar(),
-                      ),
-                      AccordionSection(
-                        isOpen: false,
-                        leftIcon: Icon(Icons.movie, color: Colors.white),
-                        header: Text('BMI', style: _headerStyle),
-                        content: Bmi(),
-                      ),
-                      AccordionSection(
-                        isOpen: false,
-                        leftIcon: Icon(Icons.movie, color: Colors.white),
-                        header: Text('REFERRAL', style: _headerStyle),
-                        content: Referral(),
-                      ),
-                    ],
-                  ),
-                  Center(
-                    child: ElevatedButton(
-                      child: Text('Enroll Patient'),
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.indigo,
-                          padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                          textStyle: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white
-                          )),
-                      onPressed: (){
-                        // print(firstname.text);
-                        // print(facility.text);
-                        this.submit();
-                      },
-                    ),
-                  ),
-                ],
-              ),
+    );
+  }
 
+  Card makeDashboardItem(String title, IconData icon,screen) {
+    return Card(
+        elevation: 3.0,
+        margin: new EdgeInsets.all(8.0),
+        color:bgColor,
+        child: Container(
+          decoration: BoxDecoration(
+            color:secondaryColor,
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: new InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context)=>screen)
+              );
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              verticalDirection: VerticalDirection.down,
+              children: <Widget>[
+                SizedBox(height: 20.0),
+                Center(
+                    child: Icon(
+                      icon,
+                      size: 40.0,
+                      color: Colors.blueAccent,
+                    )),
+                SizedBox(height: 20.0),
+                new Center(
+                  child: new Text(title,
+                      style:
+                      new TextStyle(fontSize: 15.0, color: Colors.white,fontWeight: FontWeight.bold)),
+                )
+              ],
             ),
           ),
-    ),
-    ),
-    );
-}}
+        ));
+  }
+}

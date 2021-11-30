@@ -1,5 +1,3 @@
-// import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:mpower/database.dart';
 import 'package:http/http.dart' as http;
@@ -26,6 +24,7 @@ class _UploadState extends State<Upload> {
         headers: {"Content-Type": "application/json"},
         body:jsonEncode(bpdata)
     );
+    print(response.body);
 
     var data=jsonDecode(response.body);
     // print(data);
@@ -45,7 +44,7 @@ class _UploadState extends State<Upload> {
         headers: {"Content-Type": "application/json"},
         body:jsonEncode(bpdata)
     );
-   // print(bpdata);
+   print(url);
 
     var data=jsonDecode(response.body);
     if(data=="Error"){
@@ -151,7 +150,7 @@ class _UploadState extends State<Upload> {
     );
 
     var data=jsonDecode(response.body);
-    //print(data);
+    print(data);
     if(data=="Error"){
       // Scaffold.of(context).showSnackBar(SnackBar(
       print('Could not Add uploadDiabetes');

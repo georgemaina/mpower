@@ -6,7 +6,7 @@ INJECTED from C:\Users\george\Documents\FlutterApps\mpower\android\app\src\main\
 INJECTED from C:\Users\george\Documents\FlutterApps\mpower\android\app\src\main\AndroidManifest.xml:1:1-41:12
 MERGED from C:\Users\george\Documents\FlutterApps\mpower\android\app\src\main\AndroidManifest.xml:1:1-41:12
 MERGED from [:sqflite] C:\Users\george\Documents\FlutterApps\mpower\build\sqflite\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
-MERGED from [:path_provider] C:\Users\george\Documents\FlutterApps\mpower\build\path_provider\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:path_provider_android] C:\Users\george\Documents\FlutterApps\mpower\build\path_provider_android\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.fragment:fragment:1.1.0] C:\Users\george\.gradle\caches\transforms-2\files-2.1\2fd9120a6da4df3dbabdd40f6a2d8995\fragment-1.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.activity:activity:1.0.0] C:\Users\george\.gradle\caches\transforms-2\files-2.1\68dbf8ea01a1dbd974fc87b5753550f0\jetified-activity-1.0.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\george\.gradle\caches\transforms-2\files-2.1\eb26273f8f7192460456ce62b9bdf9ef\viewpager-1.0.0\AndroidManifest.xml:17:1-22:12
@@ -48,7 +48,7 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\ge
 	android:label
 		ADDED from C:\Users\george\Documents\FlutterApps\mpower\android\app\src\main\AndroidManifest.xml:4:9-31
 	android:icon
-		ADDED from C:\Users\george\Documents\FlutterApps\mpower\android\app\src\main\AndroidManifest.xml:5:9-43
+		ADDED from C:\Users\george\Documents\FlutterApps\mpower\android\app\src\main\AndroidManifest.xml:5:9-45
 activity#mpower.chak.or.ke.mpower.MainActivity
 ADDED from C:\Users\george\Documents\FlutterApps\mpower\android\app\src\main\AndroidManifest.xml:6:9-34:20
 	android:launchMode
@@ -97,8 +97,8 @@ INJECTED from C:\Users\george\Documents\FlutterApps\mpower\android\app\src\main\
 INJECTED from C:\Users\george\Documents\FlutterApps\mpower\android\app\src\main\AndroidManifest.xml
 MERGED from [:sqflite] C:\Users\george\Documents\FlutterApps\mpower\build\sqflite\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:sqflite] C:\Users\george\Documents\FlutterApps\mpower\build\sqflite\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:path_provider] C:\Users\george\Documents\FlutterApps\mpower\build\path_provider\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:path_provider] C:\Users\george\Documents\FlutterApps\mpower\build\path_provider\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:path_provider_android] C:\Users\george\Documents\FlutterApps\mpower\build\path_provider_android\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:path_provider_android] C:\Users\george\Documents\FlutterApps\mpower\build\path_provider_android\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [androidx.fragment:fragment:1.1.0] C:\Users\george\.gradle\caches\transforms-2\files-2.1\2fd9120a6da4df3dbabdd40f6a2d8995\fragment-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.fragment:fragment:1.1.0] C:\Users\george\.gradle\caches\transforms-2\files-2.1\2fd9120a6da4df3dbabdd40f6a2d8995\fragment-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.activity:activity:1.0.0] C:\Users\george\.gradle\caches\transforms-2\files-2.1\68dbf8ea01a1dbd974fc87b5753550f0\jetified-activity-1.0.0\AndroidManifest.xml:20:5-22:41

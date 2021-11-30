@@ -99,8 +99,6 @@ class _RegisterState extends State<Register> {
 
   String dataurl = globals.url.toString() + "getSubCounties";
 
-
-
   @override
   void initState() {
     // TODO: implement initState
@@ -114,14 +112,15 @@ class _RegisterState extends State<Register> {
     var res = await http.post(
         Uri.parse(dataurl + "&county=" + Uri.encodeComponent(countyname)));
     //attache countryname on parameter country in url
+    print(dataurl);
     if (res.statusCode == 200) {
       setState(() {
         countydata = json.decode(res.body);
-        if (countydata["error"]) {
-          //check fi there is any error from server.
-          error = true;
-          message = countydata["errmsg"];
-        }
+        // if (countydata["error"]) {
+        //   //check fi there is any error from server.
+        //   error = true;
+        //   message = countydata["errmsg"];
+        // }
       });
     } else {
       //there is error
@@ -133,14 +132,13 @@ class _RegisterState extends State<Register> {
   }
 
   Future<List<FacilityModel>> getFacilities(filter) async {
-    var response = await Dio().get(
-      globals.url.toString() + "getFacilities",
-      queryParameters: {"filter": filter},
-    );
+    var response = await http.post(
+        Uri.parse(globals.url.toString() + "getFacilities"));
 
-    final data = json.decode(response.data);
+    final data = json.decode(response.body);
+    //print(data);
     if (data != null) {
-      // print(data.length);
+      //print(data.length);
       return FacilityModel.fromJsonList(data);
     }
 
@@ -260,6 +258,7 @@ class _RegisterState extends State<Register> {
                     controller: names,
                     decoration: InputDecoration(
                       hintText: 'Names of CHF',
+                      labelText: "Name of CHF",
                       // suffixIcon: Icon(Icons.email),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
@@ -278,6 +277,7 @@ class _RegisterState extends State<Register> {
                     controller: phone,
                     decoration: InputDecoration(
                       hintText: 'Phone',
+                      labelText: "Phone",
                       // suffixIcon: Icon(Icons.visibility_off),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
@@ -302,11 +302,13 @@ class _RegisterState extends State<Register> {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: DropdownButton(
+                      child: DropdownButtonFormField(
                         isExpanded: true,
                         value: countyname,
                         hint: Text('Choose a county'),
-
+                        decoration: InputDecoration(
+                          labelText: "County",
+                        ),
                         items: counties.map((value) {
                           return DropdownMenuItem(
                             value: value,
@@ -314,8 +316,9 @@ class _RegisterState extends State<Register> {
                           );
                         }).toList(),
                         onChanged: (value) {
-                          countyname = value.toString(); //change the country name
                           getSubCounty();
+                          countyname = value.toString(); //change the country name
+                          county.text=value.toString();
                         },
                       ),
                     ),
@@ -339,7 +342,7 @@ class _RegisterState extends State<Register> {
                     //   FacilityModel(facilityname: "Offline name2", mflcode: 101)
                     // ],
                     maxHeight: 300,
-                    onFind:(String? filter)=>getFacilities(filter),
+                    onFind:(filter)=>getFacilities(filter),
                     dropdownSearchDecoration: InputDecoration(
                       labelText: "Name of Health Facility",
                       contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
@@ -347,6 +350,7 @@ class _RegisterState extends State<Register> {
                     ),
                     onChanged: (value){
                       mflcode.text=value!.mflcode.toString();
+                      facility.text=value.facilityname.toString();
                     },
                     showSearchBox: true,
                   ),
@@ -356,6 +360,7 @@ class _RegisterState extends State<Register> {
                     obscureText: false,
                     controller: mflcode,
                     decoration: InputDecoration(
+                      labelText: "Facility MFL Code",
                       hintText: 'Facility MFL Code',
                       // suffixIcon: Icon(Icons.visibility_off),
                       border: OutlineInputBorder(
@@ -375,6 +380,7 @@ class _RegisterState extends State<Register> {
                     controller: venue,
                     decoration: InputDecoration(
                       hintText: 'Venue of Awareness Creation',
+                      labelText:'Venue of Awareness Creation',
                       // suffixIcon: Icon(Icons.visibility_off),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
@@ -404,7 +410,9 @@ class _RegisterState extends State<Register> {
                       contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
                       border: OutlineInputBorder(),
                     ),
-                    onChanged: print,
+                    onChanged: (value){
+                      gathering.text=value.toString();
+                    },
                   ),
                   SizedBox(height: 10),
                   TextFormField(
@@ -412,6 +420,7 @@ class _RegisterState extends State<Register> {
                     controller: menreached,
                     decoration: InputDecoration(
                       hintText: 'Men Reached',
+                      labelText: "Men Reached",
                       // suffixIcon: Icon(Icons.visibility_off),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
@@ -430,6 +439,7 @@ class _RegisterState extends State<Register> {
                     controller: womenreached,
                     decoration: InputDecoration(
                       hintText: 'Number Women Reached',
+                      labelText: 'Number Women Reached',
                       // suffixIcon: Icon(Icons.visibility_off),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
@@ -448,6 +458,7 @@ class _RegisterState extends State<Register> {
                     controller: disabledreached,
                     decoration: InputDecoration(
                       hintText: 'Disabled Reached',
+                      labelText: 'Disabled Reached',
                       // suffixIcon: Icon(Icons.visibility_off),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
@@ -465,14 +476,14 @@ class _RegisterState extends State<Register> {
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         // Text('Forget password?',style: TextStyle(fontSize: 12.0),),
                         ElevatedButton.icon(
                           label: Text('REGISTER'),
                           icon: Icon(Icons.save),
                           style: ElevatedButton.styleFrom(
-                              primary: Colors.indigo,
+                              primary: Colors.deepOrange,
                               padding: EdgeInsets.symmetric(
                                   horizontal: 50, vertical: 20),
                               textStyle: TextStyle(
@@ -510,7 +521,7 @@ class _RegisterState extends State<Register> {
   Widget wardList() {
     //widget function for city list
     List<WardOne> wordList = List<WardOne>.from(
-        countydata["data"].map((i) {
+        countydata.map((i) {
           return WardOne.fromJSON(i);
         })
     ); //searilize citylist json data to object model.
@@ -523,11 +534,13 @@ class _RegisterState extends State<Register> {
       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: DropdownButton(
+        child: DropdownButtonFormField (
           hint: Text("Select Sub County"),
           isExpanded: true,
           value: subcountyname,
-
+          decoration: InputDecoration(
+            labelText: 'Sub-County',
+          ),
           items: wordList.map((wordOne) {
             return DropdownMenuItem(
               child: Text(wordOne.subcounty),
@@ -537,6 +550,7 @@ class _RegisterState extends State<Register> {
           onChanged: (value) {
             setState(() {
               subcountyname = value;
+              subcounty.text=value.toString();
             });
             // <-- Will trigger re-build on StatefulWidget
             print("Selected city is $value");
@@ -550,7 +564,8 @@ class _RegisterState extends State<Register> {
 }
 //model class to searilize country list JSON data.
 class WardOne{
-  String id, county, subcounty;
+  int id;
+  String county, subcounty;
   WardOne({required this.id, required this.county, required this.subcounty});
 
   factory WardOne.fromJSON(Map<String, dynamic> json){

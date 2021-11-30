@@ -20,6 +20,8 @@ class _TreatmentState extends State<Treatment> {
   static final DateTime now = DateTime.now();
   static final DateFormat formatter = DateFormat('yyyy-MM-dd H:m:s');
   final String formatted = formatter.format(now);
+  bool hypertesionStatus=false;
+  bool diabetesStatus=false;
 
   final _formKey = GlobalKey<FormBuilderState>();
   @override
@@ -76,12 +78,19 @@ class _TreatmentState extends State<Treatment> {
                       onChanged:(val) {
                         setState(() {
                           globals.hypertensive=val.toString();
+                          if(val=='Yes'){
+                            hypertesionStatus=true;
+                          }else{
+                            hypertesionStatus=false;
+                            globals.bp_treatment="";
+                          }
                           print('Hypertensive:'+val.toString());
                         });
                       }
                   ),
                   FormBuilderRadioGroup(
                       name: 'bptreament',
+                      enabled: hypertesionStatus,
                       options:[
                         FormBuilderFieldOption(value: 'Yes'),
                         FormBuilderFieldOption(value: 'No'),
@@ -108,12 +117,19 @@ class _TreatmentState extends State<Treatment> {
                       onChanged:(val) {
                         setState(() {
                           globals.diabetic=val.toString();
+                          if(val=='Yes'){
+                            diabetesStatus=true;
+                          }else{
+                            diabetesStatus=false;
+                            globals.diabetes_treatment="";
+                          }
                           print('Diabetic:'+val.toString());
                         });
                       }
                   ),
                   FormBuilderRadioGroup(
                       name: 'diabetesTreatment',
+                      enabled: diabetesStatus,
                       options:[
                         FormBuilderFieldOption(value: 'Yes'),
                         FormBuilderFieldOption(value: 'No'),

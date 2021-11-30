@@ -61,6 +61,7 @@ class DBProvider {
       "test_bs             TEXT,"
       "last_meal             TEXT,"
       "bs_results             TEXT,"
+      "bs_reason             TEXT,"
       "weight             TEXT,"
       "height             TEXT,"
       "voucher_no             TEXT,"
@@ -266,7 +267,7 @@ class DBProvider {
   String phone,String nationalid,String opdno, String alcohol,String tobacco,String diet,
   String exercise,String hypertensive,String bp_treatment,String diabetic,String diabetes_treatment,
   String systolic,String diastolic, String systolic2,String diastolic2,String test_bs, String last_meal,
-  String bs_results,String weight, String height, String voucher_no, String refer_to,inputdate) async {
+  String bs_results,String bs_reason,String weight, String height, String voucher_no, String refer_to,inputdate) async {
     final db = await DBProvider.db();
 
     final data = {"firstname":firstname,"lastname":lastname,"dob":dob, "sex":sex, "pregnant":pregnant,
@@ -274,7 +275,8 @@ class DBProvider {
     "opdno":opdno,"alcohol":alcohol,"tobacco":tobacco,"diet":diet,"exercise":exercise,"hypertensive":hypertensive,
     "bp_treatment":bp_treatment,"diabetic":diabetic,"diabetes_treatment":diabetes_treatment, "systolic":systolic,
     "diastolic":diastolic,"systolic2":systolic2,"diastolic2":diastolic2,"test_bs":test_bs,"last_meal":last_meal,
-    "bs_results":bs_results,"weight":weight,"height":height,"voucher_no":voucher_no, "refer_to":refer_to, "refer_to":refer_to};
+    "bs_results":bs_results,"bs_reason":bs_reason,"weight":weight,"height":height,"voucher_no":voucher_no,
+      "refer_to":refer_to, "refer_to":refer_to};
 
     //print(data);
 

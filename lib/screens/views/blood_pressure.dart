@@ -23,9 +23,11 @@ class _BloodPressureState extends State<BloodPressure> {
 
   TextEditingController systolic = TextEditingController();
   TextEditingController diastolic = TextEditingController();
-  TextEditingController systolic2 = TextEditingController();
-  TextEditingController diastolic2 = TextEditingController();
+  TextEditingController bpSystolic2 = TextEditingController();
+  TextEditingController bpDiastolic2 = TextEditingController();
   bool bp2Visible = false ;
+  bool bpDiastolicStatus=false;
+  bool bpSystolicStatus=false;
 
   void hideWidget(){
     setState(() {
@@ -102,12 +104,25 @@ class _BloodPressureState extends State<BloodPressure> {
                                 setState(() {
                                   globals.systolic=val.toString();
                                   if(int.parse(val.toString())>140 || int.parse(val.toString())<90){
-                                    this.showWidget();
+                                    bpSystolicStatus=true;
+                                    bpDiastolicStatus=true;
+                                  }else{
+                                    bpSystolicStatus=false;
+                                    bpDiastolicStatus=false;
+                                    bpSystolic2.text="";
+                                    bpDiastolic2.text="";
+
                                   }
                                   print('Systoric 1='+val.toString());
                                 });
-                              }
-                          ),
+                              },
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter First Reading';
+                                }
+                                  return null;
+                                },
+                              ),
 
                         ),
                         VerticalDivider(),
@@ -123,11 +138,28 @@ class _BloodPressureState extends State<BloodPressure> {
                                 setState(() {
                                   globals.diastolic=val.toString();
                                   if(int.parse(val.toString())>120 || int.parse(val.toString())<70){
-                                    this.showWidget();
+                                    bpDiastolicStatus=true;
+                                    bpSystolicStatus=true;
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('BP is High please Take Second Reading.'),
+                                      ),
+                                    );
+                                  }else{
+                                    bpDiastolicStatus=false;
+                                    bpSystolicStatus=false;
+                                    bpSystolic2.text="";
+                                    bpDiastolic2.text="";
                                   }
                                   print('diastolic 1='+val.toString());
                                 });
+                              },
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter First Reading';
                               }
+                              return null;
+                            },
                           ),
                         ),
                         // Text("First BP"),
@@ -144,79 +176,71 @@ class _BloodPressureState extends State<BloodPressure> {
                           child: Text('SECOND BP  READING  ',style: TextStyle(fontSize: 12)),
                         ),
                         ),
-                        Visibility(
-                          maintainAnimation: true,
-                          maintainState: true,
-                          visible: bp2Visible,
-                          child: Flexible(
-                            child: FormBuilderTextField(
-                                name: 'systolic2',
-                                controller: systolic2,
-                                decoration: InputDecoration(
-                                  labelText:'Systolic.',
-                                  // hintText: 'Systolic'
-                                ),
-                                onChanged:(val) {
-                                  setState(() {
-                                    globals.systolic2=val.toString();
-                                    print('Systoric 2='+val.toString());
-                                  });
-                                }
-                            ),
+                        Flexible(
+                          child: FormBuilderTextField(
+                              name: 'Systolic2',
+                              enabled: bpSystolicStatus,
+                              controller: bpSystolic2,
+                              decoration: InputDecoration(
+                                labelText:'Systolic.',
+                                // hintText: 'Systolic'
+                              ),
+                              onChanged:(val) {
+                                setState(() {
+                                  globals.systolic2=val.toString();
+                                  print('Systoric 2='+val.toString());
+                                });
+                              }
                           ),
                         ),
                         VerticalDivider(),
-                        Visibility(
-                          maintainAnimation: true,
-                          maintainState: true,
-                          visible: bp2Visible,
-                          child: Flexible(
-                            child: FormBuilderTextField(
-                                name: 'diastolic2',
-                                controller: diastolic2,
-                                decoration: InputDecoration(
-                                  labelText:'Diastolic.',
-                                  // hintText: 'Diastolic'
-                                ),
-                                onChanged:(val) {
-                                  setState(() {
-                                    globals.systolic2=val.toString();
-                                    print('Systoric 2='+val.toString());
-                                  });
-                                }
-                            ),
+                        Flexible(
+                          child: FormBuilderTextField(
+                              name: 'diastolic2',
+                              controller: bpDiastolic2,
+                              enabled: bpDiastolicStatus,
+                              decoration: InputDecoration(
+                                labelText:'Diastolic.',
+                                // hintText: 'Diastolic'
+                              ),
+                              onChanged:(val) {
+                                setState(() {
+                                  globals.systolic2=val.toString();
+                                  print('Systoric 2='+val.toString());
+                                });
+                              }
                           ),
                         ),
-                        SizedBox(height: 10.0,),
-                        ElevatedButton.icon(
-                          label: Text('Save'),
-                          icon: Icon(Icons.save),
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.deepOrange,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 50, vertical: 20),
-                              textStyle: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white
-                              )),
-                          onPressed: () {
-                            _formKey.currentState?.save();
-                            if (_formKey.currentState!.validate()) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context)=>BloodSugar())
-                              );
-                            } else {
-                              print("validation failed");
-                            }
-                          },
-                        ),
+
                         // Text("First BP"),
 
                       ],
-                    )
-
+                    ),
+                    SizedBox(height: 20.0,),
+                    ElevatedButton.icon(
+                      label: Text('Save'),
+                      icon: Icon(Icons.save),
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.deepOrange,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 50, vertical: 20),
+                          textStyle: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
+                          )),
+                      onPressed: () {
+                        _formKey.currentState?.save();
+                        if (_formKey.currentState!.validate()) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context)=>BloodSugar())
+                          );
+                        } else {
+                          print("validation failed");
+                        }
+                      },
+                    ),
 
                   ],
                 )

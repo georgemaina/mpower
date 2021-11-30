@@ -87,6 +87,9 @@ class _IdentifiersState extends State<Identifiers> {
                     controller: phone,
                     decoration: InputDecoration(
                       labelText:'Mobile Phone Number',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                       // hintText: 'MOBILE PHONE NUMBER'
                     ),
                     onChanged:(val) {
@@ -102,11 +105,15 @@ class _IdentifiersState extends State<Identifiers> {
                       return null;
                     },
                   ),
+                  SizedBox(height: 10.0,),
                   FormBuilderTextField(
                     name: 'nationalid',
                     controller: nationalid,
                     decoration: InputDecoration(
                       labelText:'National ID.',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                       // hintText: 'NATIONAL ID'
                     ),
                     onChanged:(val) {
@@ -122,11 +129,15 @@ class _IdentifiersState extends State<Identifiers> {
                       return null;
                     },
                   ),
+                  SizedBox(height: 10.0,),
                   FormBuilderTextField(
                       name: 'opdno',
                       controller: opdno,
                       decoration: InputDecoration(
                         labelText:'OPD Number.',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
                       ),
                       keyboardType: TextInputType.number,
                       onChanged:(val) {

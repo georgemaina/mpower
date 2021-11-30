@@ -35,6 +35,7 @@ String diastolic2="";
 String test_bs="";
 String last_meal="";
 String bs_results="";
+String bs_reason="";
 String weight="";
 String height="";
 String voucher_no="";

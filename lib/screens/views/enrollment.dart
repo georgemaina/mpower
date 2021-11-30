@@ -95,6 +95,9 @@ class _EnrollmentState extends State<Enrollment> {
                     controller: firstname,
                     decoration: InputDecoration(
                       labelText: 'First Name.',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                       // hintText: 'First Name'
                     ),
                     onChanged:(val) {
@@ -110,11 +113,15 @@ class _EnrollmentState extends State<Enrollment> {
                       return null;
                     },
                   ),
+                  SizedBox(height: 10.0,),
                   FormBuilderTextField(
                     name: 'lastname',
                     controller: lastname,
                     decoration: InputDecoration(
                       labelText: 'Last Name.',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                       // hintText: 'Last Name'
                     ),
                     onChanged:(val) {
@@ -130,11 +137,15 @@ class _EnrollmentState extends State<Enrollment> {
                       return null;
                     },
                   ),
+                  SizedBox(height: 10.0,),
                   FormBuilderTextField(
                     name: 'dob',
                     controller: dob,
                     decoration: InputDecoration(
                       labelText: 'Year of Birth.',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                     ),
                     keyboardType: TextInputType.number,
                     onChanged:(val) {
@@ -150,6 +161,7 @@ class _EnrollmentState extends State<Enrollment> {
                       return null;
                     },
                   ),
+                  SizedBox(height: 10.0,),
                   FormBuilderRadioGroup(
                       name: 'Sex',
                       options: [
@@ -158,6 +170,9 @@ class _EnrollmentState extends State<Enrollment> {
                       ],
                       decoration: InputDecoration(
                         labelText: 'Sex',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
                       ),
                       onChanged: (val) {
                         setState(() {

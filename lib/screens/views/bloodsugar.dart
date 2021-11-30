@@ -21,7 +21,21 @@ class _BloodSugarState extends State<BloodSugar> {
   static final DateTime now = DateTime.now();
   static final DateFormat formatter = DateFormat('yyyy-MM-dd H:m:s');
   final String formatted = formatter.format(now);
-  bool isSwitched = false;
+  bool isSwitched = true;
+  bool bloodTestStatus=true;
+  bool reasonVisible=false;
+
+  void hideWidget(){
+    setState(() {
+      reasonVisible=false;
+    });
+  }
+
+  void showWidget(){
+    setState(() {
+      reasonVisible=true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,20 +95,33 @@ class _BloodSugarState extends State<BloodSugar> {
                             onChanged: (value) {
                               setState(() {
                                 isSwitched = value;
+                                if(value==false){
+                                  bloodTestStatus=false;
+                                  reasonVisible=true;
+                                }else{
+                                  bloodTestStatus=true;
+                                  reasonVisible=false;
+                                }
                                 globals.test_bs=value.toString();
+                                print(value.toString());
                               });
                             },
                           ),
                         ),
                         ],
                       ),
+                    SizedBox(height: 10.0,),
                         Column(
                           children: [
                             Container(
                               child: FormBuilderTextField(
                                   name: 'lastmeal',
+                                  enabled: bloodTestStatus,
                                   decoration: InputDecoration(
                                     labelText:'How many hours since the client last Ate/Drunk anything but water?',
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
                                     // hintText: 'NATIONAL ID'
                                   ),
                                   onChanged:(val) {
@@ -105,17 +132,48 @@ class _BloodSugarState extends State<BloodSugar> {
                                   }
                               ),
                             ),
+                            SizedBox(height: 10.0,),
                             SizedBox(
                               child: FormBuilderTextField(
                                   name: 'bsresults',
+                                  enabled: bloodTestStatus,
                                   decoration: InputDecoration(
                                     labelText:'Blood Sugar Results.',
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
                                   ),
                                   keyboardType: TextInputType.number,
                                   onChanged:(val) {
                                     setState(() {
                                       globals.bs_results=val.toString();
                                       print('Blood Sugar Result='+val.toString());
+                                    });
+                                  }
+                              ),
+                            ),
+                            SizedBox(height: 10.0,),
+                            Visibility(
+                              maintainAnimation: true,
+                              maintainState: true,
+                              visible: reasonVisible,
+                              child: FormBuilderRadioGroup(
+                                  name: 'reason',
+                                  // orientation:Orien,
+                                  options: [
+                                    FormBuilderFieldOption(value: 'no-kit',child: Text('No Testing Kit Available'),),
+                                    FormBuilderFieldOption(value: 'declined',child: Text('Client Declined Testing'),),
+                                  ],
+                                  decoration: InputDecoration(
+                                    labelText: 'Please indicate why you are not performing a Blood Sugar Test',
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                  ),
+                                  onChanged: (val) {
+                                    setState(() {
+                                      globals.sex = val.toString();
+                                      print(val.toString());
                                     });
                                   }
                               ),

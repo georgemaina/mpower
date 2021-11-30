@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:mpower/screens/awareness_home.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mpower/constants.dart';
+import 'package:mpower/screens/screening.dart';
 import 'package:mpower/screens/views/treatment.dart';
 import 'package:mpower/database.dart';
 
@@ -50,7 +51,7 @@ class _RiskAssessmentState extends State<RiskAssessment> {
             onPressed: () {
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context)=>AwarenessDashboard())
+                  MaterialPageRoute(builder: (context)=>ScreeningHome())
               );
             },
           ),

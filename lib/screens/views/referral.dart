@@ -1,14 +1,18 @@
+import 'dart:convert';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:mpower/welcome.dart';
+import 'package:mpower/models/facilities.dart';
 import 'package:mpower/database.dart';
 import 'package:mpower/screens/globals.dart' as globals;// import 'health_workers.dart';
 import 'package:intl/intl.dart';
 import 'package:mpower/screens/awareness_home.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mpower/constants.dart';
+import 'package:dropdown_search/dropdown_search.dart';
+import 'package:http/http.dart' as http;
 import 'package:mpower/screens/screening.dart';
-import 'package:mpower/database.dart';
 
 class Referral extends StatefulWidget {
   const Referral({Key? key}) : super(key: key);
@@ -32,17 +36,31 @@ class _ReferralState extends State<Referral> {
         globals.nationalid,globals.opdno,globals.alcohol,globals.tobacco,globals.diet,
         globals.exercise,globals.hypertensive,globals.bp_treatment,globals.diabetic,globals.diabetes_treatment,
         globals.systolic,globals.diastolic,globals.systolic2,globals.diastolic2,globals.test_bs,
-        globals.last_meal,globals.bs_results,globals.weight,globals.height,globals.voucher_no, globals.refer_to,formatted);
+        globals.last_meal,globals.bs_results,globals.bs_reason,globals.weight,globals.height,globals.voucher_no,
+        globals.refer_to,formatted);
     //this.registerDefaulter();
     // Navigator.push(
     //     context,
     //     MaterialPageRoute(builder: (context)=>ScreeningHome())
     // );
   }
+  Future<List<FacilityModel>> getFacilities(filter) async {
+    var response = await http.post(
+        Uri.parse(globals.url.toString() + "getFacilities"));
+
+    final data = json.decode(response.body);
+    //print(data);
+    if (data != null) {
+      //print(data.length);
+      return FacilityModel.fromJsonList(data);
+    }
+
+    return [];
+
+  }
 
   void _getReferalData() async {
     // First validate form.
-
 
     setState(() {
       globals.voucher_no = this.voucher.text;
@@ -86,7 +104,7 @@ class _ReferralState extends State<Referral> {
             onPressed: () {
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context)=>AwarenessDashboard())
+                  MaterialPageRoute(builder: (context)=>ScreeningHome())
               );
             },
           ),
@@ -103,6 +121,9 @@ class _ReferralState extends State<Referral> {
                       name: 'voucher',
                       decoration: InputDecoration(
                         labelText:'VOUCHER NUMBER',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
                         //hintText: 'MOBILE PHONE NUMBER'
                       ),
                       onChanged:(val) {
@@ -112,25 +133,21 @@ class _ReferralState extends State<Referral> {
                         });
                       }
                   ),
-                  FormBuilderTextField(
-                    name: 'referto',
-                    decoration: InputDecoration(
-                      labelText:'REFER TO',
-                      //hintText: 'NATIONAL ID'
+                  SizedBox(height: 20.0,),
+                  DropdownSearch<FacilityModel>(
+                    maxHeight: 300,
+                    onFind:(filter)=>getFacilities(filter),
+                    dropdownSearchDecoration: InputDecoration(
+                      labelText: "REFER TO ",
+                      contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
+                      border: OutlineInputBorder(),
                     ),
-                    onChanged:(val) {
-                      setState(() {
-                        globals.refer_to=val.toString();
-                        print('Refer To='+val.toString());
-                      });
+                    onChanged: (value){
+                      globals.refer_to=value.toString();
                     },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
+                    showSearchBox: true,
                   ),
+
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Row(

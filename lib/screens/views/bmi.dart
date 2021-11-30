@@ -72,6 +72,9 @@ class _BmiState extends State<Bmi> {
                       controller: txtWeight,
                       decoration: InputDecoration(
                         labelText:'WEIGHT(kgs)',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
                         //hintText: 'MOBILE PHONE NUMBER'
                       ),
                       onChanged:(val) {
@@ -81,11 +84,15 @@ class _BmiState extends State<Bmi> {
                         });
                       }
                   ),
+                  SizedBox(height: 10.0,),
                   FormBuilderTextField(
                       name: 'height',
                       controller: txtHeight,
                       decoration: InputDecoration(
                         labelText:'HEIGHT(cms).',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
                         //hintText: 'NATIONAL ID'
                       ),
                       onChanged:(val) {

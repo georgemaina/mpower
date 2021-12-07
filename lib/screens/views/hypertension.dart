@@ -20,15 +20,22 @@ class _HypertensionState extends State<Hypertension> {
   static final DateFormat formatter = DateFormat('yyyy-MM-dd H:m:s');
   final String formatted = formatter.format(now);
 
-  TextEditingController totalhypertension = TextEditingController();
+  TextEditingController totalMaleHypertension = TextEditingController();
+  TextEditingController totalFemaleHypertension = TextEditingController();
+  TextEditingController totalDisabledHypertension = TextEditingController();
 
   void submit() async{
     print(globals.dbt1.toString());
+
+    globals.totalMaleHypertension=totalMaleHypertension.text;
+    globals.totalFemaleHypertension=totalFemaleHypertension.text;
+    globals.totalDisabledHypertension=totalDisabledHypertension.text;
     // var now=DateTime.now();
     var user= globals.loggedUser.toString();
     DBProvider.addHypertension(user,globals.bp1.toString(), globals.bp2.toString(), globals.bp3.toString(), globals.bp4.toString(),
         globals.bp5.toString(), globals.bp6.toString(), globals.bp7.toString(), globals.bp8.toString(),
-        globals.bp9.toString(), globals.bp10.toString(),formatted,globals.totalhypertension.toString());
+        globals.bp9.toString(), globals.bp10.toString(),formatted,totalMaleHypertension.text,
+        totalFemaleHypertension.text,totalDisabledHypertension.text);
 
     Navigator.push(context, MaterialPageRoute(builder: (context)=>AwarenessDashboard()));
 
@@ -145,10 +152,10 @@ class _HypertensionState extends State<Hypertension> {
                             });
                           }),
                       FormBuilderTextField(
-                          name: 'totalhypertension',
-                          controller: totalhypertension,
+                          name: 'totalMaleHypertension',
+                          controller: totalMaleHypertension,
                           decoration: InputDecoration(
-                            labelText:'Total Clients Reached.',
+                            labelText:'Total Male Clients Reached.',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
@@ -158,6 +165,41 @@ class _HypertensionState extends State<Hypertension> {
                             setState(() {
                               globals.height=val.toString();
                               print('hypertension='+val.toString());
+                            });
+                          }
+                      ),
+                      SizedBox(height: 10.0,),
+                      FormBuilderTextField(
+                          name: 'totalFemaleHypertension',
+                          controller: totalFemaleHypertension,
+                          decoration: InputDecoration(
+                            labelText:'Total Female Clients Reached .',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            //hintText: 'NATIONAL ID'
+                          ),
+                          onChanged:(val) {
+                            setState(() {
+                              globals.height=val.toString();
+                              print('Cancer='+val.toString());
+                            });
+                          }
+                      ),SizedBox(height: 10.0,),
+                      FormBuilderTextField(
+                          name: 'totalDisabledHypertension',
+                          controller: totalDisabledHypertension,
+                          decoration: InputDecoration(
+                            labelText:'Total Disabled Clients Reached.',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            //hintText: 'NATIONAL ID'
+                          ),
+                          onChanged:(val) {
+                            setState(() {
+                              globals.height=val.toString();
+                              print('Cancer='+val.toString());
                             });
                           }
                       ),

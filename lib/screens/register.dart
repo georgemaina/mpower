@@ -5,17 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mpower/models/facilities.dart';
 import 'package:mpower/screens/Awareness.dart';
-import 'package:mpower/screens/defaulters.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:http/http.dart' as http;
-// import 'package:validate/validate.dart';
 import 'globals.dart' as globals;
-// import 'package:provider/provider.dart';
 import 'package:mpower/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dio/dio.dart';
 import 'package:mpower/database.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mpower/screens/awareness_home.dart';
 
 class Register extends StatefulWidget {
    const Register({Key? key}) : super(key: key);
@@ -170,7 +168,7 @@ class _RegisterState extends State<Register> {
     } else {
       print('Successfully Added Healthworker');
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Defaulters()));
+          context, MaterialPageRoute(builder: (context) => AwarenessDashboard()));
     }
   }
 
@@ -198,7 +196,7 @@ class _RegisterState extends State<Register> {
     //this.registerDefaulter();
     Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => AwarenessApp())
+        MaterialPageRoute(builder: (context) => AwarenessDashboard())
     );
   }
 

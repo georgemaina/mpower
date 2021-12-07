@@ -21,15 +21,23 @@ class _DiabetesRetinopathyState extends State<DiabetesRetinopathy> {
   static final DateFormat formatter = DateFormat('yyyy-MM-dd H:m:s');
   final String formatted = formatter.format(now);
 
-  TextEditingController totalretinopathy = TextEditingController();
+  TextEditingController totalMaleRetinopathy = TextEditingController();
+  TextEditingController totalFemaleRetinopathy = TextEditingController();
+  TextEditingController totalDisabledRetinopathy = TextEditingController();
 
   void submit() async{
     print(globals.dbt1.toString());
     // var now=DateTime.now();
+    globals.totalMaleRetinopathy=totalMaleRetinopathy.text;
+    globals.totalFemaleRetinopathy=totalFemaleRetinopathy.text;
+    globals.totalDisabledRetinopathy=totalDisabledRetinopathy.text;
+
+
     var user= globals.loggedUser.toString();
 
     DBProvider.addRetinopathy(user,globals.dr1.toString(), globals.dr2.toString(), globals.dr3.toString(),
-        globals.dr4.toString(),globals.dr5.toString(),formatted,globals.totalretinopathy.toString());
+        globals.dr4.toString(),globals.dr5.toString(),formatted,totalMaleRetinopathy.text,
+        totalFemaleRetinopathy.text,totalDisabledRetinopathy.text);
 
     Navigator.push(context, MaterialPageRoute(builder: (context)=>AwarenessDashboard()));
     final data=await DBProvider.countRecords();
@@ -112,10 +120,46 @@ class _DiabetesRetinopathyState extends State<DiabetesRetinopathy> {
                             });
                           }),
                       FormBuilderTextField(
-                          name: 'totalretinopathy',
-                          controller: totalretinopathy,
+                          name: 'totalMaleRetinopathy',
+                          controller: totalMaleRetinopathy,
                           decoration: InputDecoration(
-                            labelText:'Total Clients .',
+                            labelText:'Total Male Clients Reached.',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            //hintText: 'NATIONAL ID'
+                          ),
+                          onChanged:(val) {
+                            setState(() {
+                              globals.height=val.toString();
+                              print('Retinopathy='+val.toString());
+                            });
+                          }
+                      ),
+                  SizedBox(height: 10.0,),
+                      FormBuilderTextField(
+                          name: 'totalFemaleRetinopathy',
+                          controller: totalFemaleRetinopathy,
+                          decoration: InputDecoration(
+                            labelText:'Total Female Clients Reached.',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            //hintText: 'NATIONAL ID'
+                          ),
+                          onChanged:(val) {
+                            setState(() {
+                              globals.height=val.toString();
+                              print('Retinopathy='+val.toString());
+                            });
+                          }
+                      ),
+                  SizedBox(height: 10.0,),
+                      FormBuilderTextField(
+                          name: 'totalDisabledRetinopathy',
+                          controller: totalDisabledRetinopathy,
+                          decoration: InputDecoration(
+                            labelText:'Total Disabled Clients reached.',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),

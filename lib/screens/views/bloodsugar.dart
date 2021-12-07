@@ -178,7 +178,7 @@ class _BloodSugarState extends State<BloodSugar> {
                                   }
                               ),
                             ),
-                            SizedBox(height: 10.0,),
+
                             ElevatedButton.icon(
                               label: Text('Save'),
                               icon: Icon(Icons.save),

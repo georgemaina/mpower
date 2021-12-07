@@ -8,6 +8,7 @@ import '../../constants.dart';
 import 'components/header.dart';
 import 'dashlet1.dart';
 import 'summary.dart';
+import 'summary2.dart';
 import 'components/upload.dart';
 
 //
@@ -32,6 +33,12 @@ class DashboardScreen extends StatelessWidget {
             Card(
               color: Color(4278727245),
               elevation: 5.0,
+              child:Summary2(),
+            ),
+            SizedBox(height: 5),
+            Card(
+              color: Color(4278727245),
+              elevation: 5.0,
               child:Summary(),
             ),
             SizedBox(height: 5),
@@ -40,14 +47,14 @@ class DashboardScreen extends StatelessWidget {
               elevation: 5.0,
               child:Upload(),
             ),
-             FloatingActionButton(
-              onPressed: () {
-                Navigator.push(context,MaterialPageRoute(builder: (context) => Register()));
-              },
-              child: const Icon(Icons.add),
-              backgroundColor: Colors.green,
-               mini: true,
-            ),
+            //  FloatingActionButton(
+            //   onPressed: () {
+            //     Navigator.push(context,MaterialPageRoute(builder: (context) => Register()));
+            //   },
+            //   child: const Icon(Icons.add),
+            //   backgroundColor: Colors.green,
+            //    mini: true,
+            // ),
 
           ],
         ),

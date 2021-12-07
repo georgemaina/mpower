@@ -5,8 +5,8 @@ String loggedUser="";
 
 // String url="http://51.140.3.12:8082/mpower/data/getDataFunctions.php?task=";
 // String url="http://192.168.100.7/mpower/data/getDataFunctions.php?task=";
-String url="http://192.168.100.103:8888/mpower/data/getDataFunctions.php?task=";
-// String url="http://40.71.71.47/mpower/data/getDataFunctions.php?task=";
+// String url="http://192.168.100.103:8888/mpower/data/getDataFunctions.php?task=";
+String url="https://40.71.71.47/mpower/data/getDataFunctions.php?task=";
 //CHAK Server
 // String url="http://197.232.14.151:8089/mpower/data/getDataFunctions.php?task=";
 
@@ -55,7 +55,9 @@ String bc1="";
 String bc2="";
 String bc3="";
 String bc4="";
-String totalcancer="";
+String totalMaleCancer="";
+String totalFemaleCancer="";
+String totalDisabledCancer="";
 
 //******Diabetes variables***
 String dbt1="";
@@ -68,7 +70,10 @@ String dbt7="";
 String dbt8="";
 String dbt9="";
 String dbt10="";
-String totaldiabetes="";
+String totalMaleDiabetes="";
+String totalFemaleDiabetes="";
+String totalDisabledDiabetes="";
+String meetingID="";
 
 //******Hypertension variables***
 String bp1="";
@@ -81,14 +86,18 @@ String bp7="";
 String bp8="";
 String bp9="";
 String bp10="";
-String totalhypertension="";
+String totalMaleHypertension="";
+String totalFemaleHypertension="";
+String totalDisabledHypertension="";
 
 //******Epilepsy variables***
 String epy1="";
 String epy2="";
 String epy3="";
 String epy4="";
-String totalepilepsy="";
+String totalMaleEpilepsy="";
+String totalFemaleEpilepsy="";
+String totalDisabledEpilepsy="";
 
 //******Diabetes Retinipathy variables***
 String dr1="";
@@ -96,7 +105,9 @@ String dr2="";
 String dr3="";
 String dr4="";
 String dr5="";
-String totalretinopathy="";
+String totalMaleRetinopathy="";
+String totalFemaleRetinopathy="";
+String totalDisabledRetinopathy="";
 
 //******Anaemia variables***
 String sca1="";
@@ -104,5 +115,7 @@ String sca2="";
 String sca3="";
 String sca4="";
 String sca5="";
-String totalanaemia="";
+String totalMaleAnaemia="";
+String totalFemaleAnaemia="";
+String totalDisabledAnaemia="";
 

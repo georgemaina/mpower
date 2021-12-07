@@ -7,7 +7,7 @@ import 'package:mpower/models/facilities.dart';
 import 'package:mpower/database.dart';
 import 'package:mpower/screens/globals.dart' as globals;// import 'health_workers.dart';
 import 'package:intl/intl.dart';
-import 'package:mpower/screens/awareness_home.dart';
+import 'package:mpower/screens/views/review_enrollments.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mpower/constants.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -39,10 +39,10 @@ class _ReferralState extends State<Referral> {
         globals.last_meal,globals.bs_results,globals.bs_reason,globals.weight,globals.height,globals.voucher_no,
         globals.refer_to,formatted);
     //this.registerDefaulter();
-    // Navigator.push(
-    //     context,
-    //     MaterialPageRoute(builder: (context)=>ScreeningHome())
-    // );
+    Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context)=>Enrollments())
+    );
   }
   Future<List<FacilityModel>> getFacilities(filter) async {
     var response = await http.post(

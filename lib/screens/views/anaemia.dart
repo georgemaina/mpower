@@ -21,14 +21,21 @@ class _AnaemiaState extends State<Anaemia> {
   static final DateFormat formatter = DateFormat('yyyy-MM-dd H:m:s');
   final String formatted = formatter.format(now);
 
-  TextEditingController totalanaemia = TextEditingController();
+  TextEditingController totalMaleAnaemia = TextEditingController();
+  TextEditingController totalFemaleAnaemia= TextEditingController();
+  TextEditingController totalDisabledAnaemia = TextEditingController();
 
   void submit() async{
     print(globals.dbt1.toString());
+
+    globals.totalMaleAnaemia=totalMaleAnaemia.text;
+    globals.totalFemaleAnaemia=totalFemaleAnaemia.text;
+    globals.totalDisabledAnaemia=totalDisabledAnaemia.text;
     // var now=DateTime.now();
     var user= globals.loggedUser.toString();
     DBProvider.addAnaemia(user,globals.sca1.toString(), globals.sca2.toString(), globals.sca3.toString(),
-        globals.sca4.toString(),globals.sca5.toString(),formatted,globals.totalanaemia.toString());
+        globals.sca4.toString(),globals.sca5.toString(),formatted,
+        totalMaleAnaemia.text,totalFemaleAnaemia.text,totalDisabledAnaemia.text);
 
     Navigator.push(context, MaterialPageRoute(builder: (context)=>AwarenessDashboard()));
     final data=await DBProvider.countRecords();
@@ -113,17 +120,55 @@ class _AnaemiaState extends State<Anaemia> {
                               globals.sca5=val.toString();
                             });
                           }),
+                      SizedBox(height: 10.0,),
                       FormBuilderTextField(
-                          name: 'totalanaemia',
-                          controller: totalanaemia,
+                          name: 'totalMaleAnaemia',
+                          controller: totalMaleAnaemia,
                           decoration: InputDecoration(
-                            labelText:'Total Clients .',
+                            labelText:'Total Male Clients .',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
                             //hintText: 'NATIONAL ID'
                           ),
                           onChanged:(val) {
                             setState(() {
                               globals.height=val.toString();
-                              print('anaemia='+val.toString());
+                              print('Cancer='+val.toString());
+                            });
+                          }
+                      ),SizedBox(height: 10.0,),
+                      FormBuilderTextField(
+                          name: 'totalFemaleAnaemia',
+                          controller: totalFemaleAnaemia,
+                          decoration: InputDecoration(
+                            labelText:'Total Female Clients .',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            //hintText: 'NATIONAL ID'
+                          ),
+                          onChanged:(val) {
+                            setState(() {
+                              globals.height=val.toString();
+                              print('Cancer='+val.toString());
+                            });
+                          }
+                      ),SizedBox(height: 10.0,),
+                      FormBuilderTextField(
+                          name: 'totalDisabledAnaemia',
+                          controller: totalDisabledAnaemia,
+                          decoration: InputDecoration(
+                            labelText:'Total Disabled Clients .',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            //hintText: 'NATIONAL ID'
+                          ),
+                          onChanged:(val) {
+                            setState(() {
+                              globals.height=val.toString();
+                              print('Cancer='+val.toString());
                             });
                           }
                       ),

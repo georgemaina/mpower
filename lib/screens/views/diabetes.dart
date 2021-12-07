@@ -22,7 +22,9 @@ class _DiabetesState extends State<Diabetes> {
   static final DateFormat formatter = DateFormat('yyyy-MM-dd H:m:s');
   final String formatted = formatter.format(now);
 
-  TextEditingController totaldiabetes = TextEditingController();
+  TextEditingController totalMaleDiabetes = TextEditingController();
+  TextEditingController totalFemaleDiabetes = TextEditingController();
+  TextEditingController totalDisableDiabetes = TextEditingController();
   List<Map<String, dynamic>> _listDiabetes = [];
 
   void submit() async{
@@ -31,7 +33,12 @@ class _DiabetesState extends State<Diabetes> {
     var user= globals.loggedUser.toString();
     DBProvider.addDiabetes(user,globals.dbt1.toString(), globals.dbt2.toString(), globals.dbt3.toString(), globals.dbt4.toString(),
         globals.dbt5.toString(), globals.dbt6.toString(), globals.dbt7.toString(), globals.dbt8.toString(),
-        globals.dbt9.toString(), globals.dbt10.toString(),formatted,globals.totaldiabetes.toString());
+        globals.dbt9.toString(), globals.dbt10.toString(),formatted,totalMaleDiabetes.text,totalFemaleDiabetes.text,
+        totalDisableDiabetes.text,globals.meetingID.toString());
+
+    globals.totalMaleDiabetes=totalDisableDiabetes.text;
+    globals.totalFemaleDiabetes=totalFemaleDiabetes.text;
+    globals.totalDisabledDiabetes=totalDisableDiabetes.text;
 
     Navigator.push(context, MaterialPageRoute(builder: (context)=>AwarenessDashboard()));
     final data=await DBProvider.countRecords();
@@ -153,10 +160,10 @@ class _DiabetesState extends State<Diabetes> {
                           });
                         }),
                     FormBuilderTextField(
-                        name: 'totaldiabetes',
-                        controller: totaldiabetes,
+                        name: 'totalMaleDiabetes',
+                        controller: totalMaleDiabetes,
                         decoration: InputDecoration(
-                          labelText:'Total Clients Reached .',
+                          labelText:'Total Male Clients Reached .',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
@@ -165,6 +172,42 @@ class _DiabetesState extends State<Diabetes> {
                         onChanged:(val) {
                           setState(() {
                             globals.height=val.toString();
+                            print('Height='+val.toString());
+                          });
+                        }
+                    ),
+                    SizedBox(height: 10.0,),
+                    FormBuilderTextField(
+                        name: 'totalFemaleDiabetes',
+                        controller: totalFemaleDiabetes,
+                        decoration: InputDecoration(
+                          labelText:'Total Female Clients Reached .',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          //hintText: 'NATIONAL ID'
+                        ),
+                        onChanged:(val) {
+                          setState(() {
+                            globals.height=val.toString();
+                            print('Height='+val.toString());
+                          });
+                        }
+                    ),
+                    SizedBox(height: 10.0,),
+                    FormBuilderTextField(
+                        name: 'totalDisableDiabetes',
+                        controller: totalDisableDiabetes,
+                        decoration: InputDecoration(
+                          labelText:'Total Disabled Clients Reached .',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          //hintText: 'NATIONAL ID'
+                        ),
+                        onChanged:(val) {
+                          setState(() {
+                            globals.totalMaleDiabetes=val.toString();
                             print('Height='+val.toString());
                           });
                         }

@@ -1,16 +1,28 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
-// import 'package:flutter_form_builder/flutter_form_builder.dart';
-// import 'package:mpower/screens/main_screen.dart';
-// import 'package:validate/validate.dart';
-// import 'package:dropdown_search/dropdown_search.dart';
 import 'package:http/http.dart' as http;
 import 'screens/globals.dart' as globals;
 import 'package:mpower/welcome.dart';
-// import 'package:mpower/database.dart';
-// import 'package:mpower/models/HealthWorkers.dart';
+
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+      ((X509Certificate cert, String host, int port) {
+        if (host == '40.71.71.47') {
+          return true;
+        } else {
+          return false;
+        }
+      });
+  }
+}
 
 void main() {
+  HttpOverrides.global = new MyHttpOverrides();
   runApp(MaterialApp(
     home: MyApp(),
   ));

@@ -24,7 +24,9 @@ class ScreeningHome extends StatefulWidget {
 
 class _ScreeningHomeState extends State<ScreeningHome> {
   @override
+
   Widget build(BuildContext context) {
+
     return MaterialApp(
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: bgColor,
@@ -50,9 +52,13 @@ class _ScreeningHomeState extends State<ScreeningHome> {
           ),
         ),
         body: Container(
-          padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 2.0),
+          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
           child: GridView.count(
             crossAxisCount: 2,
+            // childAspectRatio: (itemWidth / itemHeight),
+            shrinkWrap: true,
+            controller: new ScrollController(keepScrollOffset: false),
+            scrollDirection: Axis.vertical,
             padding: EdgeInsets.all(3.0),
             children: <Widget>[
               makeDashboardItem("Enrollment", Icons.medical_services,Enrollment()),
@@ -94,12 +100,12 @@ class _ScreeningHomeState extends State<ScreeningHome> {
               mainAxisSize: MainAxisSize.min,
               verticalDirection: VerticalDirection.down,
               children: <Widget>[
-                SizedBox(height: 20.0),
+                SizedBox(height: 15.0),
                 Center(
                     child: Icon(
                       icon,
                       size: 40.0,
-                      color: Colors.blueAccent,
+                      color: Colors.white,
                     )),
                 SizedBox(height: 20.0),
                 new Center(

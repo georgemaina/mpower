@@ -3,10 +3,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mpower/screens/Awareness.dart';
 import 'package:mpower/screens/register.dart';
 import 'package:mpower/screens/screening.dart';
-// import 'package:mpower/screens/screening3.dart';
+import 'package:mpower/screens/main_screen.dart';
 import 'views/health_workers.dart';
 import 'package:mpower/screens/awareness_home.dart';
-import 'package:mpower/screens/awareness_home.dart';
+import 'package:mpower/screens/views/review_enrollments.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({
@@ -24,7 +24,14 @@ class SideMenu extends StatelessWidget {
           DrawerListTile(
             title: "Dashboard",
             svgSrc: "assets/icons/menu_dashbord.svg",
-            press: () {},
+            press: () {
+              var route = ModalRoute.of(context);
+              if(route!=null){
+                print(route.settings.name);
+              }
+              Navigator.pop(context, false);
+
+            },
           ),
           DrawerListTile(
             title: "Screening",
@@ -62,12 +69,12 @@ class SideMenu extends StatelessWidget {
             },
           ),
           DrawerListTile(
-            title: "Notification",
+            title: "Pending Encounters",
             svgSrc: "assets/icons/menu_notification.svg",
             press: () {
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context)=>ScreeningHome())
+                  MaterialPageRoute(builder: (context)=>Enrollments())
               );
             },
           ),

@@ -171,6 +171,19 @@ class _UploadState extends State<Upload> {
     });
   }
 
+  static Future<int> deleteRows() async {
+    final db = await DBProvider.db();
+
+    db.execute("Delete from enrollments");
+    db.execute("Delete from diabetes");
+    db.execute("Delete from hypertension");
+    db.execute("Delete from anaemia");
+    db.execute("Delete from epilepsy");
+    db.execute("Delete from cancer");
+
+    return 1;
+  }
+
 
   @override
   void initState() {
@@ -203,6 +216,7 @@ class _UploadState extends State<Upload> {
                       uploadCancer();
                       uploadHealthWorkers();
                       uploadEnrollment();
+                      deleteRows();
                       // Navigator.push(context, MaterialPageRoute(builder: (context)=>Workers()));
                     });
                 }

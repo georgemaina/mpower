@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mpower/screens/globals.dart' as globals;
+
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -11,7 +13,7 @@ class WelcomeScreen extends StatelessWidget {
       child:Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("WELCOME BACK George",
+          Text("WELCOME BACK "+globals.loggedUser,
             style:TextStyle(fontSize: 16,fontWeight:FontWeight.bold ,color: Color(4282547648)),
           ),
           Text("YOU ARE LOGGED IN TO",

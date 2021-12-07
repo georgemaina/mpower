@@ -49,26 +49,26 @@ class _AwarenessPageState extends State<AwarenessPage> {
   void submit() async{
     print(globals.dbt1.toString());
     // var now=DateTime.now();
-    var user= globals.loggedUser.toString();
-    DBProvider.addDiabetes(user,globals.dbt1.toString(), globals.dbt2.toString(), globals.dbt3.toString(), globals.dbt4.toString(),
-        globals.dbt5.toString(), globals.dbt6.toString(), globals.dbt7.toString(), globals.dbt8.toString(),
-        globals.dbt9.toString(), globals.dbt10.toString(),formatted,globals.totaldiabetes.toString());
-
-    DBProvider.addHypertension(user,globals.bp1.toString(), globals.bp2.toString(), globals.bp3.toString(), globals.bp4.toString(),
-        globals.bp5.toString(), globals.bp6.toString(), globals.bp7.toString(), globals.bp8.toString(),
-        globals.bp9.toString(), globals.bp10.toString(),formatted,globals.totalhypertension.toString());
-
-    DBProvider.addAnaemia(user,globals.sca1.toString(), globals.sca2.toString(), globals.sca3.toString(),
-          globals.sca4.toString(),globals.sca5.toString(),formatted,globals.totalanaemia.toString());
-
-    DBProvider.addEpilepsy(user,globals.epy1.toString(), globals.epy2.toString(), globals.epy3.toString(),
-        globals.epy4.toString(),formatted,globals.totalepilepsy.toString());
-
-    DBProvider.addRetinopathy(user,globals.dr1.toString(), globals.dr2.toString(), globals.dr3.toString(),
-        globals.dr4.toString(),globals.dr5.toString(),formatted,globals.totalretinopathy.toString());
-
-    DBProvider.addCancer(user,globals.bc1.toString(), globals.bc2.toString(), globals.bc3.toString(),
-        globals.bc4.toString(),formatted,globals.totalcancer.toString());
+    // var user= globals.loggedUser.toString();
+    // DBProvider.addDiabetes(user,globals.dbt1.toString(), globals.dbt2.toString(), globals.dbt3.toString(), globals.dbt4.toString(),
+    //     globals.dbt5.toString(), globals.dbt6.toString(), globals.dbt7.toString(), globals.dbt8.toString(),
+    //     globals.dbt9.toString(), globals.dbt10.toString(),formatted,globals.totaldiabetes.toString());
+    //
+    // DBProvider.addHypertension(user,globals.bp1.toString(), globals.bp2.toString(), globals.bp3.toString(), globals.bp4.toString(),
+    //     globals.bp5.toString(), globals.bp6.toString(), globals.bp7.toString(), globals.bp8.toString(),
+    //     globals.bp9.toString(), globals.bp10.toString(),formatted,globals.totalhypertension.toString());
+    //
+    // DBProvider.addAnaemia(user,globals.sca1.toString(), globals.sca2.toString(), globals.sca3.toString(),
+    //       globals.sca4.toString(),globals.sca5.toString(),formatted,globals.totalanaemia.toString());
+    //
+    // DBProvider.addEpilepsy(user,globals.epy1.toString(), globals.epy2.toString(), globals.epy3.toString(),
+    //     globals.epy4.toString(),formatted,globals.totalepilepsy.toString());
+    //
+    // DBProvider.addRetinopathy(user,globals.dr1.toString(), globals.dr2.toString(), globals.dr3.toString(),
+    //     globals.dr4.toString(),globals.dr5.toString(),formatted,globals.totalretinopathy.toString());
+    //
+    // DBProvider.addCancer(user,globals.bc1.toString(), globals.bc2.toString(), globals.bc3.toString(),
+    //     globals.bc4.toString(),formatted,globals.totalcancer.toString());
 
     Navigator.push(context, MaterialPageRoute(builder: (context)=>ReviewData()));
 

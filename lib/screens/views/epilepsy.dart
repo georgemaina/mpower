@@ -22,15 +22,22 @@ class _EpilepsyState extends State<Epilepsy> {
   static final DateTime now = DateTime.now();
   static final DateFormat formatter = DateFormat('yyyy-MM-dd H:m:s');
   final String formatted = formatter.format(now);
-  TextEditingController totalepilepsy = TextEditingController();
+
+  TextEditingController totalMaleEpilepsy = TextEditingController();
+  TextEditingController totalFemaleEpilepsy = TextEditingController();
+  TextEditingController totalDisabledEpilepsy = TextEditingController();
+
 
   void submit() async{
     print(globals.dbt1.toString());
     // var now=DateTime.now();
     var user= globals.loggedUser.toString();
+    globals.totalMaleEpilepsy=totalMaleEpilepsy.text;
+    globals.totalFemaleEpilepsy=totalFemaleEpilepsy.text;
+    globals.totalDisabledEpilepsy=totalDisabledEpilepsy.text;
 
     DBProvider.addEpilepsy(user,globals.epy1.toString(), globals.epy2.toString(), globals.epy3.toString(),
-        globals.epy4.toString(),formatted,globals.totalepilepsy.toString());
+        globals.epy4.toString(),formatted,totalMaleEpilepsy.text,totalFemaleEpilepsy.text,totalDisabledEpilepsy.text);
 
     Navigator.push(context, MaterialPageRoute(builder: (context)=>AwarenessDashboard()));
     final data=await DBProvider.countRecords();
@@ -106,10 +113,10 @@ class _EpilepsyState extends State<Epilepsy> {
                             });
                           }),
                       FormBuilderTextField(
-                          name: 'totalepilepsy',
-                          controller: totalepilepsy,
+                          name: 'totalMaleEpilepsy',
+                          controller: totalMaleEpilepsy,
                           decoration: InputDecoration(
-                            labelText:'Total Clients .',
+                            labelText:'Total Male Clients Reached.',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
@@ -118,7 +125,42 @@ class _EpilepsyState extends State<Epilepsy> {
                           onChanged:(val) {
                             setState(() {
                               globals.height=val.toString();
-                              print('Epilepsy='+val.toString());
+                              print('hypertension='+val.toString());
+                            });
+                          }
+                      ),
+                      SizedBox(height: 10.0,),
+                      FormBuilderTextField(
+                          name: 'totalFemaleEpilepsy',
+                          controller: totalFemaleEpilepsy,
+                          decoration: InputDecoration(
+                            labelText:'Total Female Clients Reached .',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            //hintText: 'NATIONAL ID'
+                          ),
+                          onChanged:(val) {
+                            setState(() {
+                              globals.height=val.toString();
+                              print('Cancer='+val.toString());
+                            });
+                          }
+                      ),SizedBox(height: 10.0,),
+                      FormBuilderTextField(
+                          name: 'totalDisabledEpilepsy',
+                          controller: totalDisabledEpilepsy,
+                          decoration: InputDecoration(
+                            labelText:'Total Disabled Clients Reached.',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            //hintText: 'NATIONAL ID'
+                          ),
+                          onChanged:(val) {
+                            setState(() {
+                              globals.height=val.toString();
+                              print('Cancer='+val.toString());
                             });
                           }
                       ),

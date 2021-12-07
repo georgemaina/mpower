@@ -3,6 +3,7 @@ import 'package:mpower/database.dart';
 // import 'package:http/http.dart' as http;
 // import 'package:mpower/screens/globals.dart' as globals;
 import 'dart:convert';
+import 'screening.dart';
 
 class Summary extends StatefulWidget {
   const Summary({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class _SummaryState extends State<Summary> {
   int totalRecords=0;
 
   void _getEnrollments() async{
-    final data=await DBProvider.countEnrollments();
+    final data=await DBProvider.countRecords();
 
     setState(() {
       _records=data;
@@ -39,8 +40,23 @@ class _SummaryState extends State<Summary> {
       child:Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("NOVEMBER SUMMARY",
-            style:TextStyle(fontSize: 16,fontWeight:FontWeight.bold ,color: Color(4282547648)),
+          Row(
+            children: [
+              Flexible(
+                child: Text("SCREENING SUMMARY",
+                  style:TextStyle(fontSize: 16,fontWeight:FontWeight.bold ,color: Colors.red),
+                ),
+              ),
+              Flexible(
+                child:    FloatingActionButton(
+                  onPressed: () {
+                    Navigator.push(context,MaterialPageRoute(builder: (context) => ScreeningHome()));
+                  },
+                  child: const Icon(Icons.add),
+                  backgroundColor: Colors.green,
+                  mini: true,
+                ),),
+            ],
           ),
           SizedBox(height: 10.0,),
           Padding(
@@ -55,7 +71,7 @@ class _SummaryState extends State<Summary> {
           Row(
             children: [
               Flexible(
-                child:Text("CLIENTS SCREENED",
+                child:Text("Clients Screened",
                   style:TextStyle(fontSize: 16,fontWeight:FontWeight.bold,color: Color(4282547648)),
                 ),
                 ),
@@ -68,7 +84,7 @@ class _SummaryState extends State<Summary> {
           Row(
             children: [
               Flexible(
-                child:Text("PRE-HYPERTENSIVE",
+                child:Text("Pre-Hypertensive",
                   style:TextStyle(fontSize: 16,fontWeight:FontWeight.bold,color: Color(4282547648)),
                 ),
               ),
@@ -82,7 +98,7 @@ class _SummaryState extends State<Summary> {
           Row(
             children: [
               Flexible(
-                child:Text("HYPERTENSIVE",
+                child:Text("Hypertensive",
                   style:TextStyle(fontSize: 16,fontWeight:FontWeight.bold,color: Color(4282547648)),
                 ),
               ),
@@ -98,7 +114,7 @@ class _SummaryState extends State<Summary> {
           Row(
             children: [
               Flexible(
-                child:Text("CLIENTS SCREENED:",
+                child:Text("Clients Screened:",
                   style:TextStyle(fontSize: 16,fontWeight:FontWeight.bold,color: Color(4282547648)),
                 ),
               ),
@@ -111,7 +127,7 @@ class _SummaryState extends State<Summary> {
           Row(
             children: [
               Flexible(
-                child:Text("PRE-DIABETIC",
+                child:Text("Pre-Diabetic",
                   style:TextStyle(fontSize: 16,fontWeight:FontWeight.bold,color: Color(4282547648)),
                 ),
               ),
@@ -124,7 +140,7 @@ class _SummaryState extends State<Summary> {
           Row(
             children: [
               Flexible(
-                child:Text("DIABETIC",
+                child:Text("Diabetic",
                   style:TextStyle(fontSize: 16,fontWeight:FontWeight.bold,color: Color(4282547648)),
                 ),
               ),

@@ -22,15 +22,21 @@ class _CancerState extends State<Cancer> {
   static final DateFormat formatter = DateFormat('yyyy-MM-dd H:m:s');
   final String formatted = formatter.format(now);
 
-  TextEditingController totalcancer = TextEditingController();
+  TextEditingController totalMaleCancer = TextEditingController();
+  TextEditingController totalFemaleCancer = TextEditingController();
+  TextEditingController totalDisabledCancer = TextEditingController();
 
   void submit() async{
     print(globals.dbt1.toString());
     // var now=DateTime.now();
     var user= globals.loggedUser.toString();
 
+    globals.totalMaleCancer=totalMaleCancer.text;
+    globals.totalFemaleCancer=totalFemaleCancer.text;
+    globals.totalDisabledCancer=totalDisabledCancer.text;
+
     DBProvider.addCancer(user,globals.bc1.toString(), globals.bc2.toString(), globals.bc3.toString(),
-        globals.bc4.toString(),formatted,globals.totalcancer.toString());
+        globals.bc4.toString(),formatted,totalMaleCancer.text,totalFemaleCancer.text,totalDisabledCancer.text);
 
     Navigator.push(context, MaterialPageRoute(builder: (context)=>AwarenessDashboard()));
     final data=await DBProvider.countRecords();
@@ -106,11 +112,12 @@ class _CancerState extends State<Cancer> {
                               globals.bc4=val.toString();
                             });
                           }),
+                      SizedBox(height: 10.0,),
                       FormBuilderTextField(
-                          name: 'totalcancer',
-                          controller: totalcancer,
+                          name: 'totalMaleCancer',
+                          controller: totalMaleCancer,
                           decoration: InputDecoration(
-                            labelText:'Total Clients .',
+                            labelText:'Total Male Clients .',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
@@ -119,6 +126,40 @@ class _CancerState extends State<Cancer> {
                           onChanged:(val) {
                             setState(() {
                               globals.height=val.toString();
+                              print('Cancer='+val.toString());
+                            });
+                          }
+                      ),SizedBox(height: 10.0,),
+                      FormBuilderTextField(
+                          name: 'totalFemaleCancer',
+                          controller: totalFemaleCancer,
+                          decoration: InputDecoration(
+                            labelText:'Total Female Clients .',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            //hintText: 'NATIONAL ID'
+                          ),
+                          onChanged:(val) {
+                            setState(() {
+                              globals.height=val.toString();
+                              print('Cancer='+val.toString());
+                            });
+                          }
+                      ),SizedBox(height: 10.0,),
+                      FormBuilderTextField(
+                          name: 'totalDiabledCancer',
+                          controller: totalDisabledCancer,
+                          decoration: InputDecoration(
+                            labelText:'Total Disabled Clients .',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            //hintText: 'NATIONAL ID'
+                          ),
+                          onChanged:(val) {
+                            setState(() {
+                              globals.totalDisabledCancer=val.toString();
                               print('Cancer='+val.toString());
                             });
                           }

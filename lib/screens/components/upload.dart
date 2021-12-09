@@ -44,7 +44,7 @@ class _UploadState extends State<Upload> {
         headers: {"Content-Type": "application/json"},
         body:jsonEncode(bpdata)
     );
-   print(url);
+   print(response.body);
 
     var data=jsonDecode(response.body);
     if(data=="Error"){

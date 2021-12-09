@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="mpower.chak.or.ke.mpower">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="mpower"
         android:icon="@mipmap/launcher_icon">

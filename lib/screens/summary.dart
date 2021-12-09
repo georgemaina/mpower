@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mpower/database.dart';
 // import 'package:http/http.dart' as http;
-// import 'package:mpower/screens/globals.dart' as globals;
+import 'package:mpower/screens/globals.dart' as globals;
 import 'dart:convert';
 import 'screening.dart';
 

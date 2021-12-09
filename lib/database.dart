@@ -190,6 +190,13 @@ class DBProvider {
 
   }
 
+  // Read all items (awareness and education)
+  static Future<List<Map<String, dynamic>>> countAwareness() async {
+    final db = await DBProvider.db();
+    return await db.query('health_workers', orderBy: "id");
+  }
+
+
   // Read all items (workers)
   static Future<List<Map<String, dynamic>>> countRecords() async {
     final db = await DBProvider.db();

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mpower/database.dart';
 import 'dart:convert';
 import 'package:mpower/screens/register.dart';
+import 'package:mpower/screens/globals.dart' as globals;
+
 
 import 'package:mpower/screens/awareness_home.dart';
 
@@ -17,7 +19,7 @@ class _Summary2State extends State<Summary2> {
   int totalRecords=0;
 
   void _getEnrollments() async{
-    final data=await DBProvider.countEnrollments();
+    final data=await DBProvider.countAwareness();
 
     setState(() {
       _records=data;
@@ -76,7 +78,7 @@ class _Summary2State extends State<Summary2> {
                 ),
                 ),
               Flexible(
-                  child: Text(" : $totalRecords",
+                  child: Text(" : "+globals.totalMaleDiabetes,
                 style:TextStyle(fontSize: 16,fontWeight:FontWeight.bold ,color: Colors.yellow),
               ))
             ],

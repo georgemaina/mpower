@@ -43,9 +43,10 @@ class _RegisterState extends State<Register> {
   var subcountyname;
   var message;
   bool error = false;
-  var countydata;
+  var countydata=[];
 
   List<String> counties = [
+    "",
     "Mombasa",
     "Kwale",
     "Kilifi",
@@ -102,7 +103,7 @@ class _RegisterState extends State<Register> {
     // TODO: implement initState
     error = false;
     message = "";
-    countyname = "Kiambu"; //default country
+     countyname = ""; //default country
     super.initState();
   }
 
@@ -112,6 +113,8 @@ class _RegisterState extends State<Register> {
     //attache countryname on parameter country in url
     print(dataurl);
     if (res.statusCode == 200) {
+      countydata.clear();
+      subcountyname=null;
       setState(() {
         countydata = json.decode(res.body);
         // if (countydata["error"]) {
@@ -314,20 +317,19 @@ class _RegisterState extends State<Register> {
                           );
                         }).toList(),
                         onChanged: (value) {
-                          getSubCounty();
-                          countyname = value.toString(); //change the country name
+                          countyname= value.toString(); //change the country name
+                          print(value);
                           county.text=value.toString();
+                          getSubCounty();
+
                         },
                       ),
                     ),
                   ),
                   SizedBox(height: 10,),
-                  Container( //wrapper for City list
+                  Container( //wrapper for subcounty list
                     // margin: EdgeInsets.only(top:10),
-                    child: error ? Text(message) :
-                    countydata == null ?
-                    Text("Choose Sub County") :
-                    wardList(),
+                    child: error ? Text(message) :countydata == null ? Text("Choose Sub County") :wardList(),
                     //if there is error then show error message,
                     //else check if data is null,
                     //if not then show city list,
@@ -517,7 +519,7 @@ class _RegisterState extends State<Register> {
 
 
   Widget wardList() {
-    //widget function for city list
+    //widget function for subCounty list
     List<WardOne> wordList = List<WardOne>.from(
         countydata.map((i) {
           return WardOne.fromJSON(i);
@@ -568,7 +570,7 @@ class WardOne{
 
   factory WardOne.fromJSON(Map<String, dynamic> json){
     return WardOne(
-        id:json["id"],
+        id:json["ID"],
         county: json["county"],
         subcounty: json["subcounty"]
     );

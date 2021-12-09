@@ -36,9 +36,9 @@ class _DiabetesState extends State<Diabetes> {
         globals.dbt9.toString(), globals.dbt10.toString(),formatted,totalMaleDiabetes.text,totalFemaleDiabetes.text,
         totalDisableDiabetes.text,globals.meetingID.toString());
 
-    globals.totalMaleDiabetes=totalDisableDiabetes.text;
-    globals.totalFemaleDiabetes=totalFemaleDiabetes.text;
-    globals.totalDisabledDiabetes=totalDisableDiabetes.text;
+    print("Male:"+totalMaleDiabetes.text);
+    print("Female:"+totalFemaleDiabetes.text);
+    print("Disabled:"+totalDisableDiabetes.text);
 
     Navigator.push(context, MaterialPageRoute(builder: (context)=>AwarenessDashboard()));
     final data=await DBProvider.countRecords();
@@ -171,8 +171,8 @@ class _DiabetesState extends State<Diabetes> {
                         ),
                         onChanged:(val) {
                           setState(() {
-                            globals.height=val.toString();
-                            print('Height='+val.toString());
+                            globals.totalMaleDiabetes=val.toString();
+                            print('Diabetes male'+val.toString());
                           });
                         }
                     ),
@@ -189,8 +189,8 @@ class _DiabetesState extends State<Diabetes> {
                         ),
                         onChanged:(val) {
                           setState(() {
-                            globals.height=val.toString();
-                            print('Height='+val.toString());
+                            globals.totalFemaleDiabetes=val.toString();
+                            print('Diabetes Female='+val.toString());
                           });
                         }
                     ),
@@ -207,8 +207,8 @@ class _DiabetesState extends State<Diabetes> {
                         ),
                         onChanged:(val) {
                           setState(() {
-                            globals.totalMaleDiabetes=val.toString();
-                            print('Height='+val.toString());
+                            globals.totalDisabledDiabetes=val.toString();
+                            print('Diabetes Disabled='+val.toString());
                           });
                         }
                     ),

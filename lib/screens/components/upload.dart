@@ -64,6 +64,7 @@ class _UploadState extends State<Upload> {
     );
 
     var data=jsonDecode(response.body);
+    print(data);
     if(data=="Error"){
       print('Could not Add Cancer');
     }else{

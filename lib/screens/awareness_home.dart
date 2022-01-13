@@ -3,7 +3,7 @@ import 'package:flutter_launcher_icons/android.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mpower/screens/globals.dart';
+import 'package:mpower/screens/globals.dart' as globals;
 import 'package:mpower/welcome.dart';
 import 'views/diabetes.dart';
 import 'views/hypertension.dart';
@@ -20,6 +20,17 @@ class AwarenessDashboard extends StatefulWidget {
 }
 
 class _AwarenessDashboardState extends State<AwarenessDashboard> {
+
+  var totalDiabetesMales=globals.totalMaleDiabetes;
+  var totalDiabetesFemales=globals.totalFemaleDiabetes;
+  var totalDiabetesDisabled=globals.totalDisabledDiabetes;
+
+  submit() async {
+    setState(() {
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -46,28 +57,83 @@ class _AwarenessDashboardState extends State<AwarenessDashboard> {
             },
           ),
         ),
-        body: Container(
-          padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 2.0),
-          child: GridView.count(
-            crossAxisCount: 2,
-            padding: EdgeInsets.all(3.0),
-            children: <Widget>[
-              makeDashboardItem("Diabetes", Icons.medical_services,Diabetes()),
-              makeDashboardItem("Hypertension",Icons.shield,Hypertension()),
-              makeDashboardItem("Sickle Cell Anaemia", Icons.favorite,Anaemia()),
-              makeDashboardItem("Epilepsy", Icons.health_and_safety,Epilepsy()),
-              makeDashboardItem("Diabetes Retinopathy", Icons.health_and_safety,DiabetesRetinopathy()),
-              makeDashboardItem("Breast Cancer",Icons.medical_services,Cancer())
-            ],
+        body: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+          child: Column(
+              children: [
+                Container(
+                  child: new Text("CHW: "+globals.loggedUser.toString()+",  Meeting ID: "+globals.meetingID.toString(),
+                  style:
+                  new TextStyle(fontSize: 15.0, color: Colors.yellow,fontWeight: FontWeight.normal)),
+                  ),
+                GridView.count(
+                          crossAxisCount: 2,
+                          // childAspectRatio: (itemWidth / itemHeight),
+                          shrinkWrap: true,
+                          controller: new ScrollController(keepScrollOffset: true),
+                          scrollDirection: Axis.vertical,
+                          padding: EdgeInsets.all(3.0),
+                           children: <Widget>[
+                             makeDashboardItem("Diabetes", Icons.medical_services,Diabetes(),
+                                 'Total Male ${totalDiabetesMales.toString()}',
+                                 'Total Female ${totalDiabetesFemales.toString()}',
+                                 'Total Disabled ${totalDiabetesDisabled.toString()}'),
+                             makeDashboardItem("Hypertension",Icons.shield,Hypertension(),
+                                 'Total Male ${globals.totalMaleHypertension.toString()}',
+                                 'Total Female ${globals.totalFemaleHypertension.toString()}',
+                                 'Total Disabled ${globals.totalDisabledHypertension.toString()}'),
+                             makeDashboardItem("Sickle Cell Anaemia", Icons.favorite,Anaemia(),
+                                 'Total Male ${globals.totalMaleAnaemia.toString()}',
+                                 'Total Female ${globals.totalFemaleAnaemia.toString()}',
+                                 'Total Disabled ${globals.totalDisabledAnaemia.toString()}'),
+                             makeDashboardItem("Epilepsy", Icons.health_and_safety,Epilepsy(),
+                                 'Total Male ${globals.totalMaleEpilepsy.toString()}',
+                                 'Total Female ${globals.totalFemaleEpilepsy.toString()}',
+                                 'Total Disabled ${globals.totalDisabledEpilepsy.toString()}'),
+                             makeDashboardItem("Diabetes Retinopathy", Icons.health_and_safety,DiabetesRetinopathy(),
+                                 'Total Male ${globals.totalMaleRetinopathy.toString()}',
+                                 'Total Female ${globals.totalFemaleRetinopathy.toString()}',
+                                 'Total Disabled ${globals.totalDisabledRetinopathy.toString()}'),
+                             makeDashboardItem("Breast Cancer",Icons.medical_services,Cancer(),
+                                 'Total Male ${globals.totalMaleCancer.toString()}',
+                                 'Total Female ${globals.totalFemaleCancer.toString()}',
+                                 'Total Disabled ${globals.totalDisabledCancer.toString()}'),
+                          ]
+                          ),
+                Container(
+                  child:ElevatedButton.icon(
+                    label: Text('Done'),
+                    icon: Icon(Icons.save),
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.deepOrange,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 50, vertical: 20),
+                        textStyle: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white
+                        )),
+                    onPressed: () {
+                      // formKey.currentState?.save();
+                      // if (formKey.currentState!.validate()) {
+                      //   this.submit();
+                      // } else {
+                      //   print("validation failed");
+                      // }
+                    },
+                  ),
+                )
+
+              ],
+
+
+            ),
+        )
           ),
-        ),
-      ),
-
-
-    );
+      );
   }
 
-  Card makeDashboardItem(String title, IconData icon,screen) {
+  Card makeDashboardItem(String title, IconData icon,screen,males,females,disabled) {
     return Card(
         elevation: 3.0,
         margin: new EdgeInsets.all(8.0),
@@ -89,18 +155,36 @@ class _AwarenessDashboardState extends State<AwarenessDashboard> {
               mainAxisSize: MainAxisSize.min,
               verticalDirection: VerticalDirection.down,
               children: <Widget>[
-                SizedBox(height: 20.0),
+                SizedBox(height: 10.0),
                 Center(
                     child: Icon(
                       icon,
                       size: 40.0,
                       color: Colors.blueAccent,
                     )),
-                SizedBox(height: 20.0),
+                SizedBox(height: 10.0),
                 new Center(
                   child: new Text(title,
                       style:
                       new TextStyle(fontSize: 15.0, color: Colors.white,fontWeight: FontWeight.bold)),
+                ),
+                SizedBox(height: 10.0),
+                new Center(
+                  child: new Text(males,
+                      style:
+                      new TextStyle(fontSize: 15.0, color: Colors.greenAccent,fontWeight: FontWeight.normal)),
+                ),
+                SizedBox(height: 10.0),
+                new Center(
+                  child: new Text(females,
+                      style:
+                      new TextStyle(fontSize: 15.0, color: Colors.cyanAccent,fontWeight: FontWeight.normal)),
+                ),
+                SizedBox(height: 10.0),
+                new Center(
+                  child: new Text(disabled,
+                      style:
+                      new TextStyle(fontSize: 15.0, color: Colors.yellow,fontWeight: FontWeight.normal)),
                 )
               ],
             ),

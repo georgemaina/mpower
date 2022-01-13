@@ -81,7 +81,7 @@ class _ScreeningHomeState extends State<ScreeningHome> {
   Card makeDashboardItem(String title, IconData icon,screen) {
     return Card(
         elevation: 3.0,
-        margin: new EdgeInsets.all(8.0),
+        margin: new EdgeInsets.all(2.0),
         color:bgColor,
         child: Container(
           decoration: BoxDecoration(
@@ -100,14 +100,14 @@ class _ScreeningHomeState extends State<ScreeningHome> {
               mainAxisSize: MainAxisSize.min,
               verticalDirection: VerticalDirection.down,
               children: <Widget>[
-                SizedBox(height: 15.0),
+                SizedBox(height: 10.0),
                 Center(
                     child: Icon(
                       icon,
                       size: 40.0,
                       color: Colors.white,
                     )),
-                SizedBox(height: 20.0),
+                SizedBox(height: 10.0),
                 new Center(
                   child: new Text(title,
                       style:

@@ -7,6 +7,7 @@ import 'package:mpower/screens/main_screen.dart';
 import 'views/health_workers.dart';
 import 'package:mpower/screens/awareness_home.dart';
 import 'package:mpower/screens/views/review_enrollments.dart';
+import 'package:mpower/screens/globals.dart' as globals;
 
 class SideMenu extends StatelessWidget {
   const SideMenu({
@@ -62,6 +63,7 @@ class SideMenu extends StatelessWidget {
             title: "Awareness & Education",
             svgSrc: "assets/icons/menu_notification.svg",
             press: () {
+              print("Meeting ID "+globals.meetingID.toString());
               Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context)=>AwarenessDashboard())

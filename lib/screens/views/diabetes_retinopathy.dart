@@ -37,7 +37,7 @@ class _DiabetesRetinopathyState extends State<DiabetesRetinopathy> {
 
     DBProvider.addRetinopathy(user,globals.dr1.toString(), globals.dr2.toString(), globals.dr3.toString(),
         globals.dr4.toString(),globals.dr5.toString(),formatted,totalMaleRetinopathy.text,
-        totalFemaleRetinopathy.text,totalDisabledRetinopathy.text);
+        totalFemaleRetinopathy.text,totalDisabledRetinopathy.text,globals.meetingID.toString());
 
     Navigator.push(context, MaterialPageRoute(builder: (context)=>AwarenessDashboard()));
     final data=await DBProvider.countRecords();

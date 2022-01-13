@@ -27,7 +27,7 @@ class _CancerState extends State<Cancer> {
   TextEditingController totalDisabledCancer = TextEditingController();
 
   void submit() async{
-    print(globals.dbt1.toString());
+   // print(globals.dbt1.toString());
     // var now=DateTime.now();
     var user= globals.loggedUser.toString();
 
@@ -36,7 +36,7 @@ class _CancerState extends State<Cancer> {
     globals.totalDisabledCancer=totalDisabledCancer.text;
 
     DBProvider.addCancer(user,globals.bc1.toString(), globals.bc2.toString(), globals.bc3.toString(),
-        globals.bc4.toString(),formatted,totalMaleCancer.text,totalFemaleCancer.text,totalDisabledCancer.text);
+        globals.bc4.toString(),formatted,totalMaleCancer.text,totalFemaleCancer.text,totalDisabledCancer.text,globals.meetingID.toString());
 
     Navigator.push(context, MaterialPageRoute(builder: (context)=>AwarenessDashboard()));
     final data=await DBProvider.countRecords();
@@ -64,7 +64,7 @@ class _CancerState extends State<Cancer> {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Cancer"),
+          title: Text("Breast Cancer"),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
@@ -126,7 +126,7 @@ class _CancerState extends State<Cancer> {
                           onChanged:(val) {
                             setState(() {
                               globals.height=val.toString();
-                              print('Cancer='+val.toString());
+                              //print('Cancer='+val.toString());
                             });
                           }
                       ),SizedBox(height: 10.0,),
@@ -143,7 +143,7 @@ class _CancerState extends State<Cancer> {
                           onChanged:(val) {
                             setState(() {
                               globals.height=val.toString();
-                              print('Cancer='+val.toString());
+                              //print('Cancer='+val.toString());
                             });
                           }
                       ),SizedBox(height: 10.0,),
@@ -160,7 +160,7 @@ class _CancerState extends State<Cancer> {
                           onChanged:(val) {
                             setState(() {
                               globals.totalDisabledCancer=val.toString();
-                              print('Cancer='+val.toString());
+                             // print('Cancer='+val.toString());
                             });
                           }
                       ),

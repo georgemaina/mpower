@@ -14,7 +14,19 @@ class Summary extends StatefulWidget {
 
 class _SummaryState extends State<Summary> {
   List<Map<String, dynamic>> _records = [];
+  List<Map<String, dynamic>> _dbrecords = [];
+  List<Map<String, dynamic>> _bprecords = [];
+  List<Map<String, dynamic>> _screcords = [];
+  List<Map<String, dynamic>> _eprecords = [];
+  List<Map<String, dynamic>> _drrecords = [];
+  List<Map<String, dynamic>> _bcrecords = [];
   int totalRecords=0;
+  int totaldbRecords=0;
+  int totalbpRecords=0;
+  int totalscRecords=0;
+  int totalepRecords=0;
+  int totaldrRecords=0;
+  int totalbcRecords=0;
 
   void _getEnrollments() async{
     final data=await DBProvider.countRecords();
@@ -22,7 +34,67 @@ class _SummaryState extends State<Summary> {
     setState(() {
       _records=data;
       totalRecords=_records.length;
-      print(jsonEncode(_records));
+     // print(jsonEncode(_records));
+    });
+  }
+
+  void _getDiabetes() async{
+    final data=await DBProvider.getDiabetesData();
+    //print("Diabetes data:"+jsonEncode(data));
+    setState(() {
+      _dbrecords=data;
+      totaldbRecords=_records.length;
+   //   print("Diabetes "+jsonEncode(_dbrecords));
+    });
+  }
+
+  void _getHypertension() async{
+    final data=await DBProvider.getHypertensionData();
+    print("Hypertension data:"+jsonEncode(data));
+    setState(() {
+      _bprecords=data;
+      totalbpRecords=_records.length;
+     // print("Hypertension "+jsonEncode(_bprecords));
+    });
+  }
+
+  void _getAnaemia() async{
+    final data=await DBProvider.getAnaemiaData();
+    print("Anaemia data:"+jsonEncode(data));
+    setState(() {
+      _screcords=data;
+      totalscRecords=_records.length;
+      //print("Anaemia "+jsonEncode(_screcords));
+    });
+  }
+
+  void _getEpilepsy() async{
+    final data=await DBProvider.getEpilepsyData();
+    print("Epilepsy data:"+jsonEncode(data));
+    setState(() {
+      _eprecords=data;
+      totalepRecords=_records.length;
+      //print("Epilepsy "+jsonEncode(_eprecords));
+    });
+  }
+
+  void _getRetinopathy() async{
+    final data=await DBProvider.getRetinopathyData();
+    print("Retinopathy data:"+jsonEncode(data));
+    setState(() {
+      _drrecords=data;
+      totaldrRecords=_records.length;
+      //print("Retinopathy "+jsonEncode(_drrecords));
+    });
+  }
+
+  void _getCancerData() async{
+    final data=await DBProvider.getCancerData();
+    print("Cancer data:"+jsonEncode(data));
+    setState(() {
+      _bcrecords=data;
+      totalbcRecords=_records.length;
+      //print("Breast Cancer "+jsonEncode(_bcrecords));
     });
   }
 
@@ -30,6 +102,11 @@ class _SummaryState extends State<Summary> {
   void initState() {
     super.initState();
     _getEnrollments();
+    _getDiabetes();
+    _getHypertension();
+    _getAnaemia();
+    _getEpilepsy();
+    _getCancerData();
   }
 
   @override

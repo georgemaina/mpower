@@ -2,12 +2,13 @@ library MyApp.globals;
 
 bool isLoggedIn = false;
 String loggedUser="";
+String facility="";
+String mflcode="";
 
 // String url="http://51.140.3.12:8082/mpower/data/getDataFunctions.php?task=";
-// String url="http://192.168.100.7/mpower/data/getDataFunctions.php?task=";
+String url="http://192.168.1.23:8888/mpower/data/getDataFunctions.php?task=";
 // String url="http://192.168.100.103:8888/mpower/data/getDataFunctions.php?task=";
-String url="https://40.71.71.47/mpower/data/getDataFunctions.php?task=";
-//CHAK Server
+// String url="https://40.71.71.47/mpower/data/getDataFunctions.php?task=";
 // String url="http://197.232.14.151:8089/mpower/data/getDataFunctions.php?task=";
 
 

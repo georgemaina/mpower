@@ -24,7 +24,7 @@ class _Summary2State extends State<Summary2> {
     setState(() {
       _records=data;
       totalRecords=_records.length;
-      print(jsonEncode(_records));
+      //print(jsonEncode(_records));
     });
   }
 
@@ -54,6 +54,7 @@ class _Summary2State extends State<Summary2> {
                 child:    FloatingActionButton(
                   onPressed: () {
                     Navigator.push(context,MaterialPageRoute(builder: (context) => Register()));
+                    print(globals.loggedUser.toString());
                   },
                   child: const Icon(Icons.add),
                   backgroundColor: Colors.green,

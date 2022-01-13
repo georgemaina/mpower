@@ -39,6 +39,8 @@ class _RegisterState extends State<Register> {
   TextEditingController disabledreached = TextEditingController();
   final formKey = new GlobalKey<FormState>();
 
+
+
   var countyname = "";
   var subcountyname;
   var message;
@@ -104,6 +106,13 @@ class _RegisterState extends State<Register> {
     error = false;
     message = "";
      countyname = ""; //default country
+    names.clear();
+    names.text=globals.loggedUser.toString();
+    phone.clear();
+    phone.text=globals.phone.toString();
+    mflcode.clear();
+    mflcode.text=globals.mflcode.toString();
+    facility.text=globals.facility.toString();
     super.initState();
   }
 
@@ -271,6 +280,7 @@ class _RegisterState extends State<Register> {
                       }
                       return null;
                     },
+                    //initialValue: globals.loggedUser.toString(),
                   ),
                   SizedBox(height: 10.0,),
                   TextFormField(
@@ -335,26 +345,45 @@ class _RegisterState extends State<Register> {
                     //if not then show city list,
 
                   ),
+                  // SizedBox(height: 20.0,),
+                  // DropdownSearch<FacilityModel>(
+                  //   // items: [
+                  //   //   FacilityModel(facilityname: "Offline name1", mflcode: 999),
+                  //   //   FacilityModel(facilityname: "Offline name2", mflcode: 101)
+                  //   // ],
+                  //   maxHeight: 300,
+                  //   onFind:(filter)=>getFacilities(filter),
+                  //   dropdownSearchDecoration: InputDecoration(
+                  //     labelText: "Name of Health Facility",
+                  //     contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
+                  //     border: OutlineInputBorder(),
+                  //   ),
+                  //   onChanged: (value){
+                  //     mflcode.text=value!.mflcode.toString();
+                  //     facility.text=value.facilityname.toString();
+                  //   },
+                  //   selectedItem:,
+                  //   showSearchBox: true,
+                  // ),
                   SizedBox(height: 20.0,),
-                  DropdownSearch<FacilityModel>(
-                    // items: [
-                    //   FacilityModel(facilityname: "Offline name1", mflcode: 999),
-                    //   FacilityModel(facilityname: "Offline name2", mflcode: 101)
-                    // ],
-                    maxHeight: 300,
-                    onFind:(filter)=>getFacilities(filter),
-                    dropdownSearchDecoration: InputDecoration(
-                      labelText: "Name of Health Facility",
-                      contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
-                      border: OutlineInputBorder(),
+                  TextFormField(
+                    obscureText: false,
+                    controller: facility,
+                    decoration: InputDecoration(
+                      labelText: "Facility",
+                      hintText: 'Facility',
+                      // suffixIcon: Icon(Icons.visibility_off),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                     ),
-                    onChanged: (value){
-                      mflcode.text=value!.mflcode.toString();
-                      facility.text=value.facilityname.toString();
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter Facility MFL Code';
+                      }
+                      return null;
                     },
-                    showSearchBox: true,
                   ),
-
                   SizedBox(height: 20.0,),
                   TextFormField(
                     obscureText: false,

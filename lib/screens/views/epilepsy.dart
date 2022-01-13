@@ -37,7 +37,7 @@ class _EpilepsyState extends State<Epilepsy> {
     globals.totalDisabledEpilepsy=totalDisabledEpilepsy.text;
 
     DBProvider.addEpilepsy(user,globals.epy1.toString(), globals.epy2.toString(), globals.epy3.toString(),
-        globals.epy4.toString(),formatted,totalMaleEpilepsy.text,totalFemaleEpilepsy.text,totalDisabledEpilepsy.text);
+        globals.epy4.toString(),formatted,totalMaleEpilepsy.text,totalFemaleEpilepsy.text,totalDisabledEpilepsy.text,globals.meetingID.toString());
 
     Navigator.push(context, MaterialPageRoute(builder: (context)=>AwarenessDashboard()));
     final data=await DBProvider.countRecords();

@@ -35,7 +35,7 @@ class _AnaemiaState extends State<Anaemia> {
     var user= globals.loggedUser.toString();
     DBProvider.addAnaemia(user,globals.sca1.toString(), globals.sca2.toString(), globals.sca3.toString(),
         globals.sca4.toString(),globals.sca5.toString(),formatted,
-        totalMaleAnaemia.text,totalFemaleAnaemia.text,totalDisabledAnaemia.text);
+        totalMaleAnaemia.text,totalFemaleAnaemia.text,totalDisabledAnaemia.text,globals.meetingID.toString());
 
     Navigator.push(context, MaterialPageRoute(builder: (context)=>AwarenessDashboard()));
     final data=await DBProvider.countRecords();

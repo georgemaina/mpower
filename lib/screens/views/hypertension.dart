@@ -35,7 +35,7 @@ class _HypertensionState extends State<Hypertension> {
     DBProvider.addHypertension(user,globals.bp1.toString(), globals.bp2.toString(), globals.bp3.toString(), globals.bp4.toString(),
         globals.bp5.toString(), globals.bp6.toString(), globals.bp7.toString(), globals.bp8.toString(),
         globals.bp9.toString(), globals.bp10.toString(),formatted,totalMaleHypertension.text,
-        totalFemaleHypertension.text,totalDisabledHypertension.text);
+        totalFemaleHypertension.text,totalDisabledHypertension.text,globals.meetingID.toString());
 
     Navigator.push(context, MaterialPageRoute(builder: (context)=>AwarenessDashboard()));
 

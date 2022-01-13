@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:intl/intl.dart';
+
 
 // import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -72,7 +74,7 @@ class DBProvider {
   await database.execute("CREATE TABLE diabetes ("
       "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
       "chfID int,"
-      "meetingID int,"
+      "meetingID TEXT,"
       "dbt1 TEXT,"
       "dbt2 TEXT,"
       "dbt3 TEXT,"
@@ -91,7 +93,7 @@ class DBProvider {
   await database.execute("CREATE TABLE hypertension ("
       "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
       "chfID int,"
-      "meetingID int,"
+      "meetingID TEXT,"
       "bp1 TEXT,"
       "bp2 TEXT,"
       "bp3 TEXT,"
@@ -110,7 +112,7 @@ class DBProvider {
   await database.execute("CREATE TABLE anaemia ("
       "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
       "chfID int,"
-      "meetingID int,"
+      "meetingID TEXT,"
       "sca1 TEXT,"
       "sca2 TEXT,"
       "sca3 TEXT,"
@@ -124,7 +126,7 @@ class DBProvider {
   await database.execute("CREATE TABLE epilepsy ("
       "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
       "chfID int,"
-      "meetingID int,"
+      "meetingID TEXT,"
       "epy1 TEXT,"
       "epy2 TEXT,"
       "epy3 TEXT,"
@@ -137,7 +139,7 @@ class DBProvider {
   await database.execute("CREATE TABLE retinopathy ("
       "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
       "chfID int,"
-      "meetingID int,"
+      "meetingID TEXT,"
       "dr1 TEXT,"
       "dr2 TEXT,"
       "dr3 TEXT,"
@@ -151,7 +153,7 @@ class DBProvider {
   await database.execute("CREATE TABLE cancer ("
       "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
       "chfID int,"
-      "meetingID int,"
+      "meetingID TEXT,"
       "bc1 TEXT,"
       "bc2 TEXT,"
       "bc3 TEXT,"
@@ -160,6 +162,16 @@ class DBProvider {
       "totalMaleClients int,"
       "totalFemaleClients int,"
       "totalDisabledClients int"")");
+
+  await database.execute("CREATE TABLE userlogs("
+      "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+      "username TEXT,"
+      "names TEXT,"
+      "facility TEXT,"
+      "logtime TEXT,"
+      "logstatus TEXT,"
+      "longtude TEXT,"
+      "latitude TEXT"")");
     }
   static Future<sql.Database> db() async {
     return sql.openDatabase(
@@ -280,14 +292,19 @@ class DBProvider {
                       String venue,String gathering,String menreached,String womenreached,
                       String disabledreached) async {
     final db = await DBProvider.db();
+    final DateTime now = DateTime.now();
+    final DateFormat formatter = DateFormat('yyyyMMddHms');
+    final String formatted = formatter.format(now);
 
     final data = {"names":names,"phone":phone,"facility":facility, "county":county,"subcounty":subcounty,"mflcode":mflcode,
       "venue":venue,"gathering":gathering,"menreached":menreached,"womenreached":womenreached,
       "disabledreached":disabledreached};
     final id = await db.insert('health_workers', data,
         conflictAlgorithm: sql.ConflictAlgorithm.replace);
-    print("Inserted ID: $id");
-    globals.meetingID=id.toString();
+    globals.meetingID=id.toString()+formatted;
+    print("Inserted ID: "+globals.meetingID.toString());
+
+
     return id;
   }
 
@@ -331,13 +348,14 @@ class DBProvider {
   // Insert Operation: Insert a diabetes awareness to database
 
   static Future<int> addDiabetes(String user,String dbt1,String dbt2,String dbt3,String dbt4,
-      String dbt5,String dbt6,String dbt7, String dbt8,String dbt9,String dbt10,strDate,totalMaleDiabetes,totalFemaleDiabetes,totalDisabledDiabetes,meetingID) async {
+      String dbt5,String dbt6,String dbt7, String dbt8,String dbt9,String dbt10,strDate,totalMaleDiabetes,
+      totalFemaleDiabetes,totalDisabledDiabetes,meetingID) async {
     final db = await DBProvider.db();
 
     final data = {"chfID":user,"dbt1":dbt1,"dbt2":dbt2,"dbt3":dbt3, "dbt4":dbt4,
       "dbt5":dbt5,"dbt6":dbt6,"dbt7":dbt7,"dbt8":dbt8,"dbt9":dbt9,"dbt10":dbt10,
       "inputDate":strDate,"totalMaleClients":totalMaleDiabetes,"totalFemaleClients":totalFemaleDiabetes,
-      "totalDisabledClients":totalDisabledDiabetes,"meetingID":meetingID};
+      "totalDisabledClients":totalDisabledDiabetes,"meetingID":globals.meetingID.toString()};
 
     final id = await db.insert('diabetes', data,conflictAlgorithm: sql.ConflictAlgorithm.replace);
     print('insertid $id');
@@ -345,12 +363,13 @@ class DBProvider {
   }
 
   static Future<int> addHypertension(String user,String bp1,String bp2,String bp3,String bp4,
-      String bp5,String bp6,String bp7, String bp8,String bp9,String bp10,strDate,totalMaleHypertension,totalFemaleHypertension,totalDisabledHypertension) async {
+      String bp5,String bp6,String bp7, String bp8,String bp9,String bp10,strDate,totalMaleHypertension,totalFemaleHypertension,totalDisabledHypertension,meetingID) async {
     final db = await DBProvider.db();
 
     final data = {"chfID":user,"bp1":bp1,"bp2":bp2,"bp3":bp3, "bp4":bp4,
       "bp5":bp5,"bp6":bp6,"bp7":bp7,"bp8":bp8,"bp9":bp9,"bp10":bp10,
-      "inputDate":strDate,"totalMaleClients":totalMaleHypertension,"totalFemaleClients":totalMaleHypertension,"totalDisabledClients":totalDisabledHypertension};
+      "inputDate":strDate,"totalMaleClients":totalMaleHypertension,"totalFemaleClients":totalMaleHypertension
+      ,"totalDisabledClients":totalDisabledHypertension,"meetingID":globals.meetingID.toString()};
 
     final id = await db.insert('hypertension', data,conflictAlgorithm: sql.ConflictAlgorithm.replace);
     print('insertid $id');
@@ -358,22 +377,24 @@ class DBProvider {
   }
 
   static Future<int> addAnaemia(String user,String sca1,String sca2,String sca3,String sca4,
-      String sca5,strDate,totalMaleAnameia,totalFemaleAnameia,totalDisabledAnameia) async {
+      String sca5,strDate,totalMaleAnameia,totalFemaleAnameia,totalDisabledAnameia,meetingID) async {
     final db = await DBProvider.db();
 
     final data = {"chfID":user,"sca1":sca1,"sca2":sca2,"sca3":sca3, "sca4":sca4,
-      "sca5":sca5,"inputDate":strDate,"totalMaleClients":totalMaleAnameia,"totalFemaleClients":totalMaleAnameia,"totalDisabledClients":totalDisabledAnameia};
+      "sca5":sca5,"inputDate":strDate,"totalMaleClients":totalMaleAnameia,"totalFemaleClients":totalMaleAnameia,
+      "totalDisabledClients":totalDisabledAnameia,"meetingID":globals.meetingID.toString()};
 
     final id = await db.insert('anaemia', data,conflictAlgorithm: sql.ConflictAlgorithm.replace);
     print('insertid $id');
     return id;
   }
 
-  static Future<int> addEpilepsy(String user,String epy1,String epy2,String epy3,String epy4,strDate,totalMaleEpilepsy,totalFemaleEpilepsy,totalDisabledEpilepsy) async {
+  static Future<int> addEpilepsy(String user,String epy1,String epy2,String epy3,String epy4,strDate,totalMaleEpilepsy,totalFemaleEpilepsy,totalDisabledEpilepsy,meetingID) async {
     final db = await DBProvider.db();
 
     final data = {"chfID":user,"epy1":epy1,"epy2":epy2,"epy3":epy3, "epy4":epy4
-      ,"inputDate":strDate,"totalMaleClients":totalMaleEpilepsy,"totalFemaleClients":totalFemaleEpilepsy,"totalDisabledClients":totalDisabledEpilepsy};
+      ,"inputDate":strDate,"totalMaleClients":totalMaleEpilepsy,"totalFemaleClients":totalFemaleEpilepsy,
+      "totalDisabledClients":totalDisabledEpilepsy,"meetingID":globals.meetingID.toString()};
 
     final id = await db.insert('epilepsy', data,conflictAlgorithm: sql.ConflictAlgorithm.replace);
     print('insertid $id');
@@ -381,11 +402,12 @@ class DBProvider {
   }
 
   static Future<int> addRetinopathy(String user,String dr1,String dr2,String dr3,String dr4,
-      String dr5,strDate,totalMaleRetinopathy,totalFemaleRetinopathy,totalDisabledRetinopathy) async {
+      String dr5,strDate,totalMaleRetinopathy,totalFemaleRetinopathy,totalDisabledRetinopathy,meetingID) async {
     final db = await DBProvider.db();
 
     final data = {"chfID":user,"dr1":dr1,"dr2":dr2,"dr3":dr3, "dr4":dr4,"dr5":dr5,
-      "inputDate":strDate,"totalMaleClients":totalMaleRetinopathy,"totalFemaleClients":totalFemaleRetinopathy,"totalDisabledClients":totalDisabledRetinopathy};
+      "inputDate":strDate,"totalMaleClients":totalMaleRetinopathy,"totalFemaleClients":totalFemaleRetinopathy,
+      "totalDisabledClients":totalDisabledRetinopathy,"meetingID":globals.meetingID.toString()};
 
     final id = await db.insert('retinopathy', data, conflictAlgorithm: sql.ConflictAlgorithm.replace);
     print('insertid $id');
@@ -393,10 +415,11 @@ class DBProvider {
   }
 
   static Future<int> addCancer(String user,String bc1,String bc2,String bc3,String bc4,
-      strDate,totalMaleCancer,totalFemaleCancer,totalDisabledCancer) async {
+      strDate,totalMaleCancer,totalFemaleCancer,totalDisabledCancer,meetingID) async {
     final db = await DBProvider.db();
     final data = {"chfID":user,"bc1":bc1,"bc2":bc2,"bc3":bc3, "bc4":bc4,"inputDate":strDate,
-      "totalMaleClients":totalMaleCancer,"totalFemaleClients":totalFemaleCancer,"totalDisabledClients":totalDisabledCancer};
+      "totalMaleClients":totalMaleCancer,"totalFemaleClients":totalFemaleCancer,"totalDisabledClients":totalDisabledCancer,
+      "meetingID":globals.meetingID.toString()};
 
     final id = await db.insert('cancer', data,  conflictAlgorithm: sql.ConflictAlgorithm.replace);
     print('insertid $id');

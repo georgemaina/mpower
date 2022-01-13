@@ -36,16 +36,17 @@ class _DiabetesState extends State<Diabetes> {
         globals.dbt9.toString(), globals.dbt10.toString(),formatted,totalMaleDiabetes.text,totalFemaleDiabetes.text,
         totalDisableDiabetes.text,globals.meetingID.toString());
 
-    print("Male:"+totalMaleDiabetes.text);
-    print("Female:"+totalFemaleDiabetes.text);
-    print("Disabled:"+totalDisableDiabetes.text);
+    // print("Male:"+totalMaleDiabetes.text);
+    // print("Female:"+totalFemaleDiabetes.text);
+    // print("Disabled:"+totalDisableDiabetes.text);
+    // print("Meeting ID:"+globals.meetingID.toString());
 
     Navigator.push(context, MaterialPageRoute(builder: (context)=>AwarenessDashboard()));
     final data=await DBProvider.countRecords();
 
     setState(() {
       _listDiabetes=data;
-      print(_listDiabetes.length);
+      // print(_listDiabetes.length);
     });
   }
 
@@ -99,10 +100,10 @@ class _DiabetesState extends State<Diabetes> {
                         initialValue: false,
                         onChanged:(val) {
                           setState(() {
-                            print(formatted);
-                            print(val);
+                            // print(formatted);
+                            // print(val);
                             globals.dbt1=val.toString();
-                            print( globals.dbt1);
+                            // print( globals.dbt1);
                           });
                         }),
                     FormBuilderCheckbox(name: 'dbt2',title:Text('Risk factors for diabetes',style: _contentStyle),
@@ -172,7 +173,7 @@ class _DiabetesState extends State<Diabetes> {
                         onChanged:(val) {
                           setState(() {
                             globals.totalMaleDiabetes=val.toString();
-                            print('Diabetes male'+val.toString());
+                            // print('Diabetes male'+val.toString());
                           });
                         }
                     ),
@@ -190,7 +191,7 @@ class _DiabetesState extends State<Diabetes> {
                         onChanged:(val) {
                           setState(() {
                             globals.totalFemaleDiabetes=val.toString();
-                            print('Diabetes Female='+val.toString());
+                            // print('Diabetes Female='+val.toString());
                           });
                         }
                     ),
@@ -208,7 +209,7 @@ class _DiabetesState extends State<Diabetes> {
                         onChanged:(val) {
                           setState(() {
                             globals.totalDisabledDiabetes=val.toString();
-                            print('Diabetes Disabled='+val.toString());
+                            // print('Diabetes Disabled='+val.toString());
                           });
                         }
                     ),

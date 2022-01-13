@@ -5,8 +5,9 @@ import 'package:http/http.dart' as http;
 import 'screens/globals.dart' as globals;
 import 'package:mpower/welcome.dart';
 import 'package:geolocator/geolocator.dart';
-
-
+import 'package:mpower/models/users.dart';
+import 'package:mpower/models/facilities.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -46,42 +47,86 @@ class MyApp extends StatefulWidget {
 class _State extends State<MyApp> {
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
+  TextEditingController facility = TextEditingController();
+  TextEditingController mflcode = TextEditingController();
   // TextEditingController location = TextEditingController();
+  var _userList = [];
+  Future<Users>? _futureUsers;
 
-  // String _chosenValue="";
-  // String _myActivity;
-  // String _myActivityResult;
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+    print(await Geolocator.getCurrentPosition());
+    return await Geolocator.getCurrentPosition();
+  }
+
   bool _isObscure=true;
 
-  Future login()async{
-    String url=globals.url.toString() + "login";
 
+  Future<Users> login() async{
+    var value;
+    String url=globals.url.toString() + "login";
     var response=await http.post(Uri.parse(url),body: {
       "username":username.text,
       "password":password.text,
       "userGroup":"Admin",
     });
-    print(url);
-    print(response.body);
-
     var data=jsonDecode(response.body);
-    print(data);
-
-    // String user=username.text;
+     // String user=username.text;
     if(data=="Error"){
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Invalid Username and Password.'),
         ),
       );
+      value='Error';
     }else{
+      globals.isLoggedIn = true;
+      globals.loggedUser =username.text;
+      value=new Users.fromJson(data);
+      print(value.facility);
+      globals.loggedUser=value.names;
+      globals.mflcode=value.mflcode;
+      globals.facility=value.facility;
+      globals.phone=username.text;
+      // buildFutureBuilder();
       Navigator.push(
           context,
           MaterialPageRoute(builder: (context)=>myMain())
       );
-      globals.isLoggedIn = true;
-      globals.loggedUser =username.text;
     }
+    return value;
   }
 
 
@@ -92,6 +137,7 @@ class _State extends State<MyApp> {
     super.initState();
     // _myActivity = '';
     // _myActivityResult = '';
+    // buildFutureBuilder();
   }
 
 
@@ -99,14 +145,56 @@ class _State extends State<MyApp> {
   void submit(){
     // First validate form.
     if (this.formKey.currentState!.validate()) {
-      this.login();
       formKey.currentState!.save(); // Save our form now.
-
-      // print('Printing the login data.');
-      // print('Mobile: ${_data.username}');
-      // print('Password: ${_data.password}');
-
+      // this.login();
+     // _determinePosition();
+      login();
     }
+  }
+
+  // //@override
+  // FutureBuilder<Users> buildFutureBuilder() {
+  //
+  //   return FutureBuilder<Users>(
+  //     future: login(),
+  //     builder: (context, snapshot) {
+  //       print(snapshot.hasData);
+  //       if (snapshot.hasData) {
+  //           print('Yes it has data');
+  //           globals.loggedUser=snapshot.data!.names;
+  //           globals.mflcode=snapshot.data!.mflcode;
+  //           globals.facility=snapshot.data!.facility;
+  //           print('Names'+snapshot.data!.names);
+  //           print('Facility'+snapshot.data!.facility);
+  //           print('mflcode'+snapshot.data!.mflcode);
+  //           Navigator.push(
+  //               context,
+  //               MaterialPageRoute(builder: (context)=>myMain())
+  //           );
+  //
+  //          return Text(snapshot.data!.ID.toString());
+  //       } else if (snapshot.hasError) {
+  //           return Text('${snapshot.error}');
+  //       }
+  //
+  //       return const CircularProgressIndicator();
+  //     },
+  //   );
+  // }
+
+  Future<List<FacilityModel>> getFacilities(filter) async {
+    var response = await http.post(
+        Uri.parse(globals.url.toString() + "getFacilities"));
+
+    final data = json.decode(response.body);
+    //print(data);
+    if (data != null) {
+      //print(data.length);
+      return FacilityModel.fromJsonList(data);
+    }
+
+    return [];
+
   }
 
   @override
@@ -153,7 +241,7 @@ class _State extends State<MyApp> {
                         ),
                       ),
                     ),
-                    SizedBox(height:20.0),
+                    SizedBox(height:10.0),
                     Container(
                       padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                       child: TextField(
@@ -175,23 +263,29 @@ class _State extends State<MyApp> {
                         ),
                       ),
                     ),
-                    SizedBox(height:20.0),
-                    // Container(
-                    //   padding: EdgeInsets.all(10),
-                    //   child: DropdownSearch<String>(
-                    //     validator: (v) => v == null ? "required field" : null,
-                    //     dropdownSearchDecoration: InputDecoration(
-                    //       hintText: "LOCATION TYPE",
-                    //       labelText: "LOCATION TYPE *",
-                    //       contentPadding: EdgeInsets.all(10),
-                    //       border: OutlineInputBorder(),
-                    //     ),
-                    //     mode: Mode.MENU,
-                    //     showSelectedItems: true,
-                    //     items: ["HEALTH FACILITY", "CU"],
-                    //     onChanged: print
-                    //   ),
-                    // ),
+                    SizedBox(height:10.0),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                      child: DropdownSearch<FacilityModel>(
+                        // items: [
+                        //   FacilityModel(facilityname: "Offline name1", mflcode: 999),
+                        //   FacilityModel(facilityname: "Offline name2", mflcode: 101)
+                        // ],
+                        maxHeight: 300,
+                        onFind:(filter)=>getFacilities(filter),
+                        dropdownSearchDecoration: InputDecoration(
+                          labelText: "Name of Health Facility",
+                          contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
+                          border: OutlineInputBorder(),
+                        ),
+                        onChanged: (value){
+                          mflcode.text=value!.mflcode.toString();
+                          facility.text=value.facilityname.toString();
+                        },
+                        showSearchBox: true,
+                      ),
+                    ),
+                    SizedBox(height: 20.0,),
                     // Container(
                     //   padding: EdgeInsets.all(10),
                     //   child: TextField(

@@ -19,7 +19,7 @@ class WelcomeScreen extends StatelessWidget {
           Text("YOU ARE LOGGED IN TO",
           style:TextStyle(fontSize: 16,fontWeight:FontWeight.bold,color: Color(4282547648)),
           ),
-          Text("12998 - Kaloleni Dispensary",
+          Text( globals.mflcode +"-"+ globals.facility.toString(),
           style:TextStyle(fontSize: 16,fontWeight:FontWeight.bold,color: Color(4282547648)),
           ),
           Padding(

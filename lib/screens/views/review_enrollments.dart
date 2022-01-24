@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mpower/database.dart';
 import 'package:mpower/welcome.dart';
-import 'package:mpower/welcome.dart';
 // import 'package:mpower/screens/views/referral.dart';
 
 class Enrollments extends StatelessWidget {

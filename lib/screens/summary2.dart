@@ -92,7 +92,7 @@ class _Summary2State extends State<Summary2> {
                 ),
               ),
               Flexible(
-                  child: Text(" : $totalRecords",
+                  child: Text(" : "+globals.totalMaleHypertension,
                     style:TextStyle(fontSize: 16,fontWeight:FontWeight.bold ,color: Colors.yellow),
                   ))
             ],
@@ -106,7 +106,7 @@ class _Summary2State extends State<Summary2> {
                 ),
               ),
               Flexible(
-                  child: Text(" : $totalRecords",
+                  child: Text(" : "+globals.totalMaleAnaemia,
                     style:TextStyle(fontSize: 16,fontWeight:FontWeight.bold ,color: Colors.yellow),
                   ))
             ],
@@ -119,7 +119,7 @@ class _Summary2State extends State<Summary2> {
                 ),
               ),
               Flexible(
-                  child: Text(" : $totalRecords",
+                  child: Text(" : "+globals.totalMaleEpilepsy,
                     style:TextStyle(fontSize: 16,fontWeight:FontWeight.bold ,color: Colors.yellow),
                   ))
             ],
@@ -132,7 +132,7 @@ class _Summary2State extends State<Summary2> {
                 ),
               ),
               Flexible(
-                  child: Text(" : $totalRecords",
+                  child: Text(" : "+globals.totalMaleDiabetes,
                     style:TextStyle(fontSize: 16,fontWeight:FontWeight.bold ,color: Colors.yellow),
                   ))
             ],
@@ -145,7 +145,7 @@ class _Summary2State extends State<Summary2> {
                 ),
               ),
               Flexible(
-                  child: Text(" : $totalRecords",
+                  child: Text(" : "+globals.totalMaleCancer,
                     style:TextStyle(fontSize: 16,fontWeight:FontWeight.bold ,color: Colors.yellow),
                   ))
             ],

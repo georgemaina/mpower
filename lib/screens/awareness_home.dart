@@ -13,6 +13,7 @@ import 'views/epilepsy.dart';
 import 'views/cancer.dart';
 import 'main_screen.dart';
 import '../constants.dart';
+import 'final_screen.dart';
 
 class AwarenessDashboard extends StatefulWidget {
   @override
@@ -114,12 +115,7 @@ class _AwarenessDashboardState extends State<AwarenessDashboard> {
                             color: Colors.white
                         )),
                     onPressed: () {
-                      // formKey.currentState?.save();
-                      // if (formKey.currentState!.validate()) {
-                      //   this.submit();
-                      // } else {
-                      //   print("validation failed");
-                      // }
+                      Navigator.push(context,MaterialPageRoute(builder: (context) => FinalScreen()));
                     },
                   ),
                 )

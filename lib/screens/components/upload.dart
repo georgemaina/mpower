@@ -175,13 +175,13 @@ class _UploadState extends State<Upload> {
 
   static Future<int> deleteRows() async {
     final db = await DBProvider.db();
-
-    // db.execute("Delete from enrollments");
-    // db.execute("Delete from diabetes");
-    // db.execute("Delete from hypertension");
-    // db.execute("Delete from anaemia");
-    // db.execute("Delete from epilepsy");
-    // db.execute("Delete from cancer");
+    db.execute("Delete from enrollments");
+    db.execute("Delete from diabetes");
+    db.execute("Delete from hypertension");
+    db.execute("Delete from anaemia");
+    db.execute("Delete from epilepsy");
+    db.execute("Delete from cancer");
+    db.execute("Delete from health_workers");
 
     return 1;
   }

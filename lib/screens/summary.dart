@@ -153,7 +153,7 @@ class _SummaryState extends State<Summary> {
                 ),
                 ),
               Flexible(
-                  child: Text(" : $totalRecords",
+                  child: Text(" : $totalbpRecords",
                 style:TextStyle(fontSize: 16,fontWeight:FontWeight.bold ,color: Colors.yellow),
               ))
             ],
@@ -166,7 +166,7 @@ class _SummaryState extends State<Summary> {
                 ),
               ),
               Flexible(
-                  child: Text(" : $totalRecords",
+                  child: Text(" : $totalbpRecords",
                     style:TextStyle(fontSize: 16,fontWeight:FontWeight.bold ,color: Colors.yellow),
                   ))
             ],
@@ -180,7 +180,7 @@ class _SummaryState extends State<Summary> {
                 ),
               ),
               Flexible(
-                  child: Text(" : $totalRecords",
+                  child: Text(" : $totalbpRecords",
                     style:TextStyle(fontSize: 16,fontWeight:FontWeight.bold ,color: Colors.yellow),
                   ))
             ],
@@ -196,7 +196,7 @@ class _SummaryState extends State<Summary> {
                 ),
               ),
               Flexible(
-                  child: Text(" : $totalRecords",
+                  child: Text(" : $totaldbRecords",
                     style:TextStyle(fontSize: 16,fontWeight:FontWeight.bold ,color: Colors.yellow),
                   ))
             ],
@@ -209,7 +209,7 @@ class _SummaryState extends State<Summary> {
                 ),
               ),
               Flexible(
-                  child: Text(" : $totalRecords",
+                  child: Text(" : $totaldbRecords",
                     style:TextStyle(fontSize: 16,fontWeight:FontWeight.bold ,color: Colors.yellow),
                   ))
             ],
@@ -222,7 +222,7 @@ class _SummaryState extends State<Summary> {
                 ),
               ),
               Flexible(
-                  child: Text(" : $totalRecords",
+                  child: Text(" : $totaldbRecords",
                     style:TextStyle(fontSize: 16,fontWeight:FontWeight.bold ,color: Colors.yellow),
                   ))
             ],

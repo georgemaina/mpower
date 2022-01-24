@@ -6,8 +6,8 @@ String facility="";
 String mflcode="";
 
 // String url="http://51.140.3.12:8082/mpower/data/getDataFunctions.php?task=";
-String url="http://192.168.1.23:8888/mpower/data/getDataFunctions.php?task=";
-// String url="http://192.168.100.103:8888/mpower/data/getDataFunctions.php?task=";
+// String url="http://192.168.1.108:8888/mpower/data/getDataFunctions.php?task=";
+String url="http://192.168.100.107:8888/mpower/data/getDataFunctions.php?task=";
 // String url="https://40.71.71.47/mpower/data/getDataFunctions.php?task=";
 // String url="http://197.232.14.151:8089/mpower/data/getDataFunctions.php?task=";
 
@@ -120,3 +120,30 @@ String totalMaleAnaemia="";
 String totalFemaleAnaemia="";
 String totalDisabledAnaemia="";
 
+
+///*************Awareness Objects********///
+var diabetesObj={
+ "dbt1":"Understanding diabetes",
+ "dbt2":"Risk factors for diabetes",
+ "dbt3":"Signs and symptoms of diabetes",
+ "dbt4":"Prevention of diabetes",
+ "dbt5":"Healthy diet",
+ "dbt6":"Physical activity",
+ "dbt7":"How to manage diabetes",
+ "dbt8":"Complications of diabetes",
+ "dbt9":"Procedure for blood glucose testing",
+ "dbt10":"Myths and Misconceptions of diabetes",
+};
+
+var hypertensionObj={
+ "bp1":"Understanding hypertension",
+ "bp2":"Risk factors for hypertension",
+ "bp3":"Signs and symptoms of hypertension",
+ "bp4":"Understanding BP readings",
+ "bp5":"Controlling high blood pressure",
+ "bp6":"Healthy diet",
+ "bp7":"Physical activity",
+ "bp8":"Treatment of high blood pressure",
+ "bp9":"Complications of high blood pressure",
+ "bp10":"Side effects of blood pressure medication",
+};

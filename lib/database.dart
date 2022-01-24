@@ -233,6 +233,8 @@ class DBProvider {
     return db.query('diabetes', orderBy: "id");
   }
 
+
+
   static Future<List<Map<String, dynamic>>> getHypertensionData() async {
     final db = await DBProvider.db();
     return db.query('hypertension', orderBy: "id");
